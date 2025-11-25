@@ -27,7 +27,7 @@ public class OrderService {
     private final SagaOrchestrator sagaOrchestrator;
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
-    private static final BigDecimal TAX_RATE = new BigDecimal("0.19"); // 19% IVA
+    private static final BigDecimal TAX_RATE = new BigDecimal("0.13"); // 13% IVA
 
     @Transactional
     public OrderResponse createOrder(CreateOrderRequest request) {
@@ -160,7 +160,7 @@ public class OrderService {
     private BigDecimal calculateShippingCost(List<OrderItemRequest> items) {
         boolean hasPhysical = items.stream()
                 .anyMatch(item -> item.getProductType() == ProductType.PHYSICAL);
-        return hasPhysical ? new BigDecimal("15000") : BigDecimal.ZERO;
+        return hasPhysical ? new BigDecimal("15.00") : BigDecimal.ZERO;
     }
 
     private OrderResponse mapToOrderResponse(Order order) {

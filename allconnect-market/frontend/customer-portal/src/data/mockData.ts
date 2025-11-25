@@ -96,10 +96,9 @@ export const mockAddresses: Address[] = [
     customerId: 1,
     label: 'Casa',
     street: 'Calle Principal 123',
-    streetAddress: 'Calle Principal 123',
     city: 'San José',
     state: 'San José',
-    postalCode: '10101',
+    zipCode: '10101',
     country: 'Costa Rica',
     isDefault: true
   },
@@ -108,10 +107,9 @@ export const mockAddresses: Address[] = [
     customerId: 1,
     label: 'Oficina',
     street: 'Avenida Central 456',
-    streetAddress: 'Avenida Central 456',
     city: 'San José',
     state: 'San José',
-    postalCode: '10102',
+    zipCode: '10102',
     country: 'Costa Rica',
     isDefault: false
   },
@@ -120,10 +118,9 @@ export const mockAddresses: Address[] = [
     customerId: 2,
     label: 'Casa',
     street: 'Barrio Los Ángeles 789',
-    streetAddress: 'Barrio Los Ángeles 789',
     city: 'Heredia',
     state: 'Heredia',
-    postalCode: '40101',
+    zipCode: '40101',
     country: 'Costa Rica',
     isDefault: true
   }

@@ -7,6 +7,73 @@ spring:
   cloud:
     gateway:
       routes:
+        # ============= ADMIN ROUTES =============
+
+        # Admin Orders - Order Service
+        - id: admin-orders
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/api/admin/orders/**
+          filters:
+            - RewritePath=/api/admin/orders/(?<segment>.*), /api/admin/orders/${segment}
+
+        # Admin Dashboard Stats - Order Service
+        - id: admin-dashboard
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/api/admin/dashboard/**
+          filters:
+            - RewritePath=/api/admin/dashboard/(?<segment>.*), /api/admin/dashboard/${segment}
+
+        # Admin Operations Orders/Shipping - Order Service
+        - id: admin-operations-orders
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/api/admin/operations/orders/**,/api/admin/operations/shipping/**
+          filters:
+            - RewritePath=/api/admin/operations/(?<segment>.*), /api/admin/operations/${segment}
+
+        # Admin Customers - Customer Service
+        - id: admin-customers
+          uri: lb://CUSTOMER-SERVICE
+          predicates:
+            - Path=/api/admin/customers/**
+          filters:
+            - RewritePath=/api/admin/customers/(?<segment>.*), /api/admin/customers/${segment}
+
+        # Admin Products/Catalog - Catalog Service
+        - id: admin-products
+          uri: lb://CATALOG-SERVICE
+          predicates:
+            - Path=/api/admin/products/**
+          filters:
+            - RewritePath=/api/admin/products/(?<segment>.*), /api/admin/products/${segment}
+
+        - id: admin-catalog
+          uri: lb://CATALOG-SERVICE
+          predicates:
+            - Path=/api/admin/catalog/**
+          filters:
+            - RewritePath=/api/admin/catalog/(?<segment>.*), /api/admin/catalog/${segment}
+
+        # Admin Operations Inventory - Catalog Service
+        - id: admin-operations-inventory
+          uri: lb://CATALOG-SERVICE
+          predicates:
+            - Path=/api/admin/operations/inventory/**
+          filters:
+            - RewritePath=/api/admin/operations/(?<segment>.*), /api/admin/operations/${segment}
+
+        # Admin Content - Catalog Service
+        - id: admin-content
+          uri: lb://CATALOG-SERVICE
+          predicates:
+            - Path=/api/admin/content/**
+          filters:
+            - RewritePath=/api/admin/content/(?<segment>.*), /api/admin/content/${segment}
+
+        # ============= REGULAR SERVICE ROUTES =============
+
         # Order Service - Puerto 8091
         - id: order-service
           uri: lb://ORDER-SERVICE

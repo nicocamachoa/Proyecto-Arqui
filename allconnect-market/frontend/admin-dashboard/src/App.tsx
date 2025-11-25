@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { AdminLayout } from './views/components/AdminLayout';
 import { ProtectedRoute } from './views/components/ProtectedRoute';
@@ -9,7 +10,26 @@ import { DashboardOperaciones } from './views/pages/DashboardOperaciones';
 import { useAuthStore } from './stores';
 
 function App() {
-  const { user } = useAuthStore();
+  const { user, isAuthenticated, setAuth } = useAuthStore();
+
+  // Check for admin session from customer-portal (shared localStorage)
+  useEffect(() => {
+    if (!isAuthenticated) {
+      try {
+        const customerPortalAuth = localStorage.getItem('auth-storage');
+        if (customerPortalAuth) {
+          const parsed = JSON.parse(customerPortalAuth);
+          const state = parsed?.state;
+          if (state?.user && state?.token && state?.user?.role?.startsWith('ADMIN_')) {
+            // Auto-authenticate admin users from customer-portal
+            setAuth(state.user, state.token);
+          }
+        }
+      } catch {
+        // Ignore parsing errors
+      }
+    }
+  }, [isAuthenticated, setAuth]);
 
   const getDashboardByRole = () => {
     switch (user?.role) {

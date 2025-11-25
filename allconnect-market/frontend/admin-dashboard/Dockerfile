@@ -6,9 +6,10 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 COPY . .
-# Disable mock mode and point to real backend
+# Use mock mode (admin endpoints not yet implemented in backend)
+# TODO: Change to false when backend admin endpoints are ready
 ENV VITE_API_URL=http://host.docker.internal:8080/api
-ENV VITE_USE_MOCK=false
+ENV VITE_USE_MOCK=true
 RUN npm run build
 
 FROM nginx:alpine

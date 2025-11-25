@@ -34,7 +34,16 @@
       "Bash(docker rm:*)",
       "Bash(docker network:*)",
       "Bash(tasklist:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(dir /s /b C:UsersalecaDownloadsProyecto-Arquiallconnect-marketfrontendcustomer-portalsrcpages*.tsx)",
+      "Bash(timeout /t 15 /nobreak)",
+      "Bash(dir C:UsersalecaDownloadsProyecto-Arqui /s /b)",
+      "Bash(cmd //c \"taskkill /PID 28656 /F\")",
+      "Bash(docker inspect:*)",
+      "Bash(powershell -ExecutionPolicy Bypass -File:*)",
+      "Bash(TOKEN=\"eyJhbGciOiJIUzM4NCJ9.eyJmaXJzdE5hbWUiOiJUZXN0IiwibGFzdE5hbWUiOiJPcmRlciIsInJvbGUiOiJDVVNUT01FUiIsInVzZXJJZCI6OSwic3ViIjoidGVzdG9yZGVyQHRlc3QuY29tIiwiaWF0IjoxNzY0MDg4ODgwLCJleHAiOjE3NjQxNzUyODB9.37mevhvIyqZO9YvNGRDjjAjy7ILperf7rrHhKO3nJfVb5BP0BgTxABH7qhxuZNpD\")",
+      "Bash(__NEW_LINE__ curl -s -X POST \"http://localhost:8080/api/orders\" )",
+      "Bash(docker-compose:*)"
     ],
     "deny": [],
     "ask": []

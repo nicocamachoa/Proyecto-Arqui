@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart, useOrders } from '../../viewmodels';
 import { useAuthStore } from '../../stores';
+import { customerService } from '../../services';
+import { Address } from '../../models';
 
 type Step = 'shipping' | 'payment' | 'review';
 
@@ -13,6 +15,19 @@ export const Checkout = () => {
   const [currentStep, setCurrentStep] = useState<Step>('shipping');
   const [orderComplete, setOrderComplete] = useState(false);
   const [orderId, setOrderId] = useState<number | null>(null);
+  const [isProcessingOrder, setIsProcessingOrder] = useState(false);
+  const [completedOrderData, setCompletedOrderData] = useState<{
+    items: typeof items;
+    subtotal: number;
+    tax: number;
+    total: number;
+  } | null>(null);
+
+  // Saved addresses from backend
+  const [savedAddresses, setSavedAddresses] = useState<Address[]>([]);
+  const [selectedAddressId, setSelectedAddressId] = useState<number | null>(null);
+  const [useNewAddress, setUseNewAddress] = useState(false);
+  const [loadingAddresses, setLoadingAddresses] = useState(true);
 
   const [shippingData, setShippingData] = useState({
     firstName: user?.firstName || '',
@@ -31,9 +46,46 @@ export const Checkout = () => {
     cvv: '',
   });
 
+  // Load saved addresses on mount
+  useEffect(() => {
+    const loadAddresses = async () => {
+      if (user?.id) {
+        try {
+          const addresses = await customerService.getAddresses(user.id);
+          setSavedAddresses(addresses);
+          // Auto-select default address
+          const defaultAddr = addresses.find(a => a.isDefault);
+          if (defaultAddr) {
+            setSelectedAddressId(defaultAddr.id);
+          } else if (addresses.length > 0) {
+            setSelectedAddressId(addresses[0].id);
+          } else {
+            setUseNewAddress(true);
+          }
+        } catch (err) {
+          console.error('Error loading addresses:', err);
+          setUseNewAddress(true);
+        } finally {
+          setLoadingAddresses(false);
+        }
+      } else {
+        setLoadingAddresses(false);
+        setUseNewAddress(true);
+      }
+    };
+    loadAddresses();
+  }, [user?.id]);
+
   const hasPhysicalProducts = items.some(i => i.product.productType === 'PHYSICAL');
   const hasServices = items.some(i => i.product.productType === 'SERVICE');
   const hasSubscriptions = items.some(i => i.product.productType === 'SUBSCRIPTION');
+
+  // Skip shipping step if no physical products
+  useEffect(() => {
+    if (!hasPhysicalProducts && currentStep === 'shipping') {
+      setCurrentStep('payment');
+    }
+  }, [hasPhysicalProducts, currentStep]);
 
   const handleShippingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,45 +98,141 @@ export const Checkout = () => {
   };
 
   const handlePlaceOrder = async () => {
+    // Set processing flag FIRST to prevent any redirect
+    setIsProcessingOrder(true);
+
+    // Save order data BEFORE any async operations
+    const orderData = { items: [...items], subtotal, tax, total };
+
     try {
       const orderItems = items.map(item => ({
         productId: item.product.id,
+        productName: item.product.name,
+        productType: item.product.productType,
         quantity: item.quantity,
-        price: item.product.price,
+        unitPrice: item.product.price,
       }));
+
+      // Get shipping address from selected saved address or new address
+      let shippingAddress: Record<string, string> | undefined;
+      if (hasPhysicalProducts) {
+        if (!useNewAddress && selectedAddressId) {
+          const selectedAddr = savedAddresses.find(a => a.id === selectedAddressId);
+          if (selectedAddr) {
+            shippingAddress = {
+              address: selectedAddr.street,
+              city: selectedAddr.city,
+              state: selectedAddr.state || '',
+              zipCode: selectedAddr.zipCode || '',
+            };
+          }
+        } else {
+          shippingAddress = shippingData;
+        }
+      }
 
       const order = await createOrder({
         items: orderItems,
-        shippingAddress: hasPhysicalProducts ? shippingData : undefined,
+        shippingAddress,
         paymentMethod: 'CREDIT_CARD',
       });
 
+      // Set ALL success states synchronously before clearing cart
+      setCompletedOrderData(orderData);
       setOrderId(order.id);
       setOrderComplete(true);
+
+      // Clear cart after state is set
       clearCart();
     } catch (error) {
       console.error('Error creating order:', error);
+      setIsProcessingOrder(false);
     }
   };
 
   if (orderComplete) {
     return (
-      <div className="max-w-2xl mx-auto px-4 py-16 text-center">
-        <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-          <svg className="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
+      <div className="max-w-2xl mx-auto px-4 py-16">
+        {/* Success Header */}
+        <div className="text-center mb-8">
+          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg className="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">¡Pedido Confirmado!</h1>
+          <p className="text-gray-600">
+            Pedido #{orderId ? String(orderId).padStart(8, '0') : ''} procesado exitosamente
+          </p>
         </div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">¡Pedido Confirmado!</h1>
-        <p className="text-gray-600 mb-2">
-          Tu pedido #{orderId ? String(orderId).padStart(8, '0') : ''} ha sido procesado exitosamente.
-        </p>
-        <p className="text-gray-500 text-sm mb-8">
-          Recibirás un correo de confirmación con los detalles.
-        </p>
 
-        <div className="space-y-3">
-          {hasPhysicalProducts && (
+        {/* Order Summary */}
+        {completedOrderData && (
+          <div className="card p-6 mb-8">
+            <h2 className="text-lg font-semibold mb-4">Resumen de tu Compra</h2>
+
+            <div className="space-y-3 mb-4">
+              {completedOrderData.items.map((item) => (
+                <div key={item.product.id} className="flex items-center gap-4">
+                  <img
+                    src={item.product.imageUrl || 'https://placehold.co/64x64?text=Producto'}
+                    alt={item.product.name}
+                    className="w-16 h-16 object-cover rounded-lg bg-gray-100"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://placehold.co/64x64?text=Producto';
+                    }}
+                  />
+                  <div className="flex-1">
+                    <p className="font-medium">{item.product.name}</p>
+                    <p className="text-sm text-gray-500">
+                      {item.product.productType === 'PHYSICAL' && 'Producto físico'}
+                      {item.product.productType === 'SERVICE' && 'Servicio'}
+                      {item.product.productType === 'SUBSCRIPTION' && 'Suscripción'}
+                      {' · '}Cantidad: {item.quantity}
+                    </p>
+                  </div>
+                  <span className="font-medium">${(item.product.price * item.quantity).toFixed(2)}</span>
+                </div>
+              ))}
+            </div>
+
+            <hr className="my-4" />
+
+            <div className="space-y-2 text-sm">
+              <div className="flex justify-between">
+                <span className="text-gray-500">Subtotal</span>
+                <span>${completedOrderData.subtotal.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-500">IVA (13%)</span>
+                <span>${completedOrderData.tax.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between text-lg font-semibold pt-2 border-t">
+                <span>Total Pagado</span>
+                <span className="text-green-600">${completedOrderData.total.toFixed(2)}</span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Info Message */}
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8">
+          <div className="flex items-start gap-3">
+            <svg className="w-5 h-5 text-blue-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+              <p className="text-blue-800 font-medium">Confirmación enviada</p>
+              <p className="text-blue-600 text-sm">
+                Recibirás un correo electrónico con los detalles de tu pedido y seguimiento de envío.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="space-y-3 text-center">
+          {completedOrderData?.items.some(i => i.product.productType === 'PHYSICAL') && (
             <button
               onClick={() => navigate('/my-orders')}
               className="btn-primary w-full py-3"
@@ -92,7 +240,7 @@ export const Checkout = () => {
               Ver Mis Pedidos
             </button>
           )}
-          {hasServices && (
+          {completedOrderData?.items.some(i => i.product.productType === 'SERVICE') && (
             <button
               onClick={() => navigate('/my-bookings')}
               className="btn-secondary w-full py-3"
@@ -100,7 +248,7 @@ export const Checkout = () => {
               Ver Mis Reservas
             </button>
           )}
-          {hasSubscriptions && (
+          {completedOrderData?.items.some(i => i.product.productType === 'SUBSCRIPTION') && (
             <button
               onClick={() => navigate('/my-subscriptions')}
               className="btn-secondary w-full py-3"
@@ -110,16 +258,18 @@ export const Checkout = () => {
           )}
           <button
             onClick={() => navigate('/')}
-            className="text-primary-600 hover:text-primary-700 font-medium"
+            className="text-primary-600 hover:text-primary-700 font-medium block w-full py-2"
           >
-            Volver al Inicio
+            Seguir Comprando
           </button>
         </div>
       </div>
     );
   }
 
-  if (items.length === 0) {
+  // Only redirect to cart if we haven't started/completed an order
+  // isProcessingOrder prevents redirect during order creation
+  if (items.length === 0 && !orderComplete && !completedOrderData && !orderId && !isProcessingOrder) {
     navigate('/cart');
     return null;
   }
@@ -176,85 +326,165 @@ export const Checkout = () => {
         <div className="lg:col-span-2">
           {/* Shipping Form */}
           {currentStep === 'shipping' && hasPhysicalProducts && (
-            <form onSubmit={handleShippingSubmit} className="card p-6">
+            <div className="card p-6">
               <h2 className="text-xl font-semibold mb-6">Dirección de Envío</h2>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
-                  <input
-                    type="text"
-                    required
-                    value={shippingData.firstName}
-                    onChange={(e) => setShippingData({ ...shippingData, firstName: e.target.value })}
-                    className="input-field"
-                  />
+
+              {loadingAddresses ? (
+                <div className="text-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 mx-auto"></div>
+                  <p className="mt-2 text-gray-500">Cargando direcciones...</p>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Apellido</label>
-                  <input
-                    type="text"
-                    required
-                    value={shippingData.lastName}
-                    onChange={(e) => setShippingData({ ...shippingData, lastName: e.target.value })}
-                    className="input-field"
-                  />
-                </div>
-                <div className="col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
-                  <input
-                    type="text"
-                    required
-                    value={shippingData.address}
-                    onChange={(e) => setShippingData({ ...shippingData, address: e.target.value })}
-                    className="input-field"
-                    placeholder="Calle, número, apartamento..."
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Ciudad</label>
-                  <input
-                    type="text"
-                    required
-                    value={shippingData.city}
-                    onChange={(e) => setShippingData({ ...shippingData, city: e.target.value })}
-                    className="input-field"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Estado/Provincia</label>
-                  <input
-                    type="text"
-                    required
-                    value={shippingData.state}
-                    onChange={(e) => setShippingData({ ...shippingData, state: e.target.value })}
-                    className="input-field"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Código Postal</label>
-                  <input
-                    type="text"
-                    required
-                    value={shippingData.zipCode}
-                    onChange={(e) => setShippingData({ ...shippingData, zipCode: e.target.value })}
-                    className="input-field"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
-                  <input
-                    type="tel"
-                    required
-                    value={shippingData.phone}
-                    onChange={(e) => setShippingData({ ...shippingData, phone: e.target.value })}
-                    className="input-field"
-                  />
-                </div>
-              </div>
-              <button type="submit" className="btn-primary w-full mt-6 py-3">
-                Continuar al Pago
-              </button>
-            </form>
+              ) : (
+                <>
+                  {/* Saved Addresses */}
+                  {savedAddresses.length > 0 && !useNewAddress && (
+                    <div className="space-y-3 mb-6">
+                      <p className="text-sm font-medium text-gray-700">Direcciones guardadas:</p>
+                      {savedAddresses.map((addr) => (
+                        <label
+                          key={addr.id}
+                          className={`block p-4 border rounded-lg cursor-pointer transition-colors ${
+                            selectedAddressId === addr.id
+                              ? 'border-primary-500 bg-primary-50'
+                              : 'border-gray-200 hover:border-gray-300'
+                          }`}
+                        >
+                          <div className="flex items-start gap-3">
+                            <input
+                              type="radio"
+                              name="address"
+                              checked={selectedAddressId === addr.id}
+                              onChange={() => setSelectedAddressId(addr.id)}
+                              className="mt-1"
+                            />
+                            <div className="flex-1">
+                              <p className="font-medium">{addr.street}</p>
+                              <p className="text-sm text-gray-600">
+                                {addr.city}, {addr.state} {addr.zipCode}
+                              </p>
+                              <p className="text-sm text-gray-500">{addr.country}</p>
+                              {addr.isDefault && (
+                                <span className="inline-block mt-1 text-xs bg-primary-100 text-primary-700 px-2 py-0.5 rounded">
+                                  Por defecto
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </label>
+                      ))}
+                      <button
+                        type="button"
+                        onClick={() => setUseNewAddress(true)}
+                        className="text-primary-600 hover:text-primary-700 text-sm font-medium"
+                      >
+                        + Agregar nueva dirección
+                      </button>
+                    </div>
+                  )}
+
+                  {/* New Address Form */}
+                  {(useNewAddress || savedAddresses.length === 0) && (
+                    <form onSubmit={handleShippingSubmit}>
+                      {savedAddresses.length > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => setUseNewAddress(false)}
+                          className="text-primary-600 hover:text-primary-700 text-sm font-medium mb-4"
+                        >
+                          ← Usar dirección guardada
+                        </button>
+                      )}
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+                          <input
+                            type="text"
+                            required
+                            value={shippingData.firstName}
+                            onChange={(e) => setShippingData({ ...shippingData, firstName: e.target.value })}
+                            className="input-field"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Apellido</label>
+                          <input
+                            type="text"
+                            required
+                            value={shippingData.lastName}
+                            onChange={(e) => setShippingData({ ...shippingData, lastName: e.target.value })}
+                            className="input-field"
+                          />
+                        </div>
+                        <div className="col-span-2">
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
+                          <input
+                            type="text"
+                            required
+                            value={shippingData.address}
+                            onChange={(e) => setShippingData({ ...shippingData, address: e.target.value })}
+                            className="input-field"
+                            placeholder="Calle, número, apartamento..."
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Ciudad</label>
+                          <input
+                            type="text"
+                            required
+                            value={shippingData.city}
+                            onChange={(e) => setShippingData({ ...shippingData, city: e.target.value })}
+                            className="input-field"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Estado/Provincia</label>
+                          <input
+                            type="text"
+                            required
+                            value={shippingData.state}
+                            onChange={(e) => setShippingData({ ...shippingData, state: e.target.value })}
+                            className="input-field"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Código Postal</label>
+                          <input
+                            type="text"
+                            required
+                            value={shippingData.zipCode}
+                            onChange={(e) => setShippingData({ ...shippingData, zipCode: e.target.value })}
+                            className="input-field"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+                          <input
+                            type="tel"
+                            required
+                            value={shippingData.phone}
+                            onChange={(e) => setShippingData({ ...shippingData, phone: e.target.value })}
+                            className="input-field"
+                          />
+                        </div>
+                      </div>
+                      <button type="submit" className="btn-primary w-full mt-6 py-3">
+                        Continuar al Pago
+                      </button>
+                    </form>
+                  )}
+
+                  {/* Continue button for saved address */}
+                  {!useNewAddress && savedAddresses.length > 0 && (
+                    <button
+                      onClick={() => setCurrentStep('payment')}
+                      className="btn-primary w-full mt-6 py-3"
+                    >
+                      Continuar al Pago
+                    </button>
+                  )}
+                </>
+              )}
+            </div>
           )}
 
           {/* Payment Form */}
@@ -361,12 +591,25 @@ export const Checkout = () => {
               {hasPhysicalProducts && (
                 <div className="border-t pt-4 mb-4">
                   <h3 className="font-medium mb-2">Dirección de Envío</h3>
-                  <p className="text-gray-600 text-sm">
-                    {shippingData.firstName} {shippingData.lastName}<br />
-                    {shippingData.address}<br />
-                    {shippingData.city}, {shippingData.state} {shippingData.zipCode}<br />
-                    Tel: {shippingData.phone}
-                  </p>
+                  {!useNewAddress && selectedAddressId ? (
+                    (() => {
+                      const selectedAddr = savedAddresses.find(a => a.id === selectedAddressId);
+                      return selectedAddr ? (
+                        <p className="text-gray-600 text-sm">
+                          {selectedAddr.street}<br />
+                          {selectedAddr.city}, {selectedAddr.state} {selectedAddr.zipCode}<br />
+                          {selectedAddr.country}
+                        </p>
+                      ) : null;
+                    })()
+                  ) : (
+                    <p className="text-gray-600 text-sm">
+                      {shippingData.firstName} {shippingData.lastName}<br />
+                      {shippingData.address}<br />
+                      {shippingData.city}, {shippingData.state} {shippingData.zipCode}<br />
+                      Tel: {shippingData.phone}
+                    </p>
+                  )}
                 </div>
               )}
 

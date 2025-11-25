@@ -19,7 +19,14 @@ export const Login = () => {
     clearError();
 
     try {
-      await login(formData);
+      const response = await login(formData);
+
+      // Redirect admin users to admin dashboard
+      if (response.user.role.startsWith('ADMIN_')) {
+        window.location.href = 'http://localhost:3002';
+        return;
+      }
+
       navigate(from, { replace: true });
     } catch {
       // Error is handled by the hook

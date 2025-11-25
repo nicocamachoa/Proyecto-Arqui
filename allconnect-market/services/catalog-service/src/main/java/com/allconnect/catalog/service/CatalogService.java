@@ -134,12 +134,14 @@ public class CatalogService {
             stock = ((Number) p.get("stock")).intValue();
         }
 
-        // Generate image URL if example.com
+        // Generate image URL if example.com or missing
         String imageUrl = p.get("imageUrl") != null ? p.get("imageUrl").toString() : null;
         if (imageUrl == null || imageUrl.contains("example.com")) {
             String name = p.get("name") != null ? p.get("name").toString() : "Product";
-            String encodedName = name.length() > 20 ? name.substring(0, 20) : name;
-            encodedName = encodedName.replace(" ", "+");
+            // Take first 15 chars, remove special chars, replace spaces
+            String encodedName = name.length() > 15 ? name.substring(0, 15) : name;
+            encodedName = encodedName.replaceAll("[^a-zA-Z0-9 ]", "").replace(" ", "+");
+            if (encodedName.isEmpty()) encodedName = "Product";
             String[] colors = {"6366f1", "8b5cf6", "ec4899", "f59e0b", "10b981", "3b82f6"};
             String color = colors[(int) (Math.abs(id) % colors.length)];
             imageUrl = String.format("https://placehold.co/400x400/%s/ffffff?text=%s", color, encodedName);
@@ -168,9 +170,12 @@ public class CatalogService {
     }
 
     public ProductResponse getProductById(Long id) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-        return mapToProductResponse(product);
+        // Search in all products (providers + DB)
+        List<ProductResponse> allProducts = getAllProducts();
+        return allProducts.stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Product not found: " + id));
     }
 
     public List<ProductResponse> getProductsByType(ProductType type) {
