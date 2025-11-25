@@ -75,8 +75,8 @@ public class OrderService {
         order = orderRepository.save(order);
         log.info("Order created with ID: {}", order.getId());
 
-        // Start Saga
-        sagaOrchestrator.startSaga(order);
+        // Start Saga (pass ID, not entity)
+        sagaOrchestrator.startSaga(order.getId());
 
         // Publish event
         publishOrderEvent("order.created", order);
@@ -121,7 +121,7 @@ public class OrderService {
         log.info("Cancelling order: {}", id);
 
         // Start compensation saga
-        sagaOrchestrator.compensateSaga(order);
+        sagaOrchestrator.compensateSaga(order.getId());
 
         order.setStatus(OrderStatus.CANCELLED);
         order = orderRepository.save(order);
