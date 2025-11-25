@@ -1,0 +1,196 @@
+% ============================================================
+% 3 Descripción General
+% ============================================================
+
+\section{Descripción General}
+
+% ------------------------------------------------------------
+% 3.1 Alcance del Sistema
+% ------------------------------------------------------------
+
+\subsection{Alcance del Sistema}
+
+El proyecto \textbf{AllConnect Market} define una plataforma digital multicanal que integra, en un solo ecosistema:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Clientes finales (B2C):} navegan, comparan y compran productos físicos, servicios profesionales y contenidos digitales usando un perfil unificado, un carrito de compras único y un flujo de pago centralizado.
+    \item \textbf{Proveedores (B2B):} integran su catálogo, inventario y estados de pedido mediante interfaces de integración, recibiendo órdenes y agendamientos de forma automatizada.
+    \item \textbf{Administradores internos:} operan la plataforma, monitorizan KPIs de negocio, gestionan proveedores y contenido, y atienden incidencias desde paneles administrativos.
+\end{itemize}
+
+El detalle funcional y de calidad del sistema se especifica en las secciones de \textbf{Requisitos Funcionales (RF)}, \textbf{Requisitos No Funcionales (RNF)} e \textbf{Historias de Usuario}, evitando duplicar definiciones en esta descripción general.
+
+% ------------------------------------------------------------
+% 3.2 Diagrama de contexto
+% ------------------------------------------------------------
+
+\subsection{Diagrama de Contexto del Sistema}
+
+La Figura~\ref{contexto} presenta el contexto de AllConnect Market, mostrando los principales actores externos y sistemas con los que intercambia información (clientes, proveedores, administradores, pasarelas de pago, servicios de logística, canales de notificación, servicios fiscales y plataformas de analítica).
+
+\begin{figure}[H]
+\begin{adjustwidth}{-2cm}{}
+    \centering
+    \includegraphics[width=1.2\textwidth]{imagenes/allconnect-context-diagram (1).drawio.png}
+    \caption{Diagrama de contexto – AllConnect Market}
+    \label{contexto}
+\end{adjustwidth}
+\end{figure}
+
+\subsubsection{Actores y sistemas externos}
+
+\begin{longtable}{|p{3.5cm}|p{2cm}|p{8cm}|}
+\hline
+\textbf{Actor/Sistema} & \textbf{Tipo} & \textbf{Responsabilidad / Interacción} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Actor/Sistema} & \textbf{Tipo} & \textbf{Responsabilidad / Interacción} \\
+\hline
+\endhead
+
+Cliente Final & Actor &
+Navega, compra y gestiona sus transacciones a través de la interfaz web y móvil de AllConnect Market. \\ \hline
+
+Proveedores & Actor &
+Publican su oferta (productos, servicios, contenidos), sincronizan inventarios y reciben órdenes/agendamientos mediante interfaces de integración. \\ \hline
+
+Administradores & Actor &
+Personal interno que gestiona catálogo, proveedores, métricas y resolución de incidencias desde paneles administrativos. \\ \hline
+
+Pasarelas de Pago & Sistema externo &
+Procesan los pagos de los clientes, devolviendo autorizaciones, rechazos y estados de conciliación. \\ \hline
+
+Servicios de Logística & Sistema externo &
+Reciben información de envíos de bienes físicos y reportan estados de entrega. \\ \hline
+
+Canales de Notificación & Sistema externo &
+Envían comunicaciones transaccionales y recordatorios a clientes y proveedores (correo electrónico, mensajes al dispositivo, etc.). \\ \hline
+
+Servicios Fiscales / Facturación & Sistema externo &
+Emiten comprobantes fiscales y aplican reglas tributarias según la normativa local. \\ \hline
+
+Plataformas de Analítica / BI & Sistema externo &
+Consumen datos agregados para análisis y visualización de indicadores de negocio. \\ \hline
+
+\caption{Actores y sistemas externos – AllConnect Market}
+\label{tab:actores}
+\end{longtable}
+
+% ------------------------------------------------------------
+% 3.3 Funcionalidades del producto
+% ------------------------------------------------------------
+
+\subsection{Funcionalidades del Producto}
+
+Las siguientes capacidades resumen, a alto nivel, lo que el sistema debe ofrecer. Su descomposición detallada se encuentra en los RF y HU.
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Gestión de catálogo multicanal:}
+    Consolidar productos físicos, servicios y contenidos digitales en un catálogo unificado, consultable por clientes y administrable por proveedores y equipo interno.
+
+    \item \textbf{Carrito de compras universal:}
+    Permitir que el cliente combine en una misma orden ítems de distintas verticales y complete la compra en un solo flujo.
+
+    \item \textbf{Procesamiento de pagos centralizado:}
+    Orquestar el cobro de las órdenes mediante diferentes medios de pago, cumpliendo requisitos de seguridad y disponibilidad establecidos en los RNF.
+
+    \item \textbf{Agendamiento de servicios:}
+    Gestionar la reserva, consulta y eventual reprogramación de citas asociadas a servicios adquiridos.
+
+    \item \textbf{Sistema de notificaciones multicanal:}
+    Informar a clientes y proveedores sobre eventos clave del ciclo de vida del pedido (registros, pagos, envíos, citas, reembolsos), respetando preferencias de comunicación.
+
+    \item \textbf{Panel administrativo y analítica:}
+    Proveer a negocio, operaciones y soporte de vistas consolidadas de métricas, herramientas de gestión de proveedores y mecanismos de resolución de disputas.
+\end{enumerate}
+
+% ------------------------------------------------------------
+% 3.4 Características de los usuarios
+% ------------------------------------------------------------
+
+\subsection{Características de los Usuarios}
+
+\begin{longtable}{|p{3cm}|p{3.5cm}|p{7.5cm}|}
+\hline
+\textbf{Tipo de Usuario} & \textbf{Perfil} & \textbf{Necesidades principales} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Tipo de Usuario} & \textbf{Perfil} & \textbf{Necesidades principales} \\
+\hline
+\endhead
+
+Clientes finales &
+Usuarios generales con alfabetización digital básica &
+Requieren una experiencia simple y segura para buscar, comprar, pagar y hacer seguimiento a sus pedidos y servicios en un solo lugar. \\ \hline
+
+Proveedores con capacidad técnica &
+Empresas con equipos de integración o TI &
+Buscan un proceso de incorporación claro, documentación suficiente e interfaces estables para automatizar catálogo, pedidos y liquidaciones. \\ \hline
+
+Proveedores PyME &
+Empresas pequeñas o medianas con recursos técnicos limitados &
+Necesitan flujos de alta guía y herramientas visuales que reduzcan la complejidad de integración y operación diaria. \\ \hline
+
+Administradores de plataforma &
+Personal interno de negocio, operaciones y contenido &
+Requieren visibilidad sobre KPIs, herramientas de gobierno sobre catálogo y proveedores, y capacidades para resolver incidencias. \\ \hline
+
+Equipos de soporte &
+Agentes de atención al cliente y posventa &
+Necesitan acceso rápido y trazable a información de usuarios, pedidos, pagos y comunicaciones enviadas. \\ \hline
+
+\caption{Perfiles de usuario – AllConnect Market}
+\label{tab:usuarios}
+\end{longtable}
+
+% ------------------------------------------------------------
+% 3.5 Restricciones, Suposiciones y Dependencias
+% ------------------------------------------------------------
+
+\subsection{Restricciones, Suposiciones y Dependencias}
+
+\subsubsection{Restricciones principales}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Regulatorias:} El sistema debe cumplir con normativas de protección de datos, comercio electrónico, facturación y estándares de seguridad aplicables al procesamiento de pagos.
+    \item \textbf{Técnicas:} La plataforma debe alcanzar los objetivos de disponibilidad, desempeño, seguridad y escalabilidad definidos en los RNF (por ejemplo, manejo de picos de usuarios concurrentes y de transacciones sin degradación significativa).
+    \item \textbf{De negocio:} El modelo de ingresos se basa en comisiones por transacción y la plataforma actúa como intermediario neutral entre clientes y proveedores, sin explotar datos personales más allá de los usos consentidos.
+\end{itemize}
+
+\subsubsection{Suposiciones y dependencias}
+
+\begin{itemize}[leftmargin=*]
+    \item Las APIs externas críticas (pagos, logística, identidad, facturación) mantienen niveles de servicio coherentes con los objetivos del sistema.
+    \item Los proveedores cuentan con la capacidad mínima necesaria para integrarse y operar mediante los mecanismos definidos.
+    \item La infraestructura de despliegue soporta el crecimiento esperado de tráfico y volumen transaccional, según las proyecciones de negocio.
+\end{itemize}
+
+% ------------------------------------------------------------
+% 3.6 Definiciones, acrónimos y abreviaturas
+% ------------------------------------------------------------
+
+\subsection{Definiciones, Acrónimos y Abreviaturas}
+
+\begin{longtable}{|p{3cm}|p{11cm}|}
+\hline
+\textbf{Término} & \textbf{Definición} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Término} & \textbf{Definición} \\
+\hline
+\endhead
+
+RF & Requisito funcional. \\ \hline
+RNF & Requisito no funcional. \\ \hline
+SLA & \emph{Service Level Agreement} – Acuerdo de nivel de servicio. \\ \hline
+GMV & \emph{Gross Merchandise Volume} – Volumen bruto de mercancía transado. \\ \hline
+AOV & \emph{Average Order Value} – Valor promedio de la orden. \\ \hline
+MVP & \emph{Minimum Viable Product} – Producto mínimo viable. \\ \hline
+KPI & \emph{Key Performance Indicator} – Indicador clave de desempeño. \\ \hline
+
+\caption{Glosario de términos}
+\label{tab:glosario}
+\end{longtable}

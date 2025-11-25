@@ -1,0 +1,701 @@
+\section{Interfaces Externas}
+
+\subsection{Descripción General}
+
+Esta sección detalla todas las interfaces entre el sistema AllConnect Market y los sistemas externos, usuarios y hardware con los que interactúa. Las interfaces se clasifican en cuatro categorías según IEEE 830:
+
+\begin{itemize}
+    \item \textbf{Interfaces de Usuario:} Interacción humano-computadora
+    \item \textbf{Interfaces de Hardware:} Dispositivos físicos
+    \item \textbf{Interfaces de Software:} Sistemas y servicios externos
+    \item \textbf{Interfaces de Comunicación:} Protocolos y formatos de datos
+\end{itemize}
+
+\subsection{Interfaces de Usuario (User Interfaces)}
+
+\subsubsection{IF-UI-001: Aplicación Web Responsive}
+
+\begin{longtable}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\textbf{Identificador} & IF-UI-001 \\
+\hline
+\textbf{Nombre} & Aplicación Web Responsive \\
+\hline
+\textbf{Descripción} & Interfaz web principal accesible desde navegadores desktop y móviles para clientes finales. \\
+\hline
+\textbf{Usuarios} & Clientes Finales (rol: comprador) \\
+\hline
+\textbf{Tecnología} &
+\begin{itemize}[leftmargin=*]
+    \item Frontend: React 18+ o Vue 3+ con TypeScript
+    \item Styling: Tailwind CSS o styled-components
+    \item State Management: Redux Toolkit o Pinia
+    \item Build: Vite o Webpack 5
+\end{itemize} \\
+\hline
+\textbf{Características Clave} &
+\begin{itemize}[leftmargin=*]
+    \item Responsive design con breakpoints: mobile ($<$768px), tablet (768-1024px), desktop ($>$1024px)
+    \item Progressive Web App (PWA) con service workers
+    \item Lazy loading de componentes y rutas
+    \item Accesibilidad WCAG 2.1 AA
+    \item Soporte para dark mode (opcional)
+\end{itemize} \\
+\hline
+\textbf{Pantallas Principales} &
+\begin{itemize}[leftmargin=*]
+    \item Home: buscador destacado, productos destacados
+    \item Búsqueda/Catálogo: resultados con filtros
+    \item Detalle de Producto: imágenes, descripción, reseñas
+    \item Carrito: resumen de ítems, cálculo de totales
+    \item Checkout: flujo multi-step
+    \item Perfil: datos personales, historial, suscripciones
+\end{itemize} \\
+\hline
+\textbf{Navegación} & Single Page Application (SPA) con routing client-side. Deep linking habilitado. \\
+\hline
+\textbf{Performance} & First Contentful Paint $<$ 1.5s, Largest Contentful Paint $<$ 2.5s (métricas Core Web Vitals). \\
+\hline
+\caption{IF-UI-001: Aplicación Web Responsive}
+\label{tab:if-ui-001}
+\end{longtable}
+
+\subsubsection{IF-UI-002: Portal de Proveedores}
+
+\begin{longtable}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\textbf{Identificador} & IF-UI-002 \\
+\hline
+\textbf{Nombre} & Portal de Proveedores (Provider Dashboard) \\
+\hline
+\textbf{Descripción} & Interfaz web para proveedores que permite gestión de catálogo, órdenes y métricas. \\
+\hline
+\textbf{Usuarios} & Proveedores (roles: propietario, operador) \\
+\hline
+\textbf{Tecnología} & Similar a IF-UI-001 con componentes de gestión empresarial (tablas, gráficos, formularios complejos). \\
+\hline
+\textbf{Características Clave} &
+\begin{itemize}[leftmargin=*]
+    \item Dashboard con métricas de ventas y salud de integración
+    \item Gestión manual de catálogo (alternativa a API)
+    \item Notificaciones en tiempo real de nuevas órdenes
+    \item Configuración de webhooks
+    \item Reportes de liquidación
+    \item Developer Portal con documentación API
+\end{itemize} \\
+\hline
+\textbf{Pantallas Principales} &
+\begin{itemize}[leftmargin=*]
+    \item Dashboard: KPIs, gráficos de tendencias
+    \item Catálogo: listado, creación/edición de productos
+    \item Órdenes: listado, detalles, cambio de estado
+    \item Liquidaciones: reportes, historial de pagos
+    \item Configuración: datos de negocio, APIs, webhooks
+    \item Developer Portal: docs, sandbox, logs
+\end{itemize} \\
+\hline
+\textbf{Autenticación} & OAuth 2.0 con MFA obligatorio para operaciones sensibles. \\
+\hline
+\caption{IF-UI-002: Portal de Proveedores}
+\label{tab:if-ui-002}
+\end{longtable}
+
+\subsubsection{IF-UI-003: Panel de Administración}
+
+\begin{longtable}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\textbf{Identificador} & IF-UI-003 \\
+\hline
+\textbf{Nombre} & Panel de Administración (Admin Panel) \\
+\hline
+\textbf{Descripción} & Interfaz interna para administradores del marketplace. \\
+\hline
+\textbf{Usuarios} & Administradores (roles: super admin, moderador, soporte, finanzas) \\
+\hline
+\textbf{Características Clave} &
+\begin{itemize}[leftmargin=*]
+    \item Dashboard ejecutivo con KPIs de negocio
+    \item Gestión de proveedores (aprobación, suspensión)
+    \item Moderación de contenido
+    \item Gestión de disputas
+    \item Configuración del sistema (comisiones, políticas)
+    \item Logs de auditoría con búsqueda avanzada
+\end{itemize} \\
+\hline
+\textbf{Seguridad} & Autenticación MFA obligatoria. IP whitelisting. Logs de todas las acciones con user ID y timestamp. \\
+\hline
+\caption{IF-UI-003: Panel de Administración}
+\label{tab:if-ui-003}
+\end{longtable}
+
+\subsubsection{IF-UI-004: Aplicación Móvil Nativa (Futuro)}
+
+\begin{longtable}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\textbf{Identificador} & IF-UI-004 \\
+\hline
+\textbf{Nombre} & Aplicación Móvil Nativa \\
+\hline
+\textbf{Descripción} & Aplicaciones nativas para iOS y Android (roadmap futuro, no MVP). \\
+\hline
+\textbf{Tecnología Sugerida} & React Native o Flutter para desarrollo cross-platform. \\
+\hline
+\textbf{Características Adicionales} &
+\begin{itemize}[leftmargin=*]
+    \item Push notifications nativas
+    \item Biometric authentication (Face ID, Touch ID)
+    \item Integración con Apple Pay / Google Pay
+    \item Cámara para búsqueda por imagen (futuro)
+    \item Geolocalización para servicios locales
+\end{itemize} \\
+\hline
+\textbf{Estado} & No incluido en MVP. Roadmap Fase 2. \\
+\hline
+\caption{IF-UI-004: Aplicación Móvil Nativa}
+\label{tab:if-ui-004}
+\end{longtable}
+
+\subsection{Interfaces de Hardware (Hardware Interfaces)}
+
+\subsubsection{IF-HW-001: Dispositivos de Usuario Final}
+
+\begin{longtable}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\textbf{Identificador} & IF-HW-001 \\
+\hline
+\textbf{Nombre} & Dispositivos de Usuario Final \\
+\hline
+\textbf{Descripción} & Smartphones, tablets y computadoras desde las cuales los usuarios acceden a AllConnect Market. \\
+\hline
+\textbf{Requisitos Mínimos} &
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Smartphones:} iOS 15+ o Android 10+ con pantalla mínima 4.7"
+    \item \textbf{Tablets:} iOS 15+ o Android 10+ con pantalla 7"+
+    \item \textbf{Desktop/Laptop:} Windows 10+, macOS 11+, o Linux moderno con navegador actualizado
+    \item Conexión a Internet: mínimo 2 Mbps (recomendado 5+ Mbps)
+\end{itemize} \\
+\hline
+\textbf{Interacción} & Touch (móvil/tablet), mouse/trackpad y teclado (desktop). Soporte para gestos estándar (swipe, pinch-to-zoom). \\
+\hline
+\textbf{Sensores Utilizados} &
+\begin{itemize}[leftmargin=*]
+    \item GPS (para servicios locales, con permiso del usuario)
+    \item Cámara (para upload de fotos en reseñas, futuro)
+    \item Micrófono (para búsqueda por voz, futuro)
+\end{itemize} \\
+\hline
+\caption{IF-HW-001: Dispositivos de Usuario Final}
+\label{tab:if-hw-001}
+\end{longtable}
+
+\subsubsection{IF-HW-002: Servidores y Cloud Infrastructure}
+
+\begin{longtable}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\textbf{Identificador} & IF-HW-002 \\
+\hline
+\textbf{Nombre} & Servidores y Cloud Infrastructure \\
+\hline
+\textbf{Descripción} & Infraestructura cloud donde se despliega AllConnect Market. \\
+\hline
+\textbf{Cloud Provider} & AWS, Azure, o Google Cloud Platform (decisión arquitectónica a definir en SAD). \\
+\hline
+\textbf{Componentes} &
+\begin{itemize}[leftmargin=*]
+    \item Compute: Instancias escalables (EC2, Azure VMs, GCE)
+    \item Storage: Object storage para assets (S3, Azure Blob, GCS)
+    \item Database: Managed databases (RDS, Azure SQL, Cloud SQL)
+    \item Cache: Redis/Memcached managed
+    \item Load Balancers: Application Load Balancers
+    \item CDN: CloudFront, Azure CDN, Cloud CDN
+\end{itemize} \\
+\hline
+\textbf{Regiones} & Multi-región para baja latencia (ej. us-east-1, sa-east-1 para Latinoamérica). \\
+\hline
+\caption{IF-HW-002: Servidores y Cloud Infrastructure}
+\label{tab:if-hw-002}
+\end{longtable}
+
+\subsection{Interfaces de Software (Software Interfaces)}
+
+\subsubsection{IF-SW-001: Pasarelas de Pago}
+
+\begin{longtable}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\textbf{Identificador} & IF-SW-001 \\
+\hline
+\textbf{Nombre} & Pasarelas de Pago (Payment Gateways) \\
+\hline
+\textbf{Descripción} & Integración con procesadores de pago para transacciones con tarjetas y métodos alternativos. \\
+\hline
+\textbf{Proveedores Candidatos} &
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Primario:} Stripe, Adyen, o Mercado Pago (según región)
+    \item \textbf{Secundario (Failover):} Otro proveedor de la lista
+\end{itemize} \\
+\hline
+\textbf{Protocolo} & REST APIs con HTTPS (TLS 1.3) \\
+\hline
+\textbf{Autenticación} & API Keys (secret almacenado en secrets manager). Webhooks con firma HMAC. \\
+\hline
+\textbf{Formato de Datos} & JSON \\
+\hline
+\textbf{Operaciones Principales} &
+\begin{itemize}[leftmargin=*]
+    \item \texttt{POST /v1/payment\_intents} - Crear intención de pago
+    \item \texttt{POST /v1/payment\_intents/:id/confirm} - Confirmar pago
+    \item \texttt{POST /v1/refunds} - Procesar reembolso
+    \item \texttt{POST /v1/subscriptions} - Crear suscripción recurrente
+    \item Webhooks: \texttt{payment\_intent.succeeded}, \texttt{payment\_intent.failed}
+\end{itemize} \\
+\hline
+\textbf{Cumplimiento} & PCI-DSS Level 1. Tokenización inmediata de tarjetas. \\
+\hline
+\textbf{Manejo de Errores} & Circuit breaker con failover automático a pasarela secundaria si error rate $>$ 10\%. \\
+\hline
+\caption{IF-SW-001: Pasarelas de Pago}
+\label{tab:if-sw-001}
+\end{longtable}
+
+\subsubsection{IF-SW-002: Proveedores de Identidad (IdP)}
+
+\begin{longtable}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\textbf{Identificador} & IF-SW-002 \\
+\hline
+\textbf{Nombre} & Identity Providers (IdP) para SSO \\
+\hline
+\textbf{Descripción} & Integración con proveedores OAuth 2.0 para login social. \\
+\hline
+\textbf{Proveedores} &
+\begin{itemize}[leftmargin=*]
+    \item Google (Google Sign-In)
+    \item Facebook (Facebook Login)
+    \item Apple (Sign in with Apple) - requerido para iOS
+\end{itemize} \\
+\hline
+\textbf{Protocolo} & OAuth 2.0 / OpenID Connect \\
+\hline
+\textbf{Flujo} & Authorization Code Flow con PKCE \\
+\hline
+\textbf{Scopes Solicitados} & \texttt{openid, email, profile} (mínimos) \\
+\hline
+\textbf{Formato de Datos} & JSON Web Tokens (JWT) \\
+\hline
+\textbf{Operaciones} &
+\begin{itemize}[leftmargin=*]
+    \item Redirect a authorization endpoint del IdP
+    \item Exchange authorization code por access token
+    \item Obtener user info desde \texttt{/userinfo} endpoint
+    \item Crear/actualizar perfil en AllConnect Market
+\end{itemize} \\
+\hline
+\textbf{Seguridad} & Client secrets almacenados en secrets manager. Validación de state parameter para prevenir CSRF. \\
+\hline
+\caption{IF-SW-002: Identity Providers}
+\label{tab:if-sw-002}
+\end{longtable}
+
+\subsubsection{IF-SW-003: Servicios de Notificaciones}
+
+\begin{longtable}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\textbf{Identificador} & IF-SW-003 \\
+\hline
+\textbf{Nombre} & Servicios de Notificaciones (Email, SMS, Push) \\
+\hline
+\textbf{Descripción} & Integración con proveedores de comunicación para envío de notificaciones multicanal. \\
+\hline
+\textbf{Proveedores} &
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Email:} SendGrid, AWS SES, o Mailgun
+    \item \textbf{SMS:} Twilio, AWS SNS, o Vonage
+    \item \textbf{Push:} Firebase Cloud Messaging (FCM)
+\end{itemize} \\
+\hline
+\textbf{Protocolo} & REST APIs con HTTPS \\
+\hline
+\textbf{Autenticación} & API Keys \\
+\hline
+\textbf{Formato de Datos} & JSON \\
+\hline
+\textbf{Operaciones Email} &
+\begin{itemize}[leftmargin=*]
+    \item \texttt{POST /v3/mail/send} - Enviar email transaccional
+    \item Templates: plantillas HTML preconstruidas con variables
+    \item Tracking: opens, clicks (opcional, GDPR-compliant)
+\end{itemize} \\
+\hline
+\textbf{Operaciones SMS} &
+\begin{itemize}[leftmargin=*]
+    \item \texttt{POST /2010-04-01/Accounts/:sid/Messages.json} - Enviar SMS
+    \item Validación de número (E.164 format)
+    \item Opt-in/opt-out management
+\end{itemize} \\
+\hline
+\textbf{Operaciones Push} &
+\begin{itemize}[leftmargin=*]
+    \item \texttt{POST /v1/projects/:project/messages:send} - Enviar push notification
+    \item Topics y device tokens
+    \item Payload con título, cuerpo, deep link
+\end{itemize} \\
+\hline
+\textbf{Manejo de Fallos} & Queue-based con reintentos. Dead letter queue para mensajes no entregados. \\
+\hline
+\caption{IF-SW-003: Servicios de Notificaciones}
+\label{tab:if-sw-003}
+\end{longtable}
+
+\subsubsection{IF-SW-004: Motor de Búsqueda}
+
+\begin{longtable}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\textbf{Identificador} & IF-SW-004 \\
+\hline
+\textbf{Nombre} & Motor de Búsqueda (Search Engine) \\
+\hline
+\textbf{Descripción} & Sistema de búsqueda full-text para catálogo de productos. \\
+\hline
+\textbf{Tecnología} & Elasticsearch 8+ o OpenSearch \\
+\hline
+\textbf{Protocolo} & REST API con HTTPS \\
+\hline
+\textbf{Autenticación} & API Key o Basic Auth \\
+\hline
+\textbf{Formato de Datos} & JSON \\
+\hline
+\textbf{Índices} &
+\begin{itemize}[leftmargin=*]
+    \item \texttt{products}: todos los productos (físicos, digitales, servicios)
+    \item Sharding por vertical para performance
+    \item Mappings con analyzers para español e inglés
+\end{itemize} \\
+\hline
+\textbf{Operaciones} &
+\begin{itemize}[leftmargin=*]
+    \item \texttt{POST /products/\_search} - Búsqueda con query DSL
+    \item \texttt{POST /products/\_doc/:id} - Indexar/actualizar producto
+    \item \texttt{DELETE /products/\_doc/:id} - Eliminar producto del índice
+    \item Suggest API para autocompletado
+\end{itemize} \\
+\hline
+\textbf{Características} & Fuzzy search, facets/aggregations, filtering, scoring customizado, highlighting. \\
+\hline
+\textbf{Sincronización} & Near real-time (refresh interval: 5s). Bulk indexing para catálogos grandes. \\
+\hline
+\caption{IF-SW-004: Motor de Búsqueda}
+\label{tab:if-sw-004}
+\end{longtable}
+
+\subsubsection{IF-SW-005: Sistemas de Proveedores (APIs)}
+
+\begin{longtable}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\textbf{Identificador} & IF-SW-005 \\
+\hline
+\textbf{Nombre} & APIs de Proveedores \\
+\hline
+\textbf{Descripción} & Integración bidireccional con sistemas de proveedores para sincronización de catálogo, inventario y órdenes. \\
+\hline
+\textbf{Protocolo} & REST APIs con HTTPS (TLS 1.2+) \\
+\hline
+\textbf{Autenticación} & OAuth 2.0 Client Credentials Flow (AllConnect como Authorization Server) \\
+\hline
+\textbf{Formato de Datos} & JSON con schema definido en OpenAPI 3.0 \\
+\hline
+\textbf{Endpoints Provistos por AllConnect} &
+\begin{itemize}[leftmargin=*]
+    \item \texttt{POST /api/v1/oauth/token} - Obtener access token
+    \item \texttt{POST /api/v1/providers/:id/catalog/sync} - Sincronizar catálogo
+    \item \texttt{PATCH /api/v1/products/:id/inventory} - Actualizar inventario
+    \item \texttt{GET /api/v1/providers/:id/orders} - Consultar órdenes
+\end{itemize} \\
+\hline
+\textbf{Webhooks Enviados a Proveedores} &
+\begin{itemize}[leftmargin=*]
+    \item \texttt{order.created} - Nueva orden generada
+    \item \texttt{order.cancelled} - Cancelación de orden
+    \item \texttt{payment.completed} - Pago confirmado
+    \item \texttt{appointment.scheduled} - Cita agendada (servicios)
+\end{itemize} \\
+\hline
+\textbf{Rate Limiting} & 100 requests/min por proveedor (configurable según tier). \\
+\hline
+\textbf{Versionado} & Semantic versioning en URL (/v1, /v2). Backward compatibility por 12 meses. \\
+\hline
+\textbf{Manejo de Errores} & HTTP status codes estándar. Responses con error codes descriptivos y mensajes localizados. \\
+\hline
+\caption{IF-SW-005: APIs de Proveedores}
+\label{tab:if-sw-005}
+\end{longtable}
+
+\subsubsection{IF-SW-006: CDN (Content Delivery Network)}
+
+\begin{longtable}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\textbf{Identificador} & IF-SW-006 \\
+\hline
+\textbf{Nombre} & Content Delivery Network \\
+\hline
+\textbf{Descripción} & Red de distribución de contenido para servir assets estáticos (imágenes, CSS, JS). \\
+\hline
+\textbf{Proveedor} & CloudFront (AWS), Azure CDN, o Cloudflare \\
+\hline
+\textbf{Contenido Distribuido} &
+\begin{itemize}[leftmargin=*]
+    \item Imágenes de productos (optimizadas en WebP y AVIF)
+    \item Assets de frontend (JS bundles, CSS)
+    \item Videos de demostración de productos
+    \item Documentación PDF
+\end{itemize} \\
+\hline
+\textbf{Características} &
+\begin{itemize}[leftmargin=*]
+    \item Cache TTL configurable por tipo de asset
+    \item Invalidación manual y automática
+    \item Image resizing on-the-fly
+    \item Compression (Gzip, Brotli)
+    \item HTTPS obligatorio
+\end{itemize} \\
+\hline
+\textbf{Performance} & Cache hit ratio target: $>$ 90\%. Latencia $<$ 100ms para usuarios en regiones cubiertas. \\
+\hline
+\caption{IF-SW-006: CDN}
+\label{tab:if-sw-006}
+\end{longtable}
+
+\subsubsection{IF-SW-007: Servicios de Analítica}
+
+\begin{longtable}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\textbf{Identificador} & IF-SW-007 \\
+\hline
+\textbf{Nombre} & Servicios de Analítica \\
+\hline
+\textbf{Descripción} & Integración con plataformas de analítica para tracking de comportamiento de usuarios y métricas de negocio. \\
+\hline
+\textbf{Proveedores} &
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Web Analytics:} Google Analytics 4, Mixpanel, o Amplitude
+    \item \textbf{Product Analytics:} Segment (como CDP - Customer Data Platform)
+    \item \textbf{Business Intelligence:} Tableau, Looker, o Power BI
+\end{itemize} \\
+\hline
+\textbf{Integración} &
+\begin{itemize}[leftmargin=*]
+    \item Client-side: tracking pixels, JavaScript SDK
+    \item Server-side: event streaming vía APIs
+    \item ETL: exportación periódica a data warehouse
+\end{itemize} \\
+\hline
+\textbf{Eventos Trackeados} &
+\begin{itemize}[leftmargin=*]
+    \item Pageviews, sessions, bounces
+    \item Product views, add to cart, checkout initiated, purchase completed
+    \item Search queries, filter usage
+    \item Errors y abandonos de flujo
+\end{itemize} \\
+\hline
+\textbf{Cumplimiento} & Consentimiento de cookies (GDPR). Anonimización de IPs. Opt-out disponible. \\
+\hline
+\caption{IF-SW-007: Servicios de Analítica}
+\label{tab:if-sw-007}
+\end{longtable}
+
+\subsubsection{IF-SW-008: Servicios Fiscales y de Cumplimiento}
+
+\begin{longtable}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\textbf{Identificador} & IF-SW-008 \\
+\hline
+\textbf{Nombre} & Servicios Fiscales (Tax Calculation) \\
+\hline
+\textbf{Descripción} & Integración con motores de cálculo de impuestos para compliance fiscal. \\
+\hline
+\textbf{Proveedores Candidatos} & Avalara, TaxJar, o Vertex \\
+\hline
+\textbf{Protocolo} & REST API con HTTPS \\
+\hline
+\textbf{Operaciones} &
+\begin{itemize}[leftmargin=*]
+    \item \texttt{POST /tax/calculate} - Calcular impuestos para carrito
+    \item \texttt{POST /tax/commit} - Confirmar transacción (filing)
+    \item Parámetros: dirección de envío, tipo de producto, monto
+\end{itemize} \\
+\hline
+\textbf{Cobertura} & Impuestos por jurisdicción (federal, estatal, municipal) según legislación local. \\
+\hline
+\textbf{Formato de Datos} & JSON \\
+\hline
+\caption{IF-SW-008: Servicios Fiscales}
+\label{tab:if-sw-008}
+\end{longtable}
+
+\subsection{Interfaces de Comunicación (Communication Interfaces)}
+
+\subsubsection{IF-COM-001: Protocolo HTTPS}
+
+\begin{longtable}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\textbf{Identificador} & IF-COM-001 \\
+\hline
+\textbf{Nombre} & HTTPS (HTTP sobre TLS) \\
+\hline
+\textbf{Descripción} & Protocolo de comunicación seguro para todas las interacciones cliente-servidor y server-to-server. \\
+\hline
+\textbf{Versión TLS} & TLS 1.3 preferido, TLS 1.2 mínimo aceptado \\
+\hline
+\textbf{Cipher Suites} & Solo cipher suites con forward secrecy (ECDHE). AES-GCM o ChaCha20-Poly1305. \\
+\hline
+\textbf{Certificados} & Certificados TLS de Let's Encrypt o CA comercial. Renovación automática. \\
+\hline
+\textbf{HSTS} & Strict-Transport-Security header con \texttt{max-age=31536000; includeSubDomains; preload} \\
+\hline
+\textbf{HTTP/2} & Habilitado para mejor performance (multiplexing, header compression). \\
+\hline
+\caption{IF-COM-001: Protocolo HTTPS}
+\label{tab:if-com-001}
+\end{longtable}
+
+\subsubsection{IF-COM-002: Formato de Datos JSON}
+
+\begin{longtable}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\textbf{Identificador} & IF-COM-002 \\
+\hline
+\textbf{Nombre} & JSON (JavaScript Object Notation) \\
+\hline
+\textbf{Descripción} & Formato de intercambio de datos para todas las APIs REST. \\
+\hline
+\textbf{Estándar} & RFC 8259 (JSON estándar) \\
+\hline
+\textbf{Encoding} & UTF-8 obligatorio \\
+\hline
+\textbf{Convenciones} &
+\begin{itemize}[leftmargin=*]
+    \item Nombres de campos en camelCase (ej. \texttt{firstName}, \texttt{totalAmount})
+    \item Timestamps en ISO 8601 format (\texttt{2025-01-15T14:30:00Z})
+    \item Amounts en centavos (integers) para evitar errores de redondeo
+    \item Null values incluidos explícitamente (no omitir campos)
+\end{itemize} \\
+\hline
+\textbf{Validación} & JSON Schema para validación de payloads en APIs. \\
+\hline
+\textbf{Compresión} & Gzip compression para responses $>$ 1KB (header \texttt{Accept-Encoding: gzip}). \\
+\hline
+\caption{IF-COM-002: Formato JSON}
+\label{tab:if-com-002}
+\end{longtable}
+
+\subsubsection{IF-COM-003: WebSockets (Tiempo Real)}
+
+\begin{longtable}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\textbf{Identificador} & IF-COM-003 \\
+\hline
+\textbf{Nombre} & WebSockets \\
+\hline
+\textbf{Descripción} & Protocolo de comunicación bidireccional para notificaciones en tiempo real en aplicación web. \\
+\hline
+\textbf{Protocolo} & WebSocket (RFC 6455) sobre TLS (wss://) \\
+\hline
+\textbf{Uso} &
+\begin{itemize}[leftmargin=*]
+    \item Notificaciones de cambio de estado de órdenes
+    \item Actualizaciones de inventario en página de producto
+    \item Chat de soporte en vivo (futuro)
+\end{itemize} \\
+\hline
+\textbf{Autenticación} & Token JWT enviado en handshake inicial. \\
+\hline
+\textbf{Formato de Mensajes} & JSON con estructura: \texttt{\{type, payload, timestamp\}} \\
+\hline
+\textbf{Heartbeat} & Ping/pong cada 30 segundos para mantener conexión viva. \\
+\hline
+\textbf{Fallback} & Long-polling si WebSockets no soportados por navegador/firewall. \\
+\hline
+\caption{IF-COM-003: WebSockets}
+\label{tab:if-com-003}
+\end{longtable}
+
+\subsubsection{IF-COM-004: Webhooks}
+
+\begin{longtable}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\textbf{Identificador} & IF-COM-004 \\
+\hline
+\textbf{Nombre} & Webhooks \\
+\hline
+\textbf{Descripción} & Mecanismo de callbacks HTTP para notificar eventos a proveedores y sistemas externos. \\
+\hline
+\textbf{Protocolo} & HTTP POST a URL configurada por el receptor \\
+\hline
+\textbf{Seguridad} & Firma HMAC-SHA256 en header \texttt{X-Webhook-Signature} con secret compartido. \\
+\hline
+\textbf{Formato} & JSON payload con estructura: \texttt{\{event, data, timestamp, signature\}} \\
+\hline
+\textbf{Retry Policy} &
+\begin{itemize}[leftmargin=*]
+    \item Reintentos con backoff exponencial: 5s, 30s, 5m, 30m, 2h
+    \item Máximo 5 reintentos
+    \item Dead letter queue para eventos no entregados
+\end{itemize} \\
+\hline
+\textbf{Idempotencia} & Incluir \texttt{eventId} único para permitir deduplicación en receptor. \\
+\hline
+\textbf{Timeout} & 10 segundos. Respuesta HTTP 200-299 considerada exitosa. \\
+\hline
+\caption{IF-COM-004: Webhooks}
+\label{tab:if-com-004}
+\end{longtable}
+
+\subsection{Matriz de Trazabilidad de Interfaces}
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{|l|l|p{6cm}|}
+\hline
+\textbf{Interface} & \textbf{Tipo} & \textbf{RF Habilitados} \\
+\hline
+IF-UI-001 & UI & Todos los RF de Cliente Final \\
+IF-UI-002 & UI & RF-PR-001 a RF-PR-006 \\
+IF-UI-003 & UI & RF-AD-001 a RF-AD-005 \\
+IF-SW-001 & Software & RF-P-001, RF-P-002, RF-P-003, RF-P-006 \\
+IF-SW-002 & Software & RF-U-003 \\
+IF-SW-003 & Software & RF-N-001, RF-N-002, RF-N-003 \\
+IF-SW-004 & Software & RF-C-003 \\
+IF-SW-005 & Software & RF-PR-001, RF-PR-002, RF-PR-003, RF-C-001, RF-C-002 \\
+IF-SW-008 & Software & RF-CC-003 (cálculo de impuestos) \\
+IF-COM-004 & Comunicación & RF-PR-003 \\
+\hline
+\end{tabular}
+\caption{Matriz de Trazabilidad: Interfaces vs Requisitos Funcionales}
+\label{tab:trazabilidad-interfaces}
+\end{table}
+
+\subsection{Consideraciones de Diseño de Interfaces}
+
+\subsubsection{Consistencia}
+Todas las interfaces REST siguen convenciones RESTful:
+\begin{itemize}
+    \item Recursos como sustantivos (\texttt{/products}, \texttt{/orders})
+    \item Verbos HTTP semánticos (GET, POST, PUT, PATCH, DELETE)
+    \item Status codes estándar (200, 201, 400, 401, 404, 500)
+    \item HATEOAS para discoverability (links en responses)
+\end{itemize}
+
+\subsubsection{Versionado}
+APIs externas usan versionado en URL (\texttt{/v1}, \texttt{/v2}). Deprecación anunciada con 6 meses de anticipación. Headers \texttt{X-API-Version} y \texttt{X-Deprecated} para comunicar versiones.
+
+\subsubsection{Documentación}
+Todas las APIs externas documentadas con OpenAPI 3.0. Disponible en Developer Portal con Swagger UI interactivo. Ejemplos de requests/responses para todos los endpoints.
+
+\subsubsection{Monitoreo}
+Todas las interfaces externas monitoreadas con:
+\begin{itemize}
+    \item Latencia (P50, P95, P99)
+    \item Error rate
+    \item Throughput (requests/second)
+    \item Availability (uptime)
+\end{itemize}

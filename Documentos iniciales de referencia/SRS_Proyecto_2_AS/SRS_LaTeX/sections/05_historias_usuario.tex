@@ -1,0 +1,1114 @@
+% ============================================================
+% 3.3 Historias de Usuario
+% ============================================================
+
+\section{Historias de Usuario}
+
+Las historias de usuario describen el comportamiento esperado del sistema AllConnect Market desde la perspectiva de los distintos actores identificados en la vista de contexto (Cliente Final, Proveedores, Administradores de Contenido, Negocio, Operaciones e IT). 
+
+Cada historia se vincula explícitamente con los módulos funcionales definidos en el mapa de módulos (Cuadro~\ref{tab:mapa-modulos}) y con los requisitos funcionales (RF) y no funcionales (RNF) especificados en las secciones anteriores.  
+
+La estructura utilizada es la siguiente:
+
+\begin{itemize}
+    \item \textbf{Formato:} \emph{Como [actor], quiero [objetivo] para [beneficio de negocio/usuario].}
+    \item \textbf{Prioridad:} Se utiliza la escala MoSCoW (\textbf{MUST}, \textbf{SHOULD}, \textbf{COULD}) alineada con la priorización de RF y RNF.
+    \item \textbf{Trazabilidad:} Cada historia referencia los RF/RNF que materializan su comportamiento o sus atributos de calidad.
+\end{itemize}
+
+\subsection{Historias de Usuario por Módulo}
+
+\subsubsection{Módulo: Gestión de Usuarios}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-GU-001 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{usuario nuevo}, quiero \textbf{registrarme con mi correo electrónico}, para \textbf{crear mi cuenta y comenzar a comprar en la plataforma sin fricciones}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item El formulario de registro solicita, como mínimo, correo electrónico, contraseña, nombre y apellido.
+    \item El sistema valida automáticamente el formato del correo electrónico.
+    \item La contraseña debe contener mínimo 8 caracteres, incluyendo mayúscula, número y carácter especial.
+    \item El sistema envía un mensaje de verificación al correo registrado en menos de 30 segundos.
+    \item La cuenta solo se activa cuando el usuario confirma el enlace de verificación (doble opt-in).
+    \item Si el correo ya está registrado, se muestra un mensaje claro indicando la situación y se sugiere iniciar sesión o recuperar contraseña.
+    \item Tras el registro exitoso, el sistema redirige a la pantalla de inicio de sesión.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & MUST \\ \hline
+\textbf{Story Points} & 3 \\ \hline
+\textbf{RF Asociados} & RF-U-001, RF-U-005 \\ \hline
+\textbf{RNF Asociados} & RNF-SEC-002, RNF-SEC-003 \\ \hline
+\end{tabular}
+\caption{HU-GU-001 – Registro de usuario por correo electrónico}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-GU-002 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{cliente registrado}, quiero \textbf{iniciar sesión de forma segura}, para \textbf{acceder a mi cuenta y continuar mis compras}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item El sistema valida las credenciales combinando correo electrónico y contraseña.
+    \item Las contraseñas se comparan utilizando un mecanismo de almacenamiento cifrado y protegido.
+    \item Después de 5 intentos fallidos consecutivos, la cuenta se bloquea temporalmente durante 15 minutos.
+    \item La sesión del usuario se mantiene activa hasta por 24 horas, salvo que el usuario cierre sesión manualmente.
+    \item Al cerrar sesión, el sistema invalida los tokens o sesiones activas del usuario.
+    \item Los mensajes de error no exponen si el correo existe o no en el sistema; solo informan que las credenciales son inválidas.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & MUST \\ \hline
+\textbf{Story Points} & 3 \\ \hline
+\textbf{RF Asociados} & RF-U-002 \\ \hline
+\textbf{RNF Asociados} & RNF-SEC-004, RNF-REL-001, RNF-SEC-005 \\ \hline
+\end{tabular}
+\caption{HU-GU-002 – Autenticación segura de clientes}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-GU-003 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{usuario}, quiero \textbf{iniciar sesión utilizando un proveedor externo de identidad}, para \textbf{evitar gestionar nuevas contraseñas en la plataforma}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item Desde la pantalla de inicio de sesión se ofrece la opción de acceder con un proveedor externo de identidad.
+    \item El sistema redirige al flujo de autenticación del proveedor externo y regresa a la plataforma una vez autorizado.
+    \item El sistema solicita y registra solo los atributos mínimos necesarios (correo, nombre, foto opcional).
+    \item Si el usuario no existe aún en la plataforma, se crea automáticamente un perfil vinculado al identificador del proveedor externo.
+    \item Si el usuario ya existe, el proveedor externo se asocia a su perfil sin duplicar cuentas.
+    \item Se registra un evento de auditoría indicando que el inicio de sesión se realizó mediante autenticación federada.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & SHOULD \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-U-003 \\ \hline
+\textbf{RNF Asociados} & RNF-COMP-001, RNF-SEC-004 \\ \hline
+\end{tabular}
+\caption{HU-GU-003 – Autenticación con proveedor externo de identidad}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-GU-004 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{usuario}, quiero \textbf{activar autenticación en dos pasos (MFA)}, para \textbf{aumentar la protección de mi cuenta y de mis métodos de pago}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item Desde la sección de seguridad del perfil, el usuario puede activar la autenticación en dos pasos.
+    \item El sistema muestra un código o elemento que permita vincular la cuenta con una aplicación generadora de códigos de un solo uso.
+    \item Para completar la activación, el usuario debe introducir correctamente un código temporal generado por la aplicación.
+    \item El sistema genera y muestra un conjunto de códigos de respaldo de un solo uso para recuperación en caso de pérdida del dispositivo.
+    \item El usuario puede desactivar la autenticación en dos pasos, siempre que confirme su identidad mediante contraseña y un código válido.
+    \item Para operaciones sensibles (por ejemplo, cambio de contraseña o gestión de métodos de pago) el sistema solicita obligatoriamente el segundo factor cuando la función está activada.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & SHOULD \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-U-004 \\ \hline
+\textbf{RNF Asociados} & RNF-SEC-004, RNF-SEC-005 \\ \hline
+\end{tabular}
+\caption{HU-GU-004 – Configuración de autenticación multifactor}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-GU-005 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{usuario}, quiero \textbf{editar mi información personal, direcciones y preferencias de comunicación}, para \textbf{mantener mi cuenta actualizada y recibir solo las notificaciones que me interesan}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item El usuario puede actualizar nombre, apellidos, número de teléfono y direcciones de envío.
+    \item El sistema valida formato de teléfono, longitud de campos y coherencia básica de la dirección.
+    \item La vista de edición de perfil es accesible y usable en dispositivos móviles y de escritorio.
+    \item El usuario puede seleccionar, por canal, qué tipo de notificaciones desea recibir (transaccionales, recordatorios, promociones).
+    \item Cada modificación exitosa muestra un mensaje claro de confirmación.
+    \item Los cambios relevantes quedan registrados en un historial de auditoría asociado al usuario.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & SHOULD \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-U-006, RF-N-005 \\ \hline
+\textbf{RNF Asociados} & RNF-USA-001, RNF-SEC-007 \\ \hline
+\end{tabular}
+\caption{HU-GU-005 – Gestión del perfil unificado del cliente}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-GU-006 \\ \hline
+\textbf{Rol} & Administrador de Operaciones \\ \hline
+\textbf{Historia} &
+Como \textbf{administrador de operaciones}, quiero \textbf{consultar el perfil y el historial de pedidos de un cliente}, para \textbf{resolver incidencias con información confiable y centralizada}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item Solo los usuarios con rol autorizado pueden acceder a la vista de detalle de clientes.
+    \item La vista muestra información básica del cliente, historial de pedidos, reclamaciones y reembolsos asociados.
+    \item Los datos sensibles (por ejemplo, ciertos campos de contacto o identificadores) se muestran enmascarados cuando corresponda.
+    \item El tiempo de respuesta para cargar la ficha de un cliente se mantiene dentro de los límites de desempeño definidos para la plataforma.
+    \item Cada acceso a la información del cliente queda registrado en un log de auditoría con usuario, fecha, hora y propósito.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & SHOULD \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-U-006, RF-AD-002 \\ \hline
+\textbf{RNF Asociados} & RNF-SEC-004, RNF-MAIN-002 \\ \hline
+\end{tabular}
+\caption{HU-GU-006 – Consulta de perfil de cliente para operaciones}
+\end{table}
+
+\subsubsection{Módulo: Catálogo y Búsqueda}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-CAT-001 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{cliente}, quiero \textbf{buscar productos físicos, servicios y contenidos digitales desde una única barra de búsqueda}, para \textbf{encontrar rápidamente opciones relevantes sin cambiar de sección}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item Existe una barra de búsqueda visible en las principales pantallas de navegación.
+    \item Al ingresar un término de búsqueda, el sistema devuelve resultados que incluyen productos físicos, servicios y contenidos digitales en una misma vista.
+    \item Los resultados se agrupan o identifican claramente por tipo de oferta (producto, servicio, contenido digital).
+    \item El sistema tolera errores tipográficos leves y sigue mostrando resultados relevantes.
+    \item El tiempo de respuesta para mostrar resultados se mantiene dentro de los límites de desempeño definidos para consultas de catálogo.
+    \item Si no hay resultados, se muestra un mensaje claro y se sugieren acciones alternativas (por ejemplo, modificar filtros o categorías).
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & MUST \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-C-003 \\ \hline
+\textbf{RNF Asociados} & RNF-PE-001, RNF-USA-002 \\ \hline
+\end{tabular}
+\caption{HU-CAT-001 – Búsqueda unificada multivertical}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-CAT-002 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{cliente}, quiero \textbf{aplicar filtros avanzados a los resultados de búsqueda} (por ejemplo, precio, categoría, proveedor, calificación y disponibilidad), para \textbf{reducir el catálogo a las opciones que se ajustan a mis necesidades y presupuesto}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item Desde la vista de resultados se ofrecen filtros por precio, categoría, proveedor, calificación y disponibilidad, al menos.
+    \item El cliente puede seleccionar varios filtros de forma simultánea.
+    \item Los resultados se actualizan automáticamente al cambiar los filtros, sin requerir recargar toda la página.
+    \item Cada filtro muestra la cantidad aproximada de resultados que se obtendrán al seleccionarlo.
+    \item Existe una opción para limpiar todos los filtros y volver a la búsqueda original.
+    \item Los filtros aplicados se mantienen mientras el usuario navega por las páginas de resultados de la misma búsqueda.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & SHOULD \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-C-004 \\ \hline
+\textbf{RNF Asociados} & RNF-USA-004 \\ \hline
+\end{tabular}
+\caption{HU-CAT-002 – Filtros avanzados en resultados de búsqueda}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-CAT-003 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{cliente}, quiero \textbf{ordenar los resultados por relevancia, precio, popularidad o fecha}, para \textbf{comparar alternativas según mi criterio principal de decisión}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item En la vista de resultados se muestra un control de ordenamiento claramente identificable.
+    \item Las opciones de ordenamiento incluyen, como mínimo: relevancia, precio ascendente, precio descendente, popularidad y fecha de publicación.
+    \item El orden seleccionado se aplica de inmediato a la lista de resultados.
+    \item El criterio de ordenamiento actualmente activo es visible en la interfaz.
+    \item El criterio de ordenamiento se conserva mientras el usuario navega entre páginas de resultados de la misma búsqueda.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & SHOULD \\ \hline
+\textbf{Story Points} & 3 \\ \hline
+\textbf{RF Asociados} & RF-C-005 \\ \hline
+\textbf{RNF Asociados} & RNF-USA-004 \\ \hline
+\end{tabular}
+\caption{HU-CAT-003 – Ordenamiento de resultados de búsqueda}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-CAT-004 \\ \hline
+\textbf{Rol} & Administrador de Contenido \\ \hline
+\textbf{Historia} &
+Como \textbf{administrador de contenido}, quiero \textbf{sincronizar el catálogo de productos de un proveedor de forma masiva e incremental}, para \textbf{mantener la oferta actualizada sin depender de cargas manuales frecuentes}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item El administrador puede registrar o actualizar en un solo proceso un conjunto grande de productos de un proveedor.
+    \item El sistema valida la estructura y la información de cada registro, generando un reporte de errores con los elementos rechazados.
+    \item Es posible ejecutar tanto cargas completas de catálogo como actualizaciones que solo incluyan cambios.
+    \item La sincronización no debe afectar la disponibilidad del catálogo para los clientes mientras se procesa.
+    \item Al finalizar la sincronización, el sistema genera un resumen con número de productos creados, actualizados y rechazados.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & MUST \\ \hline
+\textbf{Story Points} & 8 \\ \hline
+\textbf{RF Asociados} & RF-C-001, RF-PR-001 \\ \hline
+\textbf{RNF Asociados} & RNF-COMP-001, RNF-MAIN-001 \\ \hline
+\end{tabular}
+\caption{HU-CAT-004 – Sincronización masiva e incremental de catálogo}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-CAT-005 \\ \hline
+\textbf{Rol} & Administrador de Contenido \\ \hline
+\textbf{Historia} &
+Como \textbf{administrador de contenido}, quiero \textbf{que los cambios de inventario reportados por los proveedores se reflejen rápidamente en el catálogo}, para \textbf{evitar ofrecer productos sin stock o con información desactualizada}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item Cuando un proveedor notifica un cambio de stock, el estado de disponibilidad del producto se actualiza en el catálogo en un tiempo acotado definido por los requisitos de desempeño.
+    \item Para proveedores que no generan notificaciones, el sistema realiza consultas periódicas para refrescar el inventario.
+    \item Al agotarse un producto, este se marca como no disponible y deja de ser elegible para nuevas compras.
+    \item Si la cantidad disponible es baja, se muestra un indicador de stock limitado en la ficha del producto.
+    \item Los clientes no pueden completar una compra de un producto cuyo stock ya no esté disponible en el momento de la confirmación.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & MUST \\ \hline
+\textbf{Story Points} & 8 \\ \hline
+\textbf{RF Asociados} & RF-C-002, RF-PR-005 \\ \hline
+\textbf{RNF Asociados} & RNF-REL-001, RNF-REL-004 \\ \hline
+\end{tabular}
+\caption{HU-CAT-005 – Actualización casi en tiempo real del inventario}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-CAT-006 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{cliente}, quiero \textbf{realizar búsquedas por voz desde mi dispositivo móvil}, para \textbf{encontrar productos mientras realizo otras actividades sin tener que escribir}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item Desde la vista de búsqueda en dispositivos móviles se ofrece un control claro para activar la búsqueda por voz.
+    \item Al activar la función, el sistema indica que está escuchando y permite cancelar la operación.
+    \item Tras confirmar la captura de voz, el sistema interpreta la solicitud y ejecuta la búsqueda correspondiente.
+    \item El texto interpretado se muestra al usuario antes o junto con los resultados, para que este pueda corregirlo si es necesario.
+    \item Si el dispositivo no soporta entrada de voz o el usuario no otorga permisos de audio, la opción se deshabilita o se muestra un mensaje informativo.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & COULD \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-C-006 \\ \hline
+\textbf{RNF Asociados} & RNF-USA-002 \\ \hline
+\end{tabular}
+\caption{HU-CAT-006 – Búsqueda por voz en dispositivos móviles}
+\end{table}
+
+\subsubsection{Módulo: Carrito y Checkout}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-CC-001 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{cliente}, quiero \textbf{añadir al mismo carrito productos físicos, servicios y contenidos digitales}, para \textbf{pagar todo en una sola transacción sin fragmentar mi compra}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item El carrito permite agregar ítems de diferentes tipos (producto, servicio, contenido digital) en una misma vista.
+    \item Cada ítem se identifica visualmente con su tipo y características principales.
+    \item El sistema calcula subtotales por tipo de ítem y un total general de la compra.
+    \item Si un tipo de ítem tiene reglas especiales (por ejemplo, servicios que requieren agendamiento), estas se muestran de manera clara antes del pago.
+    \item El cliente puede eliminar o modificar cantidades de cualquier ítem y el total se actualiza de forma inmediata.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & MUST \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-CC-001, RF-CC-003 \\ \hline
+\textbf{RNF Asociados} & RNF-PE-002, RNF-USA-002 \\ \hline
+\end{tabular}
+\caption{HU-CC-001 – Carrito universal multivertical}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-CC-002 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{cliente autenticado}, quiero \textbf{que el sistema recuerde mi carrito entre sesiones y dispositivos}, para \textbf{retomar compras pendientes sin rearmar mi selección}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item Los cambios en el carrito se guardan automáticamente cuando el cliente está autenticado.
+    \item Al iniciar sesión desde otro dispositivo, el cliente visualiza el mismo contenido de carrito.
+    \item Al volver a la plataforma después de un tiempo, el sistema revisa la disponibilidad de los ítems antes de mostrarlos.
+    \item Si algún ítem cambió de precio o dejó de estar disponible, el sistema informa al cliente de forma clara e indica qué cambió.
+    \item El cliente puede vaciar completamente el carrito con una acción explícita.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & MUST \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-CC-002 \\ \hline
+\textbf{RNF Asociados} & RNF-REL-001, RNF-REL-004 \\ \hline
+\end{tabular}
+\caption{HU-CC-002 – Persistencia de carrito entre sesiones y dispositivos}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-CC-003 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{cliente}, quiero \textbf{ver el desglose claro de subtotal, impuestos, costos adicionales y descuentos en tiempo real}, para \textbf{entender exactamente cuánto voy a pagar antes de confirmar el pedido}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item La vista del carrito muestra subtotal, impuestos, costos adicionales (por ejemplo, envío) y descuentos aplicados.
+    \item El monto total se actualiza de forma inmediata cuando se agrega, elimina o modifica un ítem.
+    \item Los descuentos aplicados se muestran de forma explícita, indicando su origen (por ejemplo, cupón o promoción).
+    \item Antes de confirmar la compra, el cliente puede revisar un resumen final con todos los conceptos incluidos.
+    \item Los textos utilizados evitan ambigüedades y utilizan el mismo formato monetario en toda la interfaz.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & MUST \\ \hline
+\textbf{Story Points} & 3 \\ \hline
+\textbf{RF Asociados} & RF-CC-003, RF-CC-004 \\ \hline
+\textbf{RNF Asociados} & RNF-USA-001, RNF-SEC-007 \\ \hline
+\end{tabular}
+\caption{HU-CC-003 – Cálculo y desglose de totales en el carrito}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-CC-004 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{cliente}, quiero \textbf{aplicar cupones de descuento o promociones válidas durante el checkout}, para \textbf{aprovechar campañas comerciales sin errores ni rechazos injustificados}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item Durante el flujo de compra se ofrece un campo para introducir códigos de promoción.
+    \item El sistema valida que el cupón esté vigente, sea aplicable al pedido y no haya sido utilizado más veces de lo permitido.
+    \item Si el cupón es válido, se refleja el descuento en el resumen de totales.
+    \item Si el cupón no es válido, se muestra un mensaje claro explicando el motivo.
+    \item No se permite combinar cupones de manera no prevista por las reglas de negocio.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & SHOULD \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-CC-004, RF-AD-001 \\ \hline
+\textbf{RNF Asociados} & RNF-SEC-005, RNF-REL-001 \\ \hline
+\end{tabular}
+\caption{HU-CC-004 – Gestión de cupones y promociones en el checkout}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-CC-005 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{cliente}, quiero \textbf{que el checkout se estructure en pasos claros} (por ejemplo, dirección, pago y confirmación), para \textbf{no cometer errores y poder volver atrás sin perder información}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item El proceso de compra se organiza en pasos visibles con un indicador de progreso.
+    \item El cliente puede avanzar y retroceder entre pasos sin perder los datos ya ingresados.
+    \item Cada paso valida la información mínima necesaria antes de permitir avanzar.
+    \item Los mensajes de error se muestran junto al campo que requiere corrección.
+    \item La disposición y los textos son comprensibles en dispositivos móviles y de escritorio.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & MUST \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-CC-005 \\ \hline
+\textbf{RNF Asociados} & RNF-USA-002, RNF-USA-004 \\ \hline
+\end{tabular}
+\caption{HU-CC-005 – Flujo de checkout en pasos}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-CC-006 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{cliente}, quiero \textbf{que el sistema valide la disponibilidad de todos los ítems justo antes del pago}, para \textbf{evitar pagar por productos o servicios que ya no estén disponibles}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item Antes de confirmar el pago, el sistema revisa la disponibilidad de cada ítem incluido en el pedido.
+    \item Si algún ítem cambió de disponibilidad, se informa al cliente qué ítem fue afectado y cuál es la nueva situación.
+    \item En caso de indisponibilidad, el sistema impide finalizar la compra con ese ítem y ofrece opciones alternativas (por ejemplo, eliminarlo o sustituirlo).
+    \item Para servicios que requieren agendamiento, se verifica que el horario seleccionado siga disponible.
+    \item La validación se realiza en un tiempo compatible con los objetivos de desempeño del flujo de compra.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & MUST \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-CC-006, RF-C-002, RF-A-001 \\ \hline
+\textbf{RNF Asociados} & RNF-REL-004, RNF-REL-001 \\ \hline
+\end{tabular}
+\caption{HU-CC-006 – Validación de disponibilidad previa al pago}
+\end{table}
+
+% ------------------------------------------------------------
+% Módulo: Pagos
+% ------------------------------------------------------------
+
+\subsubsection{Módulo: Pagos}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-PAG-001 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{cliente}, quiero \textbf{pagar mis compras con tarjeta de crédito o débito de forma segura}, para \textbf{completar la transacción sin exponer mis datos financieros}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item En el paso de pago se ofrece la opción de introducir datos de tarjeta de forma clara y guiada.
+    \item El sistema valida que los datos obligatorios estén completos y con el formato correcto.
+    \item Si el pago es aprobado, el pedido cambia de estado a confirmado y el cliente ve un mensaje de éxito.
+    \item Si el pago es rechazado, el sistema muestra un mensaje comprensible e invita a intentar nuevamente o a usar otro medio de pago.
+    \item En ningún momento se muestran de forma completa los datos sensibles de la tarjeta en pantallas posteriores.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & MUST \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-P-001, RF-P-002 \\ \hline
+\textbf{RNF Asociados} & RNF-SEC-001, RNF-SEC-002, RNF-SEC-003 \\ \hline
+\end{tabular}
+\caption{HU-PAG-001 – Pago con tarjeta de forma segura}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-PAG-002 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{cliente}, quiero \textbf{utilizar métodos de pago alternativos distintos a la tarjeta}, para \textbf{elegir la opción que mejor se adapte a mi situación financiera}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item Además del pago con tarjeta, el paso de pago ofrece otros métodos disponibles según la configuración del país o mercado.
+    \item Al seleccionar un método alternativo, el sistema guía al cliente en los pasos necesarios para completarlo.
+    \item El resumen del pedido refleja el método de pago utilizado.
+    \item El comportamiento en caso de aprobación o rechazo es consistente con el de otros métodos (mensajes claros, actualización de estado del pedido).
+    \item El cliente puede cambiar de método de pago antes de confirmar la transacción.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & SHOULD \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-P-003 \\ \hline
+\textbf{RNF Asociados} & RNF-COMP-003, RNF-PE-002 \\ \hline
+\end{tabular}
+\caption{HU-PAG-002 – Uso de métodos de pago alternativos}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-PAG-003 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{cliente}, quiero \textbf{recibir inmediatamente una confirmación clara de mi pago y un comprobante descargable}, para \textbf{tener evidencia de la transacción y poder hacer seguimiento del pedido}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item Tras un pago exitoso, el sistema muestra una pantalla de confirmación con el resumen del pedido y un identificador único.
+    \item El cliente puede descargar o consultar posteriormente un comprobante con los datos principales de la transacción.
+    \item Se envía una notificación transaccional al canal configurado (por ejemplo, correo electrónico) con el resumen del pedido.
+    \item El estado del pedido y del pago queda actualizado en las vistas de seguimiento de pedidos del cliente.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & MUST \\ \hline
+\textbf{Story Points} & 3 \\ \hline
+\textbf{RF Asociados} & RF-P-005, RF-N-001 \\ \hline
+\textbf{RNF Asociados} & RNF-REL-001, RNF-SEC-005 \\ \hline
+\end{tabular}
+\caption{HU-PAG-003 – Confirmación y comprobante de pago}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-PAG-004 \\ \hline
+\textbf{Rol} & Cliente de Suscripción \\ \hline
+\textbf{Historia} &
+Como \textbf{cliente de contenido o servicios por suscripción}, quiero \textbf{que los cobros periódicos se realicen automáticamente en la fecha acordada}, para \textbf{mantener el acceso sin tener que renovar manualmente cada ciclo}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item Al contratar una suscripción, el sistema registra la frecuencia y la fecha de inicio de los cobros periódicos.
+    \item El cliente puede consultar en su perfil las próximas fechas de cobro y el valor estimado.
+    \item Cada intento de cobro actualiza el estado de la suscripción (activo, pendiente de pago, suspendido).
+    \item En caso de fallo de cobro, el sistema informa al cliente y ofrece opciones para regularizar el pago.
+    \item Los cobros exitosos generan confirmaciones y comprobantes de forma similar a una compra puntual.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & MUST \\ \hline
+\textbf{Story Points} & 8 \\ \hline
+\textbf{RF Asociados} & RF-P-004 \\ \hline
+\textbf{RNF Asociados} & RNF-REL-002, RNF-REL-003 \\ \hline
+\end{tabular}
+\caption{HU-PAG-004 – Gestión de cobros recurrentes de suscripción}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-PAG-005 \\ \hline
+\textbf{Rol} & Administrador de Negocio \\ \hline
+\textbf{Historia} &
+Como \textbf{administrador de negocio}, quiero \textbf{gestionar reembolsos parciales o totales desde un panel central}, para \textbf{resolver devoluciones y reclamaciones cumpliendo las políticas comerciales y regulatorias}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item Desde una vista administrativa se puede buscar un pedido y visualizar su detalle de pagos.
+    \item El administrador puede solicitar un reembolso completo o parcial, registrando el motivo.
+    \item El sistema verifica que el monto solicitado no exceda el total pagado ni las reglas definidas para reembolsos.
+    \item El resultado del proceso (aprobado, rechazado, pendiente) se refleja en el historial del pedido y puede ser consultado por el cliente.
+    \item Se registra una trazabilidad completa de quién solicitó y aprobó cada reembolso.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & SHOULD \\ \hline
+\textbf{Story Points} & 8 \\ \hline
+\textbf{RF Asociados} & RF-P-006, RF-AD-002 \\ \hline
+\textbf{RNF Asociados} & RNF-SEC-007, RNF-MAIN-002 \\ \hline
+\end{tabular}
+\caption{HU-PAG-005 – Gestión de reembolsos desde panel administrativo}
+\end{table}
+% ------------------------------------------------------------
+% Módulo: Integración con Proveedores
+% ------------------------------------------------------------
+
+\subsubsection{Módulo: Integración con Proveedores}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-PRV-001 \\ \hline
+\textbf{Rol} & Proveedor \\ \hline
+\textbf{Historia} &
+Como \textbf{proveedor}, quiero \textbf{realizar mi registro y proceso de incorporación de manera autónoma}, para \textbf{empezar a ofrecer mis productos y servicios en la plataforma sin depender de gestiones manuales extensas}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item El proveedor puede iniciar el proceso de registro desde una sección claramente identificada.
+    \item El flujo de incorporación guía al proveedor por los pasos necesarios (datos de contacto, información fiscal, datos bancarios, categorías de oferta, entre otros).
+    \item El sistema valida que la información obligatoria esté completa y coherente antes de permitir avanzar.
+    \item El proveedor puede guardar el avance y retomarlo más adelante.
+    \item Al finalizar el registro, el sistema indica el estado de su solicitud (por ejemplo, pendiente de revisión, aprobado, rechazado con observaciones).
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & MUST \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-PR-001 \\ \hline
+\textbf{RNF Asociados} & RNF-COMP-001, RNF-USA-004 \\ \hline
+\end{tabular}
+\caption{HU-PRV-001 – Onboarding autónomo de proveedores}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-PRV-002 \\ \hline
+\textbf{Rol} & Proveedor \\ \hline
+\textbf{Historia} &
+Como \textbf{proveedor}, quiero \textbf{autenticarme mediante credenciales técnicas seguras para acceder a las funciones de integración}, para \textbf{garantizar que solo mis sistemas autorizados puedan consultar y actualizar información}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item Cada proveedor dispone de credenciales técnicas asociadas exclusivamente a su cuenta.
+    \item El proveedor puede generar, revocar y rotar sus credenciales desde un apartado de seguridad.
+    \item Cuando se utilizan credenciales no válidas o caducadas, el sistema rechaza la solicitud e informa el motivo de forma clara.
+    \item El uso de credenciales queda registrado con fecha, hora y operación realizada.
+    \item No es posible acceder a información de otros proveedores utilizando las credenciales de un tercero.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & MUST \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-PR-002 \\ \hline
+\textbf{RNF Asociados} & RNF-SEC-004, RNF-SEC-006 \\ \hline
+\end{tabular}
+\caption{HU-PRV-002 – Autenticación técnica segura de proveedores}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-PRV-003 \\ \hline
+\textbf{Rol} & Proveedor \\ \hline
+\textbf{Historia} &
+Como \textbf{proveedor}, quiero \textbf{recibir avisos en tiempo casi real cuando se crea, cancela o paga un pedido con mis productos o servicios}, para \textbf{actualizar mis sistemas internos y coordinar la operación}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item El proveedor puede configurar un canal técnico para recibir avisos de eventos de negocio relevantes.
+    \item Los avisos incluyen, como mínimo, el identificador del pedido, estado, ítems afectados y montos.
+    \item El sistema reintenta el envío de avisos fallidos durante un tiempo razonable antes de marcarlos como no entregados.
+    \item El proveedor puede consultar un historial de avisos enviados y su resultado (entregado, reintentando, fallido).
+    \item Los avisos solo incluyen información correspondiente al proveedor destinatario.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & MUST \\ \hline
+\textbf{Story Points} & 8 \\ \hline
+\textbf{RF Asociados} & RF-PR-003, RF-N-001 \\ \hline
+\textbf{RNF Asociados} & RNF-REL-001, RNF-COMP-003 \\ \hline
+\end{tabular}
+\caption{HU-PRV-003 – Avisos operativos sobre pedidos de proveedores}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-PRV-004 \\ \hline
+\textbf{Rol} & Desarrollador del Proveedor \\ \hline
+\textbf{Historia} &
+Como \textbf{responsable técnico del proveedor}, quiero \textbf{acceder a un espacio con documentación y entornos de prueba}, para \textbf{integrar mis sistemas con la plataforma de manera rápida y con menos errores}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item Existe un espacio dedicado que describe las capacidades de integración disponibles y los formatos de intercambio de datos.
+    \item Se proporcionan ejemplos de solicitudes y respuestas para los principales casos de uso.
+    \item El proveedor dispone de un entorno de pruebas independiente del entorno productivo.
+    \item La documentación indica los límites de consumo, reglas de seguridad y códigos de error más frecuentes.
+    \item El contenido se mantiene actualizado cuando cambian las capacidades de integración.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & SHOULD \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-PR-004 \\ \hline
+\textbf{RNF Asociados} & RNF-MAIN-004, RNF-MAIN-001 \\ \hline
+\end{tabular}
+\caption{HU-PRV-004 – Espacio de integración y pruebas para proveedores}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-PRV-005 \\ \hline
+\textbf{Rol} & Administrador de Negocio \\ \hline
+\textbf{Historia} &
+Como \textbf{administrador de negocio}, quiero \textbf{visualizar indicadores de salud de cada integración de proveedor}, para \textbf{decidir si es necesario suspender temporalmente su oferta ante fallos recurrentes}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item Para cada proveedor se presentan métricas como disponibilidad de integración, tasa de errores y tiempos de respuesta.
+    \item Es posible ordenar o filtrar proveedores según estos indicadores.
+    \item La vista permite identificar rápidamente qué proveedores presentan problemas de integración.
+    \item El administrador puede consultar el historial de incidentes técnicos por proveedor.
+    \item Desde la misma interfaz se puede cambiar el estado de publicación de la oferta de un proveedor, respetando las reglas de negocio.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & SHOULD \\ \hline
+\textbf{Story Points} & 8 \\ \hline
+\textbf{RF Asociados} & RF-PR-005, RF-AD-002 \\ \hline
+\textbf{RNF Asociados} & RNF-REL-005 \\ \hline
+\end{tabular}
+\caption{HU-PRV-005 – Monitoreo de salud de integraciones de proveedores}
+\end{table}
+
+% ------------------------------------------------------------
+% Módulo: Agendamiento de Servicios
+% ------------------------------------------------------------
+
+\subsubsection{Módulo: Agendamiento de Servicios}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-AG-001 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{cliente}, quiero \textbf{consultar la disponibilidad de horarios de un servicio antes de confirmar la compra}, para \textbf{asegurar que puedo agendarlo en un momento que me convenga}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item En la ficha de un servicio se muestra un componente para seleccionar fecha y horario disponibles.
+    \item Solo se presentan horarios que cumplen las capacidades y restricciones definidas por el proveedor.
+    \item Cuando se selecciona un horario, este se reserva temporalmente mientras el cliente completa el proceso de compra.
+    \item Si el horario deja de estar disponible durante el proceso, el sistema informa al cliente y le pide seleccionar una nueva opción.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & SHOULD \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-A-001, RF-C-003 \\ \hline
+\textbf{RNF Asociados} & RNF-PE-001 \\ \hline
+\end{tabular}
+\caption{HU-AG-001 – Consulta de disponibilidad de horarios}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-AG-002 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{cliente}, quiero \textbf{reservar una cita vinculada a un servicio adquirido y recibir confirmación}, para \textbf{tener claridad sobre la fecha, hora y condiciones de prestación}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item Una vez realizado el pago del servicio, el sistema confirma la reserva del horario seleccionado.
+    \item La confirmación incluye fecha, hora, ubicación o modalidad y datos básicos del proveedor.
+    \item El cliente puede consultar sus citas futuras desde una sección dedicada de la plataforma.
+    \item La reserva queda registrada en el sistema de agendamiento del proveedor correspondiente.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & SHOULD \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-A-002, RF-N-001 \\ \hline
+\textbf{RNF Asociados} & RNF-REL-001, RNF-USA-004 \\ \hline
+\end{tabular}
+\caption{HU-AG-002 – Reserva y confirmación de citas de servicio}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-AG-003 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{cliente}, quiero \textbf{reprogramar una cita dentro de las políticas definidas por el proveedor}, para \textbf{ajustar mi agenda sin perder el servicio ni generar conflictos innecesarios}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item El cliente puede solicitar reprogramar una cita desde la vista de detalle del servicio reservado.
+    \item El sistema muestra únicamente los horarios alternativos que cumplen las reglas de reprogramación (por ejemplo, tiempo mínimo de aviso).
+    \item Cada reprogramación queda registrada con fecha, hora y motivo.
+    \item Si la política del proveedor impide la reprogramación (por plazo o tipo de servicio), se muestra un mensaje claro explicando el motivo.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & COULD \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-A-003 \\ \hline
+\textbf{RNF Asociados} & RNF-SEC-007, RNF-USA-004 \\ \hline
+\end{tabular}
+\caption{HU-AG-003 – Reprogramación de citas dentro de políticas}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-AG-004 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{cliente}, quiero \textbf{recibir recordatorios automatizados de mis citas próximas}, para \textbf{reducir el riesgo de olvidar el compromiso}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item Para cada cita confirmada se programan recordatorios previos en horarios configurables (por ejemplo, días u horas antes).
+    \item Los recordatorios se envían por los canales de comunicación preferidos por el cliente.
+    \item El mensaje del recordatorio incluye fecha, hora, proveedor y datos básicos del servicio.
+    \item Si una cita se cancela o reprograma, los recordatorios pendientes se actualizan en consecuencia.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & SHOULD \\ \hline
+\textbf{Story Points} & 3 \\ \hline
+\textbf{RF Asociados} & RF-A-004, RF-N-001, RF-N-002, RF-N-003 \\ \hline
+\textbf{RNF Asociados} & RNF-REL-005 \\ \hline
+\end{tabular}
+\caption{HU-AG-004 – Recordatorios automatizados de citas}
+\end{table}
+
+% ------------------------------------------------------------
+% Módulo: Notificaciones
+% ------------------------------------------------------------
+
+\subsubsection{Módulo: Notificaciones}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-NOT-001 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{cliente}, quiero \textbf{recibir mensajes transaccionales cuando realizo acciones clave} (registro, pedido, envío, reembolso), para \textbf{estar informado del estado de mis transacciones}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item Se envían mensajes automáticos cuando se completa un registro, se crea un pedido, se registra un envío y se aprueba un reembolso.
+    \item Cada mensaje indica claramente la acción realizada, el identificador del pedido (cuando aplique) y los siguientes pasos para el cliente.
+    \item El contenido se adapta al contexto del evento (por ejemplo, confirmación, advertencia, actualización).
+    \item Los mensajes se envían en un tiempo adecuado después del evento que los activa.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & MUST \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-N-001, RF-P-005, RF-P-006 \\ \hline
+\textbf{RNF Asociados} & RNF-REL-001 \\ \hline
+\end{tabular}
+\caption{HU-NOT-001 – Mensajes transaccionales sobre eventos clave}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-NOT-002 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{cliente}, quiero \textbf{configurar qué notificaciones recibo y por cuáles canales}, para \textbf{evitar mensajes innecesarios y mantener solo información relevante}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item El cliente dispone de una sección de preferencias de comunicación en su perfil.
+    \item Puede activar o desactivar, por tipo de mensaje, los canales disponibles (por ejemplo, transaccionales, recordatorios, campañas).
+    \item Las notificaciones relacionadas con obligaciones legales o de seguridad se identifican como no desactivables.
+    \item Los cambios en las preferencias tienen efecto en los siguientes envíos a partir de su actualización.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & SHOULD \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-N-005 \\ \hline
+\textbf{RNF Asociados} & RNF-SEC-007, RNF-USA-004 \\ \hline
+\end{tabular}
+\caption{HU-NOT-002 – Gestión de preferencias de notificación}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-NOT-003 \\ \hline
+\textbf{Rol} & Cliente Final \\ \hline
+\textbf{Historia} &
+Como \textbf{cliente}, quiero \textbf{recibir avisos en el dispositivo cuando ocurren eventos importantes}, para \textbf{reaccionar a tiempo sin depender solo del correo electrónico}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item El cliente puede activar o desactivar la recepción de avisos en su dispositivo desde la configuración de la cuenta.
+    \item Los avisos se generan ante eventos relevantes, como envíos despachados, cambios de estado de pedidos o proximidad de citas.
+    \item El contenido es breve, claro y orientado a la acción.
+    \item Si el cliente desactiva este tipo de avisos, deja de recibirlos en los eventos posteriores.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & SHOULD \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-N-003, RF-A-004 \\ \hline
+\textbf{RNF Asociados} & RNF-USA-002, RNF-REL-005 \\ \hline
+\end{tabular}
+\caption{HU-NOT-003 – Avisos en dispositivo sobre eventos importantes}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-NOT-004 \\ \hline
+\textbf{Rol} & Administrador de Operaciones \\ \hline
+\textbf{Historia} &
+Como \textbf{administrador de operaciones}, quiero \textbf{consultar el historial de mensajes enviados a un cliente}, para \textbf{verificar qué información recibió en caso de reclamos o disputas}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item La vista de detalle de un cliente incluye una sección con los mensajes enviados, ordenados cronológicamente.
+    \item Para cada mensaje se muestra fecha, canal, tipo y estado de entrega.
+    \item Solo los usuarios con permisos adecuados pueden acceder a este historial.
+    \item El contenido del mensaje se muestra de forma parcial o completa según las políticas de protección de datos.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & SHOULD \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-N-004 \\ \hline
+\textbf{RNF Asociados} & RNF-MAIN-002, RNF-SEC-005 \\ \hline
+\end{tabular}
+\caption{HU-NOT-004 – Consulta de historial de notificaciones enviadas}
+\end{table}
+
+% ------------------------------------------------------------
+% Módulo: Administración
+% ------------------------------------------------------------
+
+\subsubsection{Módulo: Administración}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-ADM-001 \\ \hline
+\textbf{Rol} & Administrador de Negocio \\ \hline
+\textbf{Historia} &
+Como \textbf{administrador de negocio}, quiero \textbf{visualizar un panel con indicadores clave de desempeño}, para \textbf{tomar decisiones comerciales basadas en datos}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item El panel muestra métricas como volumen de transacciones, valor bruto gestionado, conversión y desempeño por categoría o proveedor.
+    \item Se pueden aplicar filtros por periodo de tiempo y por tipo de oferta.
+    \item Es posible identificar rápidamente tendencias y variaciones significativas.
+    \item El panel se actualiza con una frecuencia acorde a los objetivos de la operación.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & SHOULD \\ \hline
+\textbf{Story Points} & 8 \\ \hline
+\textbf{RF Asociados} & RF-AD-001 \\ \hline
+\textbf{RNF Asociados} & RNF-REL-005, RNF-MAIN-003 \\ \hline
+\end{tabular}
+\caption{HU-ADM-001 – Panel ejecutivo de indicadores de negocio}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-ADM-002 \\ \hline
+\textbf{Rol} & Administrador de Contenido \\ \hline
+\textbf{Historia} &
+Como \textbf{administrador de contenido}, quiero \textbf{aprobar, suspender o editar proveedores desde una interfaz central}, para \textbf{garantizar que solo se ofrezcan productos y servicios que cumplan las políticas de calidad}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item La interfaz muestra un listado de proveedores con su estado actual (pendiente, activo, suspendido).
+    \item El administrador puede revisar la información básica y el historial de cada proveedor antes de tomar una decisión.
+    \item Los cambios de estado requieren confirmación explícita y, cuando aplica, un motivo documentado.
+    \item Las decisiones quedan registradas en un historial de auditoría.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & SHOULD \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-AD-002, RF-PR-005 \\ \hline
+\textbf{RNF Asociados} & RNF-SEC-004 \\ \hline
+\end{tabular}
+\caption{HU-ADM-002 – Gestión del ciclo de vida de proveedores}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-ADM-003 \\ \hline
+\textbf{Rol} & Administrador de Operaciones \\ \hline
+\textbf{Historia} &
+Como \textbf{administrador de operaciones}, quiero \textbf{gestionar disputas entre clientes y proveedores y seguir su estado}, para \textbf{resolver conflictos de forma trazable y dentro de los tiempos de servicio definidos}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item El sistema permite registrar una disputa asociada a un pedido, con su tipo y motivo.
+    \item Cada disputa tiene un estado (por ejemplo, abierta, en análisis, resuelta, cerrada) y plazos asociados.
+    \item Se pueden registrar notas internas y comunicaciones relevantes en el contexto de la disputa.
+    \item El historial de acciones y cambios de estado queda disponible para consultas posteriores.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & COULD \\ \hline
+\textbf{Story Points} & 8 \\ \hline
+\textbf{RF Asociados} & RF-AD-003 \\ \hline
+\textbf{RNF Asociados} & RNF-SEC-007, RNF-REL-005 \\ \hline
+\end{tabular}
+\caption{HU-ADM-003 – Gestión y trazabilidad de disputas}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-ADM-004 \\ \hline
+\textbf{Rol} & Administrador de Contenido \\ \hline
+\textbf{Historia} &
+Como \textbf{administrador de contenido}, quiero \textbf{moderar reseñas y comentarios reportados por otros usuarios}, para \textbf{mantener la calidad y confiabilidad de la información mostrada en el marketplace}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item Los usuarios pueden marcar reseñas o comentarios como inapropiados o no alineados con las políticas de uso.
+    \item Las reseñas reportadas se muestran en una vista de moderación con la información necesaria para tomar decisiones.
+    \item El administrador puede aprobar, ocultar o eliminar una reseña, registrando el motivo.
+    \item Las decisiones de moderación se reflejan en la visibilidad de la reseña para otros usuarios.
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & SHOULD \\ \hline
+\textbf{Story Points} & 5 \\ \hline
+\textbf{RF Asociados} & RF-AD-004, RF-AD-005 \\ \hline
+\textbf{RNF Asociados} & RNF-SEC-005 \\ \hline
+\end{tabular}
+\caption{HU-ADM-004 – Moderación de reseñas y comentarios}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{ID} & HU-ADM-005 \\ \hline
+\textbf{Rol} & Administrador IT \\ \hline
+\textbf{Historia} &
+Como \textbf{administrador IT}, quiero \textbf{contar con herramientas de monitoreo y registros centralizados}, para \textbf{detectar incidentes de seguridad o disponibilidad y actuar antes de que afecten el negocio}. \\ \hline
+
+\textbf{Criterios de Aceptación} &
+\begin{itemize}[leftmargin=*]
+    \item El administrador IT dispone de una vista con el estado general de los servicios principales de la plataforma.
+    \item Se muestran indicadores como tasa de errores, tiempos de respuesta y disponibilidad reciente.
+    \item Es posible profundizar en los registros asociados a un incidente para analizar su causa.
+    \item Se generan avisos de alta prioridad cuando ciertos umbrales se superan (por ejemplo, tasa de errores o caídas de servicio).
+\end{itemize} \\ \hline
+
+\textbf{Prioridad} & SHOULD \\ \hline
+\textbf{Story Points} & 8 \\ \hline
+\textbf{RF Asociados} & RF-PR-005, RF-AD-001 \\ \hline
+\textbf{RNF Asociados} & RNF-REL-005, RNF-SEC-005, RNF-MAIN-002 \\ \hline
+\end{tabular}
+\caption{HU-ADM-005 – Monitoreo operativo y de seguridad de la plataforma}
+\end{table}

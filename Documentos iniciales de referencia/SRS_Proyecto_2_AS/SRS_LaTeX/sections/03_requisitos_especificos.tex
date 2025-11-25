@@ -1,0 +1,796 @@
+\section{Requisitos Específicos}
+
+\subsection{Metodología de Priorización}
+
+Los requisitos funcionales se priorizan utilizando una combinación de:
+(i) el método \textbf{MoSCoW} y 
+(ii) un \textbf{rank numérico interno} de 1 a 10, donde 1 representa la máxima prioridad crítica para la viabilidad del sistema y 10 la menor prioridad. 
+
+La prioridad se deriva explícitamente del impacto del requisito sobre los objetivos de negocio definidos en la sección de alcance, considerando los siguientes criterios:
+
+\begin{enumerate}
+    \item \textbf{Impacto en resultados de negocio:} contribución a generación de ingresos (GMV), retención de clientes y recurrencia de compra.
+    \item \textbf{Dependencias técnicas y funcionales:} grado en que otros requisitos dependen de este para operar.
+    \item \textbf{Riesgo de negocio:} impacto de su ausencia en la viabilidad del modelo (operativa, regulatoria o de confianza).
+    \item \textbf{Diferenciación competitiva:} relevancia del requisito frente a la propuesta de valor central de la plataforma multicanal.
+    \item \textbf{Complejidad de implementación:} esfuerzo estimado, incertidumbre técnica y riesgo de retrasos.
+\end{enumerate}
+
+El rank numérico se utiliza para ordenar el backlog y se mapea a la escala MoSCoW de la siguiente forma: 
+\textbf{1--3} $\rightarrow$ MUST, 
+\textbf{4--6} $\rightarrow$ SHOULD, 
+\textbf{7--8} $\rightarrow$ COULD, 
+\textbf{9--10} $\rightarrow$ WON'T (fuera de alcance del entregable actual).
+
+\textbf{Escala de Priorización (MoSCoW):}
+\begin{itemize}
+    \item \textbf{MUST (M):} Requisito crítico para el MVP. Sin este, la plataforma no cumple los objetivos mínimos de negocio.
+    \item \textbf{SHOULD (S):} Alta prioridad. Aporta ventajas competitivas relevantes o reduce riesgos, pero el sistema podría operar sin él en una primera fase.
+    \item \textbf{COULD (C):} Deseable. Mejora la propuesta de valor o la experiencia de usuario, pero no afecta la viabilidad inicial.
+    \item \textbf{WON'T (W):} Fuera de alcance de esta versión. Se deja explícitamente en el \textit{roadmap} futuro.
+\end{itemize}
+
+\subsubsection{Mapa de Módulos Funcionales}
+
+Antes de detallar los requisitos, se define el conjunto de módulos funcionales de alto nivel de la plataforma y su alineación con los objetivos de negocio.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|p{3.5cm}|p{7cm}|p{4cm}|}
+\hline
+\textbf{Módulo} & \textbf{Descripción} & \textbf{Objetivos de negocio asociados} \\
+\hline
+Gestión de Usuarios & Administra el ciclo de vida del cliente (registro, autenticación, perfil unificado y preferencias). & Consolidar la experiencia en un solo flujo de compra; aumentar fidelización. \\
+\hline
+Catálogo y Búsqueda & Mantiene el catálogo multicanal y permite búsqueda y filtrado unificado de productos físicos, servicios y contenidos digitales. & Gestionar disponibilidad y precios en tiempo real; facilitar descubrimiento de oferta. \\
+\hline
+Carrito y Checkout & Orquesta el carrito de compras multivertical y el proceso de checkout, aplicando impuestos, descuentos y reglas de negocio. & Consolidar la experiencia de compra; reducir fricción y abandono de carrito. \\
+\hline
+Pagos & Centraliza el procesamiento de pagos, soportando múltiples métodos y pasarelas, incluyendo pagos recurrentes. & Garantizar transacciones seguras; maximizar tasa de éxito de pagos. \\
+\hline
+Integración con Proveedores & Gestiona la incorporación, autenticación y operación de proveedores, así como la sincronización de catálogos e inventarios. & Facilitar incorporación de nuevas verticales y proveedores sin reestructurar el sistema. \\
+\hline
+Agendamiento de Servicios & Permite consultar disponibilidad, reservar, reprogramar y recordar citas asociadas a servicios profesionales. & Integrar servicios al flujo de compra y reducir \textit{no-shows}. \\
+\hline
+Notificaciones & Administra el envío multicanal (email, SMS, push, in-app) de notificaciones transaccionales y operativas. & Mejorar eficiencia operativa y comunicación en tiempo real con clientes y proveedores. \\
+\hline
+Administración & Proporciona herramientas para monitoreo de KPIs, gestión de proveedores, moderación y operación de la plataforma. & Mejorar eficiencia operativa, toma de decisiones basada en datos y control de calidad. \\
+\hline
+\end{tabular}
+\caption{Mapa de módulos funcionales y relación con objetivos de negocio}
+\label{tab:mapa-modulos}
+\end{table}
+
+\clearpage
+
+% ============================================================
+% GESTIÓN DE USUARIOS
+% ============================================================
+
+\subsection{Requisitos Funcionales - Módulo: Gestión de Usuarios}
+
+\begin{longtable}{|p{2cm}|p{1.5cm}|p{10.5cm}|}
+\hline
+\textbf{ID} & \textbf{Prior.} & \textbf{Requisito} \\
+\hline
+\endfirsthead
+\hline
+\textbf{ID} & \textbf{Prior.} & \textbf{Requisito} \\
+\hline
+\endhead
+
+RF-U-001 & MUST & \textbf{Registro de Cliente con Email} \newline
+\textbf{Descripción:} El sistema debe permitir el registro de nuevos clientes usando email y contraseña, creando un perfil de usuario único en la plataforma. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Validación de formato de email según estándar vigente. \newline
+- Contraseña con mínimo 8 caracteres, incluyendo al menos 1 mayúscula, 1 número y 1 carácter especial. \newline
+- Envío automático de email de confirmación al registrarse. \newline
+- Activación de cuenta mediante doble opt-in (enlace de verificación). \newline
+\textbf{Justificación de negocio:} Habilita la creación de un perfil unificado por cliente, necesario para personalización y consolidación de la experiencia de compra. \newline
+\textbf{Módulo:} Gestión de Usuarios \\
+\hline
+
+RF-U-002 & MUST & \textbf{Autenticación Segura} \newline
+\textbf{Descripción:} El sistema debe implementar un mecanismo de inicio de sesión seguro basado en credenciales y almacenamiento protegido de contraseñas. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Las contraseñas deben almacenarse de forma cifrada y con sal única por usuario. \newline
+- Máximo 5 intentos fallidos de inicio de sesión antes de aplicar bloqueo temporal de 15 minutos. \newline
+- Tokens de sesión con expiración configurable (valor por defecto: 24 horas). \newline
+- La acción de cierre de sesión debe invalidar los tokens activos del lado servidor. \newline
+\textbf{Justificación de negocio:} Reduce riesgo de fraude y cumple requisitos de seguridad, preservando la confianza del usuario y de los proveedores. \newline
+\textbf{Módulo:} Gestión de Usuarios \\
+\hline
+
+RF-U-003 & SHOULD & \textbf{Autenticación Federada (SSO) con Proveedores Externos} \newline
+\textbf{Descripción:} El sistema debe soportar autenticación de clientes mediante proveedores externos de identidad (por ejemplo, cuentas de Google u otros). \newline
+\textbf{Criterios de Aceptación:} \newline
+- Flujo de autorización conforme al estándar de autenticación federada seleccionado. \newline
+- Creación automática de perfil de usuario en el primer inicio de sesión federado. \newline
+- Posibilidad de vincular cuentas externas a un perfil ya existente. \newline
+- Solicitud únicamente de atributos mínimos necesarios (correo electrónico, nombre, foto de perfil). \newline
+\textbf{Justificación de negocio:} Disminuye la fricción en el registro y mejora la conversión de nuevos usuarios. \newline
+\textbf{Módulo:} Gestión de Usuarios \\
+\hline
+
+RF-U-004 & SHOULD & \textbf{Autenticación Multifactor Opcional (MFA)} \newline
+\textbf{Descripción:} El sistema debe ofrecer autenticación multifactor opcional basada en códigos de un solo uso generados por aplicaciones de autenticación. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Generación de un código o imagen para vincular la cuenta con una aplicación generadora de códigos temporales. \newline
+- Emisión de al menos 8 códigos de respaldo de un solo uso por usuario. \newline
+- Opción de recordar dispositivo durante 30 días, si el usuario lo autoriza. \newline
+- MFA obligatorio para operaciones sensibles como cambio de contraseña o actualización de métodos de pago. \newline
+\textbf{Justificación de negocio:} Incrementa el nivel de seguridad para usuarios que manejan información o transacciones críticas. \newline
+\textbf{Módulo:} Gestión de Usuarios \\
+\hline
+
+RF-U-005 & MUST & \textbf{Recuperación de Contraseña} \newline
+\textbf{Descripción:} El sistema debe permitir a los clientes restablecer su contraseña mediante un flujo de recuperación basado en token enviado por correo electrónico. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Generación de un token único con vigencia máxima de 1 hora. \newline
+- Envío de un enlace directo para restablecer la contraseña sin requerir inicio de sesión previo. \newline
+- Invalidación automática del token una vez se haya actualizado la contraseña. \newline
+- Envío de notificación al correo registrado informando sobre el cambio de contraseña. \newline
+\textbf{Justificación de negocio:} Requisito básico de usabilidad que evita pérdidas de acceso y solicitudes manuales de soporte. \newline
+\textbf{Módulo:} Gestión de Usuarios \\
+\hline
+
+RF-U-006 & SHOULD & \textbf{Perfil Unificado de Usuario} \newline
+\textbf{Descripción:} El sistema debe mantener un perfil centralizado por cliente, consolidando información personal, preferencias y el historial de interacción con la plataforma. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Almacenamiento de datos personales: nombre, apellido, teléfono y direcciones de envío. \newline
+- Configuración de preferencias de notificación por canal (email, SMS, push, in-app). \newline
+- Historial consolidado de compras, listas de deseos y reseñas realizadas. \newline
+- Posibilidad de registrar métodos de pago tokenizados para uso futuro. \newline
+- Edición del perfil con validaciones de formato en tiempo real. \newline
+\textbf{Justificación de negocio:} Es la base de la identidad unificada del cliente, necesaria para personalización, analítica y marketing. \newline
+\textbf{Módulo:} Gestión de Usuarios \\
+\hline
+
+\caption{Requisitos Funcionales - Gestión de Usuarios}
+\label{tab:rf-usuarios}
+\end{longtable}
+
+\clearpage
+
+% ============================================================
+% CATÁLOGO Y BÚSQUEDA
+% ============================================================
+
+\subsection{Requisitos Funcionales - Módulo: Catálogo y Búsqueda}
+
+\begin{longtable}{|p{2cm}|p{1.5cm}|p{10.5cm}|}
+\hline
+\textbf{ID} & \textbf{Prior.} & \textbf{Requisito} \\
+\hline
+\endfirsthead
+\hline
+\textbf{ID} & \textbf{Prior.} & \textbf{Requisito} \\
+\hline
+\endhead
+
+RF-C-001 & MUST & \textbf{Sincronización de Catálogo con Proveedores} \newline
+\textbf{Descripción:} El sistema debe permitir recibir y sincronizar catálogos de proveedores mediante interfaces bien definidas, soportando actualizaciones masivas e incrementales. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Disponibilidad de una interfaz para registrar o actualizar en bloque hasta 10\,000 productos por solicitud. \newline
+- Validación del esquema de datos con devolución de errores específicos por registro inválido. \newline
+- Soporte tanto para sincronización incremental (cambios) como para cargas completas de catálogo. \newline
+- Aplicación de mecanismos de limitación de tasa por proveedor para proteger la plataforma. \newline
+\textbf{Justificación de negocio:} Habilita el modelo de integración rápida con múltiples proveedores y verticales, reduciendo el costo de incorporación. \newline
+\textbf{Módulo:} Catálogo y Búsqueda \\
+\hline
+
+RF-C-002 & MUST & \textbf{Actualización de Inventario en Tiempo Casi Real} \newline
+\textbf{Descripción:} El sistema debe reflejar cambios de stock y disponibilidad de productos en menos de 5 segundos desde que el proveedor notifica el cambio. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Existencia de un mecanismo de notificación de cambios de stock originado por el proveedor. \newline
+- Mecanismo alterno de consulta periódica (no mayor a 5 minutos) para proveedores que no soporten notificaciones. \newline
+- Invalidación automática de caché al recibir cambios de disponibilidad. \newline
+- Indicador visual de stock limitado cuando queden menos de 10 unidades. \newline
+\textbf{Justificación de negocio:} Evita ventas de productos no disponibles, reduciendo cancelaciones y reclamos. \newline
+\textbf{Módulo:} Catálogo y Búsqueda \\
+\hline
+
+RF-C-003 & MUST & \textbf{Búsqueda Unificada Multivertical} \newline
+\textbf{Descripción:} El sistema debe permitir realizar búsquedas por texto que retornen resultados de productos físicos, contenidos digitales y servicios en una sola consulta. \newline
+\textbf{Criterios de Aceptación:} \newline
+- La búsqueda debe ofrecer tolerancia a errores tipográficos (búsqueda difusa). \newline
+- Los resultados deben agruparse por vertical (físicos, digitales, servicios) con vista previa. \newline
+- El 95\% de las consultas debe resolverse en menos de 500 ms bajo carga esperada. \newline
+- Debe existir un mecanismo de autocompletado que sugiera hasta 10 coincidencias relevantes. \newline
+\textbf{Justificación de negocio:} Es un diferenciador clave frente a plataformas tradicionales centradas en una sola vertical. \newline
+\textbf{Módulo:} Catálogo y Búsqueda \\
+\hline
+
+RF-C-004 & SHOULD & \textbf{Filtros Avanzados y Facetas Dinámicas} \newline
+\textbf{Descripción:} El sistema debe ofrecer filtros dinámicos basados en atributos relevantes de cada producto o servicio. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Filtros configurables por precio, categoría, proveedor, calificación y disponibilidad. \newline
+- Las facetas deben mostrar la cantidad de resultados por atributo. \newline
+- Debe permitirse combinar múltiples filtros bajo lógica AND. \newline
+- Los filtros seleccionados deben persistir durante toda la sesión del usuario. \newline
+\textbf{Justificación de negocio:} Mejora la tasa de conversión al facilitar la exploración de catálogos grandes. \newline
+\textbf{Módulo:} Catálogo y Búsqueda \\
+\hline
+
+RF-C-005 & SHOULD & \textbf{Ordenamiento de Resultados} \newline
+\textbf{Descripción:} El sistema debe permitir ordenar los resultados de búsqueda por criterios relevantes. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Criterios soportados: relevancia (por defecto), precio asc/desc, popularidad, calificación y fecha de publicación. \newline
+- El ordenamiento seleccionado debe mantenerse al navegar entre páginas. \newline
+- Debe visualizarse un indicador del criterio de orden actual. \newline
+\textbf{Justificación de negocio:} Cumple con estándares de usabilidad y expectativas de usuarios. \newline
+\textbf{Módulo:} Catálogo y Búsqueda \\
+\hline
+
+RF-C-006 & COULD & \textbf{Búsqueda por Voz} \newline
+\textbf{Descripción:} El sistema debe permitir ejecutar búsquedas mediante comandos de voz en dispositivos móviles compatibles. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Integración con capacidades de reconocimiento de voz disponibles en los navegadores móviles soportados. \newline
+- Conversión de voz a texto y ejecución automática de la búsqueda. \newline
+- Soporte mínimo para español latinoamericano. \newline
+\textbf{Justificación de negocio:} Funcionalidad deseable en tendencias modernas de comercio móvil. \newline
+\textbf{Módulo:} Catálogo y Búsqueda \\
+\hline
+
+\caption{Requisitos Funcionales - Catálogo y Búsqueda}
+\label{tab:rf-catalogo}
+\end{longtable}
+
+\clearpage
+
+% ============================================================
+% CARRITO Y CHECKOUT
+% ============================================================
+
+\subsection{Requisitos Funcionales - Módulo: Carrito y Checkout}
+
+\begin{longtable}{|p{2cm}|p{1.5cm}|p{10.5cm}|}
+\hline
+\textbf{ID} & \textbf{Prior.} & \textbf{Requisito} \\
+\hline
+\endfirsthead
+\hline
+\textbf{ID} & \textbf{Prior.} & \textbf{Requisito} \\
+\hline
+\endhead
+
+RF-CC-001 & MUST & \textbf{Carrito Universal Multivertical} \newline
+\textbf{Descripción:} El sistema debe permitir añadir y gestionar en un mismo carrito productos físicos, servicios y contenidos digitales. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Debe soportarse la coexistencia de ítems de distintas verticales en un mismo carrito. \newline
+- Cálculo automático de subtotales por vertical. \newline
+- Aplicación de reglas específicas por tipo de ítem (por ejemplo, servicios que requieren agendamiento posterior). \newline
+- Indicadores visuales diferenciados por tipo de ítem. \newline
+\textbf{Justificación de negocio:} Es el pilar central de la propuesta de valor multicanal de la plataforma. \newline
+\textbf{Módulo:} Carrito y Checkout \\
+\hline
+
+RF-CC-002 & MUST & \textbf{Persistencia de Carrito} \newline
+\textbf{Descripción:} El sistema debe conservar el estado del carrito entre sesiones para usuarios autenticados. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Guardado automático de cambios en el carrito ante cada modificación. \newline
+- Sincronización del contenido del carrito entre dispositivos web y móviles. \newline
+- Validación de disponibilidad de los ítems al reabrir la sesión. \newline
+- Notificación clara de ítems vencidos o con cambios de stock, con opción de eliminación o sustitución. \newline
+\textbf{Justificación de negocio:} Reduce el abandono de compra y mejora la experiencia de usuario. \newline
+\textbf{Módulo:} Carrito y Checkout \\
+\hline
+
+RF-CC-003 & MUST & \textbf{Cálculo Dinámico de Totales} \newline
+\textbf{Descripción:} El sistema debe calcular en tiempo real los montos finales, impuestos y descuentos aplicables al carrito. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Actualización inmediata de montos ante cualquier cambio en el carrito. \newline
+- Desglose detallado de impuestos, costos de envío y descuentos aplicados. \newline
+- Validación de cupones y promociones en tiempo real. \newline
+- Cálculo interno de comisiones para proveedores sin exponerlas al cliente final. \newline
+\textbf{Justificación de negocio:} Garantiza transparencia en la transacción y cumplimiento de regulaciones fiscales. \newline
+\textbf{Módulo:} Carrito y Checkout \\
+\hline
+
+RF-CC-004 & SHOULD & \textbf{Gestión de Cupones y Promociones} \newline
+\textbf{Descripción:} El sistema debe permitir aplicar descuentos y promociones configurables durante el proceso de compra. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Soporte para descuentos porcentuales, montos fijos y envío gratis. \newline
+- Configuración de restricciones por fechas, categorías, monto mínimo y primera compra. \newline
+- Aplicación de un cupón por transacción salvo reglas explícitas de combinación. \newline
+- Validación del cupón en el servidor para evitar uso indebido o repetitivo. \newline
+\textbf{Justificación de negocio:} Constituye una herramienta clave de marketing para impulsar ventas y recurrencia. \newline
+\textbf{Módulo:} Carrito y Checkout \\
+\hline
+
+RF-CC-005 & MUST & \textbf{Checkout Multistep} \newline
+\textbf{Descripción:} El sistema debe implementar un proceso de compra estructurado en pasos secuenciales y consistentes. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Paso 1: captura o selección de dirección de envío (omitible para productos 100\% digitales). \newline
+- Paso 2: selección del método de pago. \newline
+- Paso 3: revisión de la orden y confirmación final. \newline
+- Posibilidad de navegar hacia atrás sin pérdida de datos ya ingresados. \newline
+- Indicador visual del progreso (por ejemplo, barra o migas de pan). \newline
+\textbf{Justificación de negocio:} Reduce errores y da claridad al usuario sobre el estado del proceso de compra. \newline
+\textbf{Módulo:} Carrito y Checkout \\
+\hline
+
+RF-CC-006 & MUST & \textbf{Validación Previa al Pago} \newline
+\textbf{Descripción:} El sistema debe verificar la disponibilidad en tiempo casi real de todos los ítems antes de procesar el pago. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Reserva temporal de inventario (lock) por al menos 5 minutos durante el checkout. \newline
+- Consulta en tiempo real a los proveedores para validar stock y condiciones. \newline
+- Bloqueo del proceso de pago si se detectan ítems no disponibles. \newline
+- Sugerencia automática de alternativas cuando existan productos similares disponibles. \newline
+\textbf{Justificación de negocio:} Evita ventas no cumplibles, reclamos y procesos de reembolso innecesarios. \newline
+\textbf{Módulo:} Carrito y Checkout \\
+\hline
+
+\caption{Requisitos Funcionales - Carrito y Checkout}
+\label{tab:rf-carrito}
+\end{longtable}
+
+\clearpage
+
+% ============================================================
+% PAGOS
+% ============================================================
+
+\subsection{Requisitos Funcionales - Módulo: Pagos}
+
+\begin{longtable}{|p{2cm}|p{1.5cm}|p{10.5cm}|}
+\hline
+\textbf{ID} & \textbf{Prior.} & \textbf{Requisito} \\
+\hline
+\endfirsthead
+\hline
+\textbf{ID} & \textbf{Prior.} & \textbf{Requisito} \\
+\hline
+\endhead
+
+RF-P-001 & MUST & \textbf{Procesamiento de Pagos con Tarjetas} \newline
+\textbf{Descripción:} El sistema debe procesar pagos con tarjetas de crédito y débito a través de pasarelas certificadas según estándares de seguridad de la industria. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Soporte para los principales esquemas de tarjeta utilizados en el mercado objetivo. \newline
+- Tokenización inmediata de los datos sensibles de la tarjeta; nunca deben almacenarse en texto plano. \newline
+- Validación de códigos de seguridad y datos de facturación relevantes. \newline
+- Manejo de respuestas estándar de las pasarelas (aprobado, rechazado, autenticación adicional requerida). \newline
+- Tiempo máximo de espera de 30 segundos antes de considerar la transacción fallida, con reintentos controlados. \newline
+\textbf{Justificación de negocio:} Es el núcleo de la monetización de la plataforma y debe cumplir requisitos de seguridad y confianza. \newline
+\textbf{Módulo:} Pagos \\
+\hline
+
+RF-P-002 & MUST & \textbf{Integración con Múltiples Pasarelas y Failover} \newline
+\textbf{Descripción:} El sistema debe ser capaz de operar con más de un proveedor de procesamiento de pagos y conmutar automáticamente ante fallas. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Configuración de una pasarela primaria y al menos una secundaria. \newline
+- Mecanismo para detectar tasas de error elevadas en la pasarela primaria. \newline
+- Conmutación automática a la pasarela secundaria cuando se detecte degradación significativa. \newline
+- Notificación al equipo de operaciones ante fallas prolongadas. \newline
+- Posibilidad de forzar el uso de una pasarela específica desde un panel administrativo. \newline
+\textbf{Justificación de negocio:} Asegura alta disponibilidad de pagos y minimiza pérdidas de GMV por caídas de terceros. \newline
+\textbf{Módulo:} Pagos \\
+\hline
+
+RF-P-003 & SHOULD & \textbf{Métodos de Pago Alternativos} \newline
+\textbf{Descripción:} El sistema debe soportar métodos de pago alternativos relevantes para el mercado (por ejemplo, billeteras digitales o pago a plazos). \newline
+\textbf{Criterios de Aceptación:} \newline
+- Integración con al menos una billetera digital utilizada por los clientes objetivo. \newline
+- Integración con al menos un proveedor de pago a plazos o \textit{Buy Now, Pay Later}. \newline
+- Soporte para flujos de redirección y retorno seguro a la plataforma. \newline
+- Manejo de notificaciones asíncronas para confirmar el estado final de la transacción. \newline
+\textbf{Justificación de negocio:} Amplía las opciones de pago, mejora conversión y acceso a segmentos con baja bancarización tradicional. \newline
+\textbf{Módulo:} Pagos \\
+\hline
+
+RF-P-004 & MUST & \textbf{Pagos Recurrentes para Suscripciones} \newline
+\textbf{Descripción:} El sistema debe gestionar cobros automáticos recurrentes asociados a contenidos o servicios bajo modelo de suscripción. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Configuración de periodicidades como mensual, trimestral y anual. \newline
+- Ejecución automática de cobros previo a la fecha de renovación. \newline
+- Envío de notificaciones previas a la renovación para el cliente. \newline
+- Manejo de tarjetas expiradas con actualización o notificación oportuna. \newline
+- Posibilidad de cancelación con efecto al final del período pagado. \newline
+\textbf{Justificación de negocio:} Permite modelos de ingreso recurrente en la vertical de contenidos digitales y servicios. \newline
+\textbf{Módulo:} Pagos \\
+\hline
+
+RF-P-005 & MUST & \textbf{Confirmación y Notificación de Transacciones} \newline
+\textbf{Descripción:} El sistema debe confirmar las transacciones exitosas y proporcionar comprobantes claros al cliente. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Página de confirmación con detalle de la orden y código de referencia. \newline
+- Envío de correo electrónico transaccional en menos de 30 segundos. \newline
+- Generación de comprobante descargable en formato estándar (por ejemplo, PDF). \newline
+- Inclusión de identificadores necesarios para seguimiento y soporte. \newline
+\textbf{Justificación de negocio:} Refuerza la confianza del usuario y reduce consultas y disputas sobre el estado del pago. \newline
+\textbf{Módulo:} Pagos \\
+\hline
+
+RF-P-006 & SHOULD & \textbf{Gestión de Reembolsos} \newline
+\textbf{Descripción:} El sistema debe permitir gestionar reembolsos parciales o totales de forma controlada, ya sea manualmente por un administrador o por reglas automáticas de política. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Soporte para reembolso total y parcial. \newline
+- Registro del motivo de reembolso y usuario que lo aprueba. \newline
+- Procesamiento de reembolsos a través de la misma pasarela de pago utilizada en el cargo original. \newline
+- Estado del reembolso consultable desde el panel administrativo. \newline
+- Envío de notificaciones a cliente y proveedor afectados. \newline
+\textbf{Justificación de negocio:} Requisito regulatorio y de servicio al cliente para manejar cancelaciones y reclamaciones. \newline
+\textbf{Módulo:} Pagos \\
+\hline
+
+\caption{Requisitos Funcionales - Pagos}
+\label{tab:rf-pagos}
+\end{longtable}
+
+\clearpage
+
+% ============================================================
+% INTEGRACIÓN CON PROVEEDORES
+% ============================================================
+
+\subsection{Requisitos Funcionales - Módulo: Integración con Proveedores}
+
+\begin{longtable}{|p{2cm}|p{1.5cm}|p{10.5cm}|}
+\hline
+\textbf{ID} & \textbf{Prior.} & \textbf{Requisito} \\
+\hline
+\endfirsthead
+\hline
+\textbf{ID} & \textbf{Prior.} & \textbf{Requisito} \\
+\hline
+\endhead
+
+RF-PR-001 & MUST & \textbf{Onboarding Automatizado de Proveedores} \newline
+\textbf{Descripción:} El sistema debe proporcionar un proceso \textit{self-service} para el registro y configuración de nuevos proveedores en la plataforma. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Formulario de registro con captura de información legal y de contacto. \newline
+- Validación de documentos requeridos (por ejemplo, registros tributarios o licencias). \newline
+- Generación automática de credenciales para uso de las APIs de integración. \newline
+- Acceso inicial a un entorno de pruebas o \textit{sandbox}. \newline
+- Tiempo máximo de ciclo de onboarding definido para proveedores con capacidad técnica adecuada. \newline
+\textbf{Justificación de negocio:} Reduce el esfuerzo manual de incorporación y escala la cantidad de proveedores soportados. \newline
+\textbf{Módulo:} Integración con Proveedores \\
+\hline
+
+RF-PR-002 & MUST & \textbf{Autenticación de Proveedores para Consumo de APIs} \newline
+\textbf{Descripción:} El sistema debe autenticar de forma segura a los proveedores que consumen las APIs de catálogo, órdenes y otros recursos. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Uso de credenciales emitidas durante el proceso de onboarding. \newline
+- Control de acceso basado en permisos o alcances diferenciados por tipo de operación. \newline
+- Capacidad de revocar credenciales desde un panel de administración. \newline
+- Aplicación de límites de uso por proveedor (número de llamadas por minuto u hora). \newline
+\textbf{Justificación de negocio:} Protege recursos de la plataforma y permite gobernar el consumo de servicios por parte de terceros. \newline
+\textbf{Módulo:} Integración con Proveedores \\
+\hline
+
+RF-PR-003 & MUST & \textbf{Notificación de Eventos a Proveedores} \newline
+\textbf{Descripción:} El sistema debe notificar a los proveedores eventos relevantes relacionados con órdenes, pagos y agendamientos mediante mecanismos configurables. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Soporte para eventos como creación y cancelación de órdenes, confirmación de pago y programación de citas. \newline
+- Posibilidad de que cada proveedor registre la URL destino para recibir las notificaciones. \newline
+- Firma o mecanismo de validación para garantizar integridad y autenticidad del mensaje. \newline
+- Reintentos con retroceso exponencial ante fallos de entrega. \newline
+- Registro de entregas exitosas y fallidas accesible desde un panel. \newline
+\textbf{Justificación de negocio:} Permite automatizar la operación de los proveedores y mantenerlos sincronizados con el estado de la plataforma. \newline
+\textbf{Módulo:} Integración con Proveedores \\
+\hline
+
+RF-PR-004 & SHOULD & \textbf{Portal para Desarrolladores de Proveedores} \newline
+\textbf{Descripción:} El sistema debe ofrecer un portal para desarrolladores de proveedores con documentación y herramientas de prueba de las APIs. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Documentación interactiva de las APIs expuestas. \newline
+- Entorno de pruebas con datos de ejemplo y simuladores. \newline
+- Consola para ejecutar llamadas de prueba. \newline
+- Ejemplos de uso en lenguajes de programación comunes. \newline
+\textbf{Justificación de negocio:} Reduce el tiempo y errores de integración, mejorando la experiencia de los proveedores. \newline
+\textbf{Módulo:} Integración con Proveedores \\
+\hline
+
+RF-PR-005 & MUST & \textbf{Monitoreo de Salud de Integraciones} \newline
+\textbf{Descripción:} El sistema debe monitorear de forma continua el estado de salud de las integraciones con cada proveedor. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Cálculo de indicadores como disponibilidad, tasa de errores y tiempo de respuesta. \newline
+- Definición de umbrales para considerar una integración en estado degradado. \newline
+- Generación de alertas automáticas cuando se superen los umbrales definidos. \newline
+- Posibilidad de aplicar medidas de mitigación (por ejemplo, ocultar catálogo de un proveedor en mal estado). \newline
+\textbf{Justificación de negocio:} Permite actuar proactivamente ante fallas de proveedores y mantener calidad de servicio al cliente final. \newline
+\textbf{Módulo:} Integración con Proveedores \\
+\hline
+
+RF-PR-006 & SHOULD & \textbf{Liquidación Automática de Comisiones} \newline
+\textbf{Descripción:} El sistema debe calcular y registrar las comisiones que corresponden a cada proveedor según los términos acordados, facilitando su liquidación. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Configuración de porcentajes de comisión por proveedor o categoría. \newline
+- Cálculo automático de comisiones por transacción. \newline
+- Posibilidad de generar reportes periódicos de liquidación. \newline
+- Registro de las liquidaciones emitidas para fines de auditoría. \newline
+\textbf{Justificación de negocio:} Automatiza el flujo financiero con proveedores y genera trazabilidad. \newline
+\textbf{Módulo:} Integración con Proveedores \\
+\hline
+
+\caption{Requisitos Funcionales - Integración con Proveedores}
+\label{tab:rf-proveedores}
+\end{longtable}
+
+\clearpage
+
+% ============================================================
+% AGENDAMIENTO DE SERVICIOS
+% ============================================================
+
+\subsection{Requisitos Funcionales - Módulo: Agendamiento de Servicios}
+
+\begin{longtable}{|p{2cm}|p{1.5cm}|p{10.5cm}|}
+\hline
+\textbf{ID} & \textbf{Prior.} & \textbf{Requisito} \\
+\hline
+\endfirsthead
+\hline
+\textbf{ID} & \textbf{Prior.} & \textbf{Requisito} \\
+\hline
+\endhead
+
+RF-A-001 & SHOULD & \textbf{Consulta de Disponibilidad de Proveedores de Servicios} \newline
+\textbf{Descripción:} El sistema debe consultar en tiempo casi real la disponibilidad de agenda de los proveedores de servicios. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Soporte para consultas por identificador de servicio y rango de fechas. \newline
+- Respuesta con franjas horarias disponibles en formato estándar de fecha y hora. \newline
+- Mecanismo de caché de corta duración para evitar sobrecarga en los proveedores. \newline
+- Tiempo máximo de respuesta de la consulta acorde con los requerimientos de experiencia de usuario. \newline
+\textbf{Justificación de negocio:} Permite ofrecer servicios profesionales como parte del proceso de compra multicanal. \newline
+\textbf{Módulo:} Agendamiento de Servicios \\
+\hline
+
+RF-A-002 & SHOULD & \textbf{Reserva y Confirmación de Citas} \newline
+\textbf{Descripción:} El sistema debe permitir a los clientes reservar citas con proveedores de servicios, bloqueando los espacios seleccionados. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Bloqueo temporal del espacio seleccionado mientras se completa la reserva. \newline
+- Confirmación de la cita tanto en la plataforma como hacia el proveedor. \newline
+- Liberación del espacio reservado si el proceso no se completa en el tiempo definido. \newline
+- Generación de un registro de cita con datos del cliente, proveedor, fecha y hora. \newline
+\textbf{Justificación de negocio:} Completa el ciclo de venta para servicios que requieren atención en una fecha y hora específicas. \newline
+\textbf{Módulo:} Agendamiento de Servicios \\
+\hline
+
+RF-A-003 & COULD & \textbf{Reprogramación de Citas} \newline
+\textbf{Descripción:} El sistema debe permitir reprogramar citas existentes dentro de las políticas definidas por cada proveedor. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Verificación de las condiciones de reprogramación (por ejemplo, tiempo mínimo antes de la cita). \newline
+- Consulta de nueva disponibilidad respetando las restricciones del proveedor. \newline
+- Actualización del registro de cita y notificación a las partes involucradas. \newline
+\textbf{Justificación de negocio:} Mejora la experiencia del cliente y reduce cancelaciones definitivas. \newline
+\textbf{Módulo:} Agendamiento de Servicios \\
+\hline
+
+RF-A-004 & SHOULD & \textbf{Recordatorios Automatizados de Citas} \newline
+\textbf{Descripción:} El sistema debe enviar recordatorios automáticos de citas próximas a los clientes y, cuando aplique, a los proveedores. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Envío de recordatorio con antelación configurable (por ejemplo, 24 horas y 2 horas antes). \newline
+- Inclusión de datos clave (fecha, hora, ubicación o enlace remoto, datos de contacto). \newline
+- Uso de los canales de notificación preferidos por el usuario, respetando sus configuraciones. \newline
+\textbf{Justificación de negocio:} Disminuye el número de asistencias fallidas y mejora la eficiencia operativa. \newline
+\textbf{Módulo:} Agendamiento de Servicios \\
+\hline
+
+\caption{Requisitos Funcionales - Agendamiento de Servicios}
+\label{tab:rf-agendamiento}
+\end{longtable}
+
+\clearpage
+
+% ============================================================
+% NOTIFICACIONES
+% ============================================================
+
+\subsection{Requisitos Funcionales - Módulo: Notificaciones}
+
+\begin{longtable}{|p{2cm}|p{1.5cm}|p{10.5cm}|}
+\hline
+\textbf{ID} & \textbf{Prior.} & \textbf{Requisito} \\
+\hline
+\endfirsthead
+\hline
+\textbf{ID} & \textbf{Prior.} & \textbf{Requisito} \\
+\hline
+\endhead
+
+RF-N-001 & MUST & \textbf{Notificaciones Transaccionales por Correo Electrónico} \newline
+\textbf{Descripción:} El sistema debe enviar correos electrónicos automáticos para eventos transaccionales críticos. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Cobertura de eventos como registro, confirmación de compra, despacho de envío, agendamiento de cita y reembolso. \newline
+- Uso de plantillas responsivas con versión alternativa en texto plano. \newline
+- Inclusión de información relevante para seguimiento de la transacción. \newline
+- Envío del correo en un tiempo máximo definido (por ejemplo, 30 segundos) tras el evento. \newline
+\textbf{Justificación de negocio:} Brinda transparencia al usuario y soporte documental a las operaciones. \newline
+\textbf{Módulo:} Notificaciones \\
+\hline
+
+RF-N-002 & SHOULD & \textbf{Notificaciones por SMS para Eventos Críticos} \newline
+\textbf{Descripción:} El sistema debe permitir el envío de mensajes SMS para eventos que requieran alta visibilidad y reacción rápida. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Soporte para envío de códigos de verificación, confirmaciones de pago y recordatorios inmediatos. \newline
+- Longitud máxima de cada mensaje acorde a los límites estándar de SMS. \newline
+- Envío únicamente a usuarios que hayan dado consentimiento explícito. \newline
+- Aplicación de límites diarios de mensajes por usuario para evitar saturación. \newline
+\textbf{Justificación de negocio:} Complementa el correo electrónico para situaciones donde se requiere atención inmediata. \newline
+\textbf{Módulo:} Notificaciones \\
+\hline
+
+RF-N-003 & SHOULD & \textbf{Notificaciones Push en Aplicaciones Móviles} \newline
+\textbf{Descripción:} El sistema debe soportar el envío de notificaciones \textit{push} a dispositivos móviles registrados. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Registro y gestión de los dispositivos asociados a cada usuario. \newline
+- Envío de notificaciones con acciones que lleven al usuario a pantallas específicas de la aplicación. \newline
+- Respeto de horarios de no molestia definidos por el usuario. \newline
+\textbf{Justificación de negocio:} Aumenta el compromiso y la retención de usuarios en canales móviles. \newline
+\textbf{Módulo:} Notificaciones \\
+\hline
+
+RF-N-004 & MUST & \textbf{Centro de Notificaciones en la Aplicación} \newline
+\textbf{Descripción:} El sistema debe mantener un historial de notificaciones accesible desde la aplicación web o móvil. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Listado cronológico de notificaciones por usuario. \newline
+- Indicador de notificaciones leídas y no leídas. \newline
+- Posibilidad de filtrar por tipo de notificación y por fecha. \newline
+- Retención mínima de 90 días de historial. \newline
+\textbf{Justificación de negocio:} Ofrece un repositorio central de información para el usuario sin depender sólo de correo o SMS. \newline
+\textbf{Módulo:} Notificaciones \\
+\hline
+
+RF-N-005 & SHOULD & \textbf{Gestión de Preferencias de Notificación} \newline
+\textbf{Descripción:} El sistema debe permitir que los usuarios gestionen qué notificaciones reciben y por qué canales. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Configuración de suscripción y cancelación por tipo de notificación. \newline
+- Posibilidad de elegir canales preferidos entre correo, SMS, \textit{push} e in-app. \newline
+- Mantener siempre activas las notificaciones transaccionales obligatorias que no puedan deshabilitarse por regulación o seguridad. \newline
+\textbf{Justificación de negocio:} Alinea el sistema con buenas prácticas de privacidad y reduce el riesgo de desuscripción masiva. \newline
+\textbf{Módulo:} Notificaciones \\
+\hline
+
+\caption{Requisitos Funcionales - Notificaciones}
+\label{tab:rf-notificaciones}
+\end{longtable}
+
+\clearpage
+
+% ============================================================
+% ADMINISTRACIÓN
+% ============================================================
+
+\subsection{Requisitos Funcionales - Módulo: Administración}
+
+\begin{longtable}{|p{2cm}|p{1.5cm}|p{10.5cm}|}
+\hline
+\textbf{ID} & \textbf{Prior.} & \textbf{Requisito} \\
+\hline
+\endfirsthead
+\hline
+\textbf{ID} & \textbf{Prior.} & \textbf{Requisito} \\
+\hline
+\endhead
+
+RF-AD-001 & SHOULD & \textbf{Dashboard Ejecutivo de KPIs} \newline
+\textbf{Descripción:} El sistema debe proporcionar un tablero con indicadores clave de desempeño de la plataforma en tiempo cercano a real. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Visualización de métricas como GMV total y por vertical, valor promedio de orden, número de transacciones y tasa de conversión. \newline
+- Filtros temporales por día, semana, mes y rango personalizado. \newline
+- Comparación con períodos anteriores. \newline
+- Opciones para exportar reportes en formatos estándar. \newline
+\textbf{Justificación de negocio:} Permite la toma de decisiones basada en datos para operadores y directivos de la plataforma. \newline
+\textbf{Módulo:} Administración \\
+\hline
+
+RF-AD-002 & SHOULD & \textbf{Gestión del Ciclo de Vida de Proveedores} \newline
+\textbf{Descripción:} El sistema debe permitir a administradores gestionar el estado y configuración de los proveedores. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Aprobación o rechazo de nuevas solicitudes de proveedores. \newline
+- Modificación de parámetros como condiciones comerciales y estados de operación. \newline
+- Suspensión temporal o definitiva de proveedores con registro de motivo. \newline
+- Consulta de métricas clave por proveedor (ventas, tasa de cancelación, tiempos de respuesta, etc.). \newline
+\textbf{Justificación de negocio:} Facilita la gestión de calidad y riesgo de la red de proveedores. \newline
+\textbf{Módulo:} Administración \\
+\hline
+
+RF-AD-003 & COULD & \textbf{Gestión de Disputas entre Clientes y Proveedores} \newline
+\textbf{Descripción:} El sistema debe brindar soporte para el registro y seguimiento de disputas relacionadas con órdenes o servicios. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Registro de una disputa asociada a una orden con descripción del problema. \newline
+- Definición de estados de la disputa (por ejemplo, abierta, en revisión, resuelta). \newline
+- Posibilidad de adjuntar evidencias relevantes. \newline
+- Registro de la resolución y tiempos asociados. \newline
+\textbf{Justificación de negocio:} Aumenta la confianza en la plataforma al ofrecer un mecanismo formal de resolución de conflictos. \newline
+\textbf{Módulo:} Administración \\
+\hline
+
+RF-AD-004 & SHOULD & \textbf{Moderación de Contenido Generado por Usuarios} \newline
+\textbf{Descripción:} El sistema debe proporcionar herramientas para moderar reseñas, comentarios y otros contenidos generados por usuarios. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Visualización de contenido reportado por usuarios. \newline
+- Filtros básicos de palabras o expresiones restringidas. \newline
+- Posibilidad de aprobar, rechazar, editar o marcar contenido como inapropiado. \newline
+- Registro de acciones de moderación para fines de auditoría. \newline
+\textbf{Justificación de negocio:} Protege la reputación de la plataforma y asegura el cumplimiento de políticas de uso. \newline
+\textbf{Módulo:} Administración \\
+\hline
+
+RF-AD-005 & COULD & \textbf{Sistema de Reseñas y Calificaciones} \newline
+\textbf{Descripción:} El sistema debe permitir a los clientes dejar reseñas y calificaciones sobre productos, servicios y proveedores. \newline
+\textbf{Criterios de Aceptación:} \newline
+- Calificación numérica en una escala de al menos 1 a 5. \newline
+- Comentario de texto opcional con límite de longitud. \newline
+- Restricción para que sólo clientes con compra verificada puedan calificar. \newline
+- Cálculo del promedio de calificaciones por ítem y por proveedor. \newline
+- Posibilidad de que el proveedor responda a reseñas. \newline
+\textbf{Justificación de negocio:} Aporta \textit{social proof} y retroalimentación útil para mejorar productos y servicios. \newline
+\textbf{Módulo:} Administración \\
+\hline
+
+\caption{Requisitos Funcionales - Administración}
+\label{tab:rf-admin}
+\end{longtable}
+
+\clearpage
+
+% ============================================================
+% RESUMEN DE PRIORIZACIÓN
+% ============================================================
+
+\subsection{Resumen de Priorización de Requisitos Funcionales}
+
+La Tabla~\ref{tab:resumen-rf} resume la distribución de requisitos por módulo y categoría MoSCoW. 
+Los valores agregan el \textit{rank} numérico 1--10 definido en la metodología de priorización y agrupan los requisitos según su impacto en los objetivos de negocio (GMV, riesgo, diferenciación y complejidad).
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Módulo} & \textbf{MUST} & \textbf{SHOULD} & \textbf{COULD} & \textbf{Total} \\
+\hline
+Gestión de Usuarios        & 3 & 3 & 0 & 6 \\
+Catálogo y Búsqueda        & 3 & 2 & 1 & 6 \\
+Carrito y Checkout         & 5 & 1 & 0 & 6 \\
+Pagos                      & 4 & 2 & 0 & 6 \\
+Integración con Proveedores& 4 & 2 & 0 & 6 \\
+Agendamiento de Servicios  & 0 & 3 & 1 & 4 \\
+Notificaciones             & 2 & 3 & 0 & 5 \\
+Administración             & 0 & 3 & 2 & 5 \\
+\hline
+\textbf{TOTAL}             & \textbf{21} & \textbf{19} & \textbf{4} & \textbf{44} \\
+\hline
+\end{tabular}
+\caption{Distribución de prioridades de requisitos funcionales por módulo}
+\label{tab:resumen-rf}
+\end{table}
+
+\noindent\textbf{Lectura de la tabla:}
+\begin{itemize}
+    \item Los \textbf{21 RF MUST (48\%)} corresponden a funcionalidades sin las cuales la plataforma no puede operar ni generar GMV. 
+    \item Los \textbf{19 RF SHOULD (43\%)} son necesarios para competitividad, eficiencia operativa y reducción de riesgo en una segunda fase.
+    \item Los \textbf{4 RF COULD (9\%)} aportan valor incremental y se planifican explícitamente para fases posteriores del \textit{roadmap}.
+\end{itemize}
+
+\noindent\textbf{Análisis por foco de negocio:}
+\begin{enumerate}
+    \item \textbf{Núcleo de captura de valor (GMV):}  
+    Los módulos \emph{Gestión de Usuarios}, \emph{Catálogo y Búsqueda}, \emph{Carrito y Checkout}, \emph{Pagos} e \emph{Integración con Proveedores} concentran \textbf{19 de los 21 MUST} (≈90\%).  
+    Esto refleja que el primer incremento del sistema prioriza:
+    \begin{itemize}
+        \item Crear y autenticar clientes (registro, login, perfil unificado).
+        \item Exponer un catálogo actualizado y consultable.
+        \item Permitir armar un carrito multivertical y finalizar la compra.
+        \item Procesar pagos de forma segura y disponible.
+        \item Integrar proveedores para que exista oferta real en la plataforma.
+    \end{itemize}
+    Estos módulos conforman el \textbf{MVP transaccional} directamente vinculado a ingresos y al modelo de negocio del marketplace.
+
+    \item \textbf{Soporte operativo y experiencia extendida:}  
+    Los módulos de \emph{Agendamiento de Servicios}, \emph{Notificaciones} y \emph{Administración} se componen principalmente de RF \textbf{SHOULD} y \textbf{COULD}.  
+    Esto indica que:
+    \begin{itemize}
+        \item El \emph{Agendamiento de Servicios} se activa una vez la venta básica funciona, extendiendo el modelo a servicios profesionales.
+        \item \emph{Notificaciones} comienza con un mínimo indispensable (emails transaccionales MUST) y se enriquece después con SMS, \textit{push} y preferencias.
+        \item \emph{Administración} incorpora primero la visibilidad y gestión esencial, dejando funcionalidades avanzadas (disputas, reseñas) como \textbf{COULD}.
+    \end{itemize}
+
+    \item \textbf{Enfoque de iteraciones:}
+    \begin{itemize}
+        \item \textbf{Iteración 1 (MVP):} implementar la totalidad de RF marcados como \textbf{MUST}, logrando un flujo completo “descubrir → añadir al carrito → pagar” con oferta real de proveedores.
+        \item \textbf{Iteración 2:} incorporar RF \textbf{SHOULD} que fortalecen competitividad: filtros avanzados, promociones, métodos de pago alternativos, recordatorios de citas, notificaciones multicanal y dashboards de operación.
+        \item \textbf{Iteración 3+:} abordar RF \textbf{COULD} centrados en experiencia avanzada y gobernanza (búsqueda por voz, reprogramación de citas, disputas, reseñas, etc.).
+    \end{itemize}
+\end{enumerate}

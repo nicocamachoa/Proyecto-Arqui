@@ -1,0 +1,68 @@
+\documentclass[12pt,a4paper]{article}
+
+% Paquetes necesarios
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{float}    % para usar la opción [H] en tablas y figuras
+\usepackage{tikz}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{changepage}
+
+% Configuración de página
+\geometry{left=2.5cm,right=2.5cm,top=3cm,bottom=3cm}
+
+% Configuración de encabezado y pie
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{AllConnect Market - SRS}
+\rhead{Versión 2.0}
+\rfoot{Página \thepage}
+
+% Configuración de enlaces
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+    pdftitle={SRS - AllConnect Market},
+    pdfpagemode=FullScreen,
+}
+
+% Configuración de secciones
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+\begin{document}
+
+% Portada
+\input{sections/00_portada}
+
+% Índice
+\newpage
+\tableofcontents
+\newpage
+
+% Secciones principales
+\input{sections/01_introduccion}
+\input{sections/02_descripcion_general}
+\input{sections/03_requisitos_especificos}
+\input{sections/04_requisitos_no_funcionales}
+\input{sections/05_historias_usuario}
+\input{sections/06_interfaces_externas}
+\input{sections/07_referencias}
+
+
+\appendix
+
+\end{document}

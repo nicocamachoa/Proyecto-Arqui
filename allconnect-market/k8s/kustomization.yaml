@@ -1,0 +1,47 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: allconnect
+
+resources:
+  # Namespace
+  - namespace.yaml
+
+  # Config & Secrets
+  - configmaps/app-config.yaml
+  - secrets/db-credentials.yaml
+  - secrets/jwt-secret.yaml
+
+  # Volumes
+  - volumes/mysql-pvc.yaml
+
+  # Infrastructure
+  - deployments/infrastructure/mysql-deployment.yaml
+  - deployments/infrastructure/redis-deployment.yaml
+  - deployments/infrastructure/kafka-deployment.yaml
+  - deployments/infrastructure/rabbitmq-deployment.yaml
+
+  # Platform (TODO: uncomment when ready)
+  # - deployments/platform/eureka-deployment.yaml
+  # - deployments/platform/gateway-deployment.yaml
+  # - deployments/platform/tomcat-deployment.yaml
+
+  # Services (TODO: uncomment when ready)
+  # - deployments/services/order-service-deployment.yaml
+  # - deployments/services/catalog-service-deployment.yaml
+  # - deployments/services/customer-service-deployment.yaml
+  # - deployments/services/payment-service-deployment.yaml
+  # - deployments/services/notification-service-deployment.yaml
+
+  # Integration (TODO: uncomment when ready)
+  # - deployments/integration/integration-service-deployment.yaml
+  # - deployments/integration/https-adapter-deployment.yaml
+  # - deployments/integration/soap-adapter-deployment.yaml
+  # - deployments/integration/rpc-adapter-deployment.yaml
+
+  # Ingress
+  - ingress/main-ingress.yaml
+
+commonLabels:
+  project: allconnect-market
+  managed-by: kustomize

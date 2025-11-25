@@ -1,0 +1,543 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36 OPR/123.0.0.0" version="29.1.1">
+  <diagram id="ProcessView" name="Process View">
+    <mxGraphModel dx="2762" dy="1580" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4000" pageHeight="2500" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" value="AllConnect Market - Process View (4+1)" vertex="1">
+          <mxGeometry height="40" width="700" x="320" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="presentationContainer" parent="1" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=150;tabHeight=40;tabPosition=left;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=left;verticalAlign=top;spacingLeft=15;fontSize=14;" value="Presentation Layer" vertex="1">
+          <mxGeometry height="520" width="340" x="300" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="browserProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#000000;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Browser&lt;/b&gt;&lt;br&gt;(Client)" vertex="1">
+          <mxGeometry height="70" width="130" x="385" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="nginxProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#000000;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Nginx 1.20&lt;/b&gt;&lt;br&gt;Web Server&lt;br&gt;:80, :443" vertex="1">
+          <mxGeometry height="80" width="130" x="385" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="conn1" edge="1" parent="1" source="browserProcess" target="nginxProcess">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn1Label" connectable="0" parent="conn1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="HTTPS&lt;br&gt;0..*" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="19" y="-3" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tomcatWebUIProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#e1d5e7;strokeColor=#9673a6;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Apache Tomcat 9.0&lt;/b&gt;&lt;br&gt;compras.war&lt;br&gt;:8080" vertex="1">
+          <mxGeometry height="90" width="130" x="385" y="725" as="geometry" />
+        </mxCell>
+        <mxCell id="conn2" edge="1" parent="1" source="nginxProcess" target="tomcatWebUIProcess">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn2Label" connectable="0" parent="conn2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="HTTP&lt;br&gt;1..1" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="19" y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tomcatAdminProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#e1d5e7;strokeColor=#9673a6;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Apache Tomcat 9.0&lt;/b&gt;&lt;br&gt;admin.war&lt;br&gt;:8081" vertex="1">
+          <mxGeometry height="90" width="130" x="385" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="conn3" edge="1" parent="1" source="nginxProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" target="tomcatAdminProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="330" y="650" />
+              <mxPoint x="330" y="885" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn3Label" connectable="0" parent="conn3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="HTTP&lt;br&gt;0..1" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="-15" y="40" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="esbContainer" parent="1" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=220;tabHeight=40;tabPosition=left;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=15;fontSize=14;" value="Enterprise Service Bus Layer" vertex="1">
+          <mxGeometry height="520" width="380" x="670" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="esbProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#000000;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;WSO2 ESB 5.0&lt;/b&gt;&lt;br&gt;Enterprise Service Bus&lt;br&gt;:8280, :8243" vertex="1">
+          <mxGeometry height="90" width="160" x="720" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="conn4" edge="1" parent="1" source="tomcatWebUIProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" target="esbProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="590" y="765" />
+              <mxPoint x="590" y="555" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn4Label" connectable="0" parent="conn4" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="SOAP/REST&lt;br&gt;1..*" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="-15" y="-60" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn5" edge="1" parent="1" source="tomcatAdminProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" target="esbProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="650" y="885" />
+              <mxPoint x="650" y="585" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn5Label" connectable="0" parent="conn5" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="SOAP/REST&lt;br&gt;0..*" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="-15" y="-90" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bpelProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#000000;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Apache ODE&lt;/b&gt;&lt;br&gt;BPEL Engine&lt;br&gt;:8282" vertex="1">
+          <mxGeometry height="90" width="160" x="720" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="conn6" edge="1" parent="1" source="esbProcess" target="bpelProcess">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn6Label" connectable="0" parent="conn6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="SOAP&lt;br&gt;1..1" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uddiProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#000000;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Apache jUDDI&lt;/b&gt;&lt;br&gt;Service Registry&lt;br&gt;:8081" vertex="1">
+          <mxGeometry height="90" width="160" x="720" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="conn7" edge="1" parent="1" source="esbProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" target="uddiProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="900" y="555" />
+              <mxPoint x="900" y="795" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn7Label" connectable="0" parent="conn7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="UDDI&lt;br&gt;0..*" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="15" y="60" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="securityServiceProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#000000;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Spring Boot&lt;/b&gt;&lt;br&gt;SecurityService&lt;br&gt;:8095" vertex="1">
+          <mxGeometry height="80" width="160" x="720" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="conn14" edge="1" parent="1" source="esbProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" target="securityServiceProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="900" y="555" />
+              <mxPoint x="900" y="910" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn14Label" connectable="0" parent="conn14" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="SOAP&lt;br&gt;1..1" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="15" y="100" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="servicesContainer" parent="1" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=200;tabHeight=40;tabPosition=left;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;verticalAlign=top;spacingLeft=15;fontSize=14;" value="Enterprise Services Layer" vertex="1">
+          <mxGeometry height="600" width="540" x="1100" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="orderServiceProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#000000;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Spring Boot&lt;/b&gt;&lt;br&gt;OrderService&lt;br&gt;:8090" vertex="1">
+          <mxGeometry height="80" width="140" x="1140" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="conn8" edge="1" parent="1" source="bpelProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" target="orderServiceProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="930" y="675" />
+              <mxPoint x="930" y="550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn8Label" connectable="0" parent="conn8" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="SOAP&lt;br&gt;1..*" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="-10" y="-35" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="catalogServiceProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#000000;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Spring Boot&lt;/b&gt;&lt;br&gt;CatalogService&lt;br&gt;:8091" vertex="1">
+          <mxGeometry height="80" width="140" x="1140" y="615" as="geometry" />
+        </mxCell>
+        <mxCell id="conn9" edge="1" parent="1" source="bpelProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" target="catalogServiceProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="930" y="675" />
+              <mxPoint x="930" y="655" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn9Label" connectable="0" parent="conn9" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="SOAP&lt;br&gt;1..*" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="customerServiceProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#000000;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Spring Boot&lt;/b&gt;&lt;br&gt;CustomerService&lt;br&gt;:8092" vertex="1">
+          <mxGeometry height="80" width="140" x="1140" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="conn10" edge="1" parent="1" source="bpelProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" target="customerServiceProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="930" y="675" />
+              <mxPoint x="930" y="760" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn10Label" connectable="0" parent="conn10" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="SOAP&lt;br&gt;0..*" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="-10" y="25" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="paymentServiceProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#000000;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Spring Boot&lt;/b&gt;&lt;br&gt;PaymentService&lt;br&gt;:8093" vertex="1">
+          <mxGeometry height="80" width="140" x="1140" y="825" as="geometry" />
+        </mxCell>
+        <mxCell id="conn11" edge="1" parent="1" source="bpelProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" target="paymentServiceProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="930" y="700" />
+              <mxPoint x="930" y="865" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn11Label" connectable="0" parent="conn11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="SOAP&lt;br&gt;0..1" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="-10" y="65" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="recommendationServiceProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#000000;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Spring Boot&lt;/b&gt;&lt;br&gt;RecommendationService&lt;br&gt;:8097" vertex="1">
+          <mxGeometry height="90" width="140" x="1140" y="930" as="geometry" />
+        </mxCell>
+        <mxCell id="conn12" edge="1" parent="1" source="bpelProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="recommendationServiceProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="690" y="675" />
+              <mxPoint x="690" y="975" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn12Label" connectable="0" parent="conn12" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="SOAP&lt;br&gt;0..*" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="161" y="21" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="billingServiceProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#000000;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Spring Boot&lt;/b&gt;&lt;br&gt;BillingService&lt;br&gt;:8096" vertex="1">
+          <mxGeometry height="80" width="140" x="1400" y="905" as="geometry" />
+        </mxCell>
+        <mxCell id="conn23" edge="1" parent="1" source="paymentServiceProcess" style="exitX=1;exitY=0.75;exitDx=0;exitDy=0;" target="billingServiceProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1350" y="885" />
+              <mxPoint x="1350" y="950" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn23Label" connectable="0" parent="conn23" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="REST&lt;br&gt;0..1" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="integrationContainer" parent="1" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=200;tabHeight=40;tabPosition=left;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;spacingLeft=15;fontSize=14;" value="Provider Integration Layer" vertex="1">
+          <mxGeometry height="700" width="560" x="1680" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="integrationServiceProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#000000;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Spring Boot&lt;/b&gt;&lt;br&gt;IntegrationService&lt;br&gt;:8094" vertex="1">
+          <mxGeometry height="80" width="150" x="1720" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="conn13" edge="1" parent="1" source="catalogServiceProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" target="integrationServiceProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1650" y="655" />
+              <mxPoint x="1650" y="550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn13Label" connectable="0" parent="conn13" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="REST&lt;br&gt;1..*" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="-215" y="-14" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="providerFacadeProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#000000;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Spring Boot&lt;/b&gt;&lt;br&gt;ProviderFacade&lt;br&gt;:8098" vertex="1">
+          <mxGeometry height="80" width="150" x="1720" y="635" as="geometry" />
+        </mxCell>
+        <mxCell id="conn15" edge="1" parent="1" source="integrationServiceProcess" target="providerFacadeProcess">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn15Label" connectable="0" parent="conn15" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="Internal&lt;br&gt;1..1" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="24" y="-4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="asyncManagerProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#000000;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Spring Boot&lt;/b&gt;&lt;br&gt;AsyncRequestManager&lt;br&gt;:8099" vertex="1">
+          <mxGeometry height="90" width="180" x="1705" y="755" as="geometry" />
+        </mxCell>
+        <mxCell id="conn16" edge="1" parent="1" source="providerFacadeProcess" target="asyncManagerProcess">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn16Label" connectable="0" parent="conn16" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="Internal&lt;br&gt;1..1" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="24" y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="adapterFactoryProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#000000;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Spring Boot&lt;/b&gt;&lt;br&gt;ProtocolAdapterFactory&lt;br&gt;:9000" vertex="1">
+          <mxGeometry height="90" width="150" x="1720" y="890" as="geometry" />
+        </mxCell>
+        <mxCell id="conn17" edge="1" parent="1" source="asyncManagerProcess" target="adapterFactoryProcess">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn17Label" connectable="0" parent="conn17" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="Internal&lt;br&gt;1..1" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="httpsAdapterProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#000000;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Node.js&lt;/b&gt;&lt;br&gt;HTTPSAdapter&lt;br&gt;:3000" vertex="1">
+          <mxGeometry height="80" width="130" x="1960" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="conn18" edge="1" parent="1" source="adapterFactoryProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" target="httpsAdapterProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1910" y="895" />
+              <mxPoint x="1910" y="690" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn18Label" connectable="0" parent="conn18" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="Creates&lt;br&gt;0..1" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="-15" y="-60" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="soapAdapterProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#000000;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Node.js&lt;/b&gt;&lt;br&gt;SOAPAdapter&lt;br&gt;:3001" vertex="1">
+          <mxGeometry height="80" width="130" x="1950" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="conn19" edge="1" parent="1" source="adapterFactoryProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" target="soapAdapterProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1920" y="950" />
+              <mxPoint x="1920" y="800" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn19Label" connectable="0" parent="conn19" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="Creates&lt;br&gt;0..1" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="-29" y="63" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rpcAdapterProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#000000;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Node.js&lt;/b&gt;&lt;br&gt;RPCAdapter&lt;br&gt;:3002" vertex="1">
+          <mxGeometry height="80" width="130" x="1940" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="conn20" edge="1" parent="1" source="adapterFactoryProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="rpcAdapterProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1870" y="910" />
+            </Array>
+            <mxPoint x="1930" y="910" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn20Label" connectable="0" parent="conn20" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="Creates&lt;br&gt;0..1" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="-10" y="11" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="externalProviderProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#f5f5f5;strokeColor=#666666;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;External API&lt;/b&gt;&lt;br&gt;Provider System&lt;br&gt;:443" vertex="1">
+          <mxGeometry height="80" width="140" x="1935" y="1010" as="geometry" />
+        </mxCell>
+        <mxCell id="conn21" edge="1" parent="1" source="httpsAdapterProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" target="externalProviderProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2110" y="690" />
+              <mxPoint x="2110" y="1060" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn21Label" connectable="0" parent="conn21" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="HTTPS&lt;br&gt;0..*" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="-21" y="67" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn22" edge="1" parent="1" source="soapAdapterProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" target="externalProviderProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2090" y="800" />
+              <mxPoint x="2090" y="1030" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn22Label" connectable="0" parent="conn22" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="SOAP&lt;br&gt;0..*" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="19" y="95" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="infrastructureContainer" parent="1" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=200;tabHeight=40;tabPosition=left;html=1;fillColor=#f8cecc;strokeColor=#b85450;align=left;verticalAlign=top;spacingLeft=15;fontSize=14;" value="Infrastructure &amp; Data Layer" vertex="1">
+          <mxGeometry height="610" width="320" x="2280" y="455" as="geometry" />
+        </mxCell>
+        <mxCell id="postgresProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#dae8fc;strokeColor=#6c8ebf;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;PostgreSQL 14&lt;/b&gt;&lt;br&gt;Main Database&lt;br&gt;:5432" vertex="1">
+          <mxGeometry height="80" width="150" x="2320" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="conn24" edge="1" parent="1" source="orderServiceProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" target="postgresProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1610" y="550" />
+              <mxPoint x="1610" y="430" />
+              <mxPoint x="2270" y="430" />
+              <mxPoint x="2270" y="530" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn24Label" connectable="0" parent="conn24" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="JDBC&lt;br&gt;1..5" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="333" y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn25" edge="1" parent="1" source="catalogServiceProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="postgresProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1380" y="680" />
+              <mxPoint x="1380" y="410" />
+              <mxPoint x="2500" y="410" />
+              <mxPoint x="2500" y="550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn25Label" connectable="0" parent="conn25" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="JDBC&lt;br&gt;1..5" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="248" y="-19" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn26" edge="1" parent="1" source="customerServiceProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="postgresProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1440" y="760" />
+              <mxPoint x="1440" y="440" />
+              <mxPoint x="2250" y="440" />
+              <mxPoint x="2250" y="550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn26Label" connectable="0" parent="conn26" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="JDBC&lt;br&gt;1..5" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="199" y="-29" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn27" edge="1" parent="1" source="paymentServiceProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" target="postgresProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1620" y="865" />
+              <mxPoint x="1620" y="390" />
+              <mxPoint x="2260" y="390" />
+              <mxPoint x="2260" y="570" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn27Label" connectable="0" parent="conn27" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="JDBC&lt;br&gt;1..5" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="331" y="8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn28" edge="1" parent="1" source="billingServiceProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" target="postgresProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1490" y="370" />
+              <mxPoint x="2520" y="370" />
+              <mxPoint x="2520" y="570" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn28Label" connectable="0" parent="conn28" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="JDBC&lt;br&gt;1..5" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="360" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="redisProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#dae8fc;strokeColor=#6c8ebf;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Redis 6.2&lt;/b&gt;&lt;br&gt;Cache Layer&lt;br&gt;:6379" vertex="1">
+          <mxGeometry height="80" width="150" x="2320" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="conn29" edge="1" parent="1" source="catalogServiceProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" target="redisProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1610" y="630" />
+              <mxPoint x="1610" y="1180" />
+              <mxPoint x="2395" y="1180" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn29Label" connectable="0" parent="conn29" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="Redis&lt;br&gt;0..*" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="235" y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mongoProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#dae8fc;strokeColor=#6c8ebf;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;MongoDB 5.0&lt;/b&gt;&lt;br&gt;Logs &amp;amp; Analytics&lt;br&gt;:27017" vertex="1">
+          <mxGeometry height="80" width="150" x="2320" y="730" as="geometry" />
+        </mxCell>
+        <mxCell id="conn30" edge="1" parent="1" source="securityServiceProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" target="mongoProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="960" y="910" />
+              <mxPoint x="960" y="340" />
+              <mxPoint x="2540" y="340" />
+              <mxPoint x="2540" y="770" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn30Label" connectable="0" parent="conn30" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="MongoDB&lt;br&gt;0..*" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="370" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kafkaProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#e1d5e7;strokeColor=#9673a6;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Apache Kafka&lt;/b&gt;&lt;br&gt;Message Broker&lt;br&gt;:9092" vertex="1">
+          <mxGeometry height="80" width="150" x="2320" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="conn31" edge="1" parent="1" source="orderServiceProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="kafkaProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1580" y="550" />
+              <mxPoint x="1580" y="1260" />
+              <mxPoint x="2540" y="1260" />
+              <mxPoint x="2540" y="860" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn31Label" connectable="0" parent="conn31" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="Async&lt;br&gt;0..*" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="628" y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn32" edge="1" parent="1" source="paymentServiceProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="kafkaProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1550" y="830" />
+              <mxPoint x="1550" y="1220" />
+              <mxPoint x="2510" y="1220" />
+              <mxPoint x="2510" y="880" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn32Label" connectable="0" parent="conn32" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="Async&lt;br&gt;0..*" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="376" y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn33" edge="1" parent="1" source="integrationServiceProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" target="kafkaProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2180" y="530" />
+              <mxPoint x="2180" y="880" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn33Label" connectable="0" parent="conn33" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="Async&lt;br&gt;1..*" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="-1" y="90" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="messageBrokerProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#e1d5e7;strokeColor=#9673a6;size=0.14;align=center;verticalAlign=middle;" value="&amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;RabbitMQ&lt;/b&gt;&lt;br&gt;Queue Manager&lt;br&gt;:5672" vertex="1">
+          <mxGeometry height="80" width="150" x="2320" y="950" as="geometry" />
+        </mxCell>
+        <mxCell id="conn34" edge="1" parent="1" source="integrationServiceProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;" target="messageBrokerProcess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2140" y="550" />
+              <mxPoint x="2140" y="990" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn34Label" connectable="0" parent="conn34" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="AMQP&lt;br&gt;0..*" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="-1" y="159" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legendText1" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=11;spacingLeft=10;" value="&lt;b&gt;Process Element:&lt;/b&gt;&lt;br&gt;• &amp;lt;&amp;lt;proceso&amp;gt;&amp;gt;: UML stereotype&lt;br&gt;• Platform: Technology/Server&lt;br&gt;• Component: Service name&lt;br&gt;• :port: Port number" vertex="1">
+          <mxGeometry height="75" width="350" x="610" y="980" as="geometry" />
+        </mxCell>
+        <mxCell id="legendText2" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=11;spacingLeft=10;" value="&lt;b&gt;Connection:&lt;/b&gt;&lt;br&gt;• Protocol: HTTP, SOAP, REST, JDBC, etc.&lt;br&gt;• Cardinality (n..m): min..max connections&lt;br&gt;  - 0..*: Unlimited&lt;br&gt;  - 1..5: Pool size&lt;br&gt;  - 0..1: Optional" vertex="1">
+          <mxGeometry height="100" width="350" x="380" y="980" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

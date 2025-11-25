@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: allconnect
+  labels:
+    app: allconnect-market
+    environment: development

@@ -1,0 +1,127 @@
+\section{Introducción}
+
+\subsection{Propósito}
+
+\textbf{Propósito del Documento:} Definir de forma precisa, completa y no ambigua el comportamiento esperado, los límites operacionales y los criterios de aceptación del sistema AllConnect Market. Este documento sirve como base contractual para:
+
+\begin{itemize}
+    \item Habilitar el diseño arquitectónico detallado (SAD)
+    \item Guiar el análisis de arquitectura (ATAM)
+    \item Establecer criterios de verificación y validación
+    \item Facilitar la comunicación entre stakeholders
+    \item Servir como referencia durante todo el ciclo de vida del proyecto
+\end{itemize}
+
+\subsection{Objetivos de Negocio}
+
+Los objetivos de negocio del sistema AllConnect Market se fundamentan en cinco pilares estratégicos definidos en el modelo de negocio:
+
+\subsubsection{Pilar 1: Consolidación Multicanal mediante Identidad y Perfil Unificado}
+
+\textbf{Objetivo:} Crear una experiencia de usuario única donde el cliente gestiona todas sus compras, suscripciones y servicios desde una única cuenta.
+
+\textbf{Valor de Negocio:}
+\begin{itemize}
+    \item Reducción de fricción en el proceso de compra
+    \item Incremento en la retención de usuarios (target: +40\% en primer año)
+    \item Datos consolidados para personalización efectiva
+    \item Ventaja competitiva vs. plataformas especializadas verticalmente
+\end{itemize}
+
+\textbf{Habilitadores Técnicos:}
+\begin{itemize}
+    \item Sistema de autenticación único (SSO) con MFA opcional
+    \item Perfil de usuario unificado con preferencias cross-vertical
+    \item Historial consolidado de transacciones
+    \item Motor de recomendaciones basado en comportamiento multi-vertical
+\end{itemize}
+
+\subsubsection{Pilar 2: Carrito de Compras Universal}
+
+\textbf{Objetivo:} Implementar la capacidad técnica para que el usuario pueda añadir bienes físicos, suscripciones digitales y servicios profesionales en una misma transacción.
+
+\textbf{Valor de Negocio:}
+\begin{itemize}
+    \item Incremento del valor promedio del carrito (AOV) estimado en +35\%
+    \item Reducción del cart abandonment rate (target: $<$25\%)
+    \item Simplificación del proceso de checkout
+    \item Diferenciación clara en el mercado
+\end{itemize}
+
+\textbf{Complejidad Gestionada:}
+\begin{itemize}
+    \item Lógica de fulfillment diferenciada por tipo de producto
+    \item Cálculo de impuestos y comisiones por vertical
+    \item Gestión de estados heterogéneos (entrega, licencia, cita)
+    \item Transacciones distribuidas con garantía de consistencia
+\end{itemize}
+
+\subsubsection{Pilar 3: Confianza y Trazabilidad mediante Pasarela de Pagos Centralizada}
+
+\textbf{Objetivo:} Establecer un único punto de procesamiento de pagos seguro y eficiente que maneje transacciones puntuales y recurrentes.
+
+\textbf{Valor de Negocio:}
+\begin{itemize}
+    \item Cumplimiento PCI-DSS nivel 1
+    \item Payment success rate objetivo: $>$99\%
+    \item Reducción de disputas mediante trazabilidad completa
+    \item Habilitación de múltiples métodos de pago (tarjetas, wallets, BNPL)
+\end{itemize}
+
+\textbf{Capacidades Requeridas:}
+\begin{itemize}
+    \item Integración multi-pasarela con failover automático
+    \item Tokenización de datos sensibles
+    \item Gestión de pagos recurrentes para suscripciones
+    \item Reconciliación y liquidación automatizada
+\end{itemize}
+
+\subsubsection{Pilar 4: Integración API-First con Proveedores}
+
+\textbf{Objetivo:} Establecer una filosofía de integración profunda y automatizada que elimine la necesidad de portales de gestión manual.
+
+\textbf{Valor de Negocio:}
+\begin{itemize}
+    \item Time-to-market de onboarding: $<$5 días para proveedores ancla
+    \item Escalabilidad ilimitada de proveedores
+    \item Sincronización en tiempo real de catálogos e inventarios
+    \item Reducción de errores operativos por automatización
+\end{itemize}
+
+\textbf{Modelo Operativo:}
+\begin{itemize}
+    \item Sincronización catálogo/stock vía API RESTful
+    \item Distribución automática de órdenes mediante webhooks
+    \item Agendamiento de servicios integrado con calendarios de proveedores
+    \item Developer Portal con sandbox y documentación OpenAPI
+\end{itemize}
+
+\subsubsection{Pilar 5: Analítica Operativa mediante Infraestructura de Notificaciones Multicanal}
+
+\textbf{Objetivo:} Mantener informados a clientes y proveedores en cada etapa del proceso mientras se capturan métricas para decisiones de producto.
+
+\textbf{Valor de Negocio:}
+\begin{itemize}
+    \item Reducción de tickets de soporte en 45\%
+    \item Incremento en satisfacción del cliente (NPS target: $>$70)
+    \item Datos accionables para optimización del funnel
+    \item Visibilidad de KPIs en tiempo real (GMV, conversión, disputas)
+\end{itemize}
+
+\textbf{Canales Implementados:}
+\begin{itemize}
+    \item Email transaccional
+    \item SMS para eventos críticos
+    \item Push notifications en aplicación móvil
+    \item Webhooks para integraciones de proveedores
+\end{itemize}
+
+\subsection{Alineación con Restricciones}
+
+\textbf{Nota Importante:} Este SRS describe el alcance ideal del sistema propuesto, fundamentado en la estrategia de lanzamiento integral de los tres verticales definida en el modelo de negocio. Las restricciones de tiempo y presupuesto se gestionarán en la fase de implementación y quedarán reflejadas en:
+
+\begin{itemize}
+    \item \textbf{Plan de Entregas del SAD:} Priorización de MVPs por vertical
+    \item \textbf{Roadmap de Producto:} Fases de rollout y features incrementales
+    \item \textbf{Estrategia de Go-to-Market:} Segmentación de lanzamiento por región/mercado
+\end{itemize}
