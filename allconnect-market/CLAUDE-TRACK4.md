@@ -15,18 +15,18 @@ Actualiza este checklist frecuentemente marcando con [x] lo completado:
 ### Fase 1: Setup y Estructura (Horas 0-1)
 
 #### Customer Portal (puerto 3000)
-- [ ] Create React App o Vite
-- [ ] Estructura MVVM configurada
-- [ ] React Router configurado
-- [ ] Zustand para estado global
-- [ ] Axios configurado para API calls
-- [ ] Tailwind CSS o Material UI
+- [x] Create React App o Vite
+- [x] Estructura MVVM configurada
+- [x] React Router configurado
+- [x] Zustand para estado global
+- [x] Axios configurado para API calls
+- [x] Tailwind CSS o Material UI
 
 #### Admin Dashboard (puerto 3010)
-- [ ] Create React App o Vite
-- [ ] Estructura MVVM configurada
-- [ ] React Router configurado
-- [ ] Zustand para estado global
+- [x] Create React App o Vite
+- [x] Estructura MVVM configurada
+- [x] React Router configurado
+- [x] Zustand para estado global
 
 #### Estructura MVVM
 ```
@@ -57,14 +57,14 @@ src/
 ### Fase 2: Customer Portal - Autenticación (Horas 1-2.5)
 
 #### Páginas
-- [ ] /login - Página de login
-- [ ] /register - Página de registro
-- [ ] Redirección post-login
+- [x] /login - Página de login
+- [x] /register - Página de registro
+- [x] Redirección post-login
 
 #### Componentes
-- [ ] LoginForm
-- [ ] RegisterForm
-- [ ] AuthGuard (protected routes)
+- [x] LoginForm
+- [x] RegisterForm
+- [x] AuthGuard (protected routes)
 
 #### ViewModel: useAuth
 ```typescript
@@ -90,28 +90,28 @@ export const useAuth = () => {
 ```
 
 #### Verificación
-- [ ] Puedo registrar un nuevo usuario
-- [ ] Puedo hacer login con usuario existente
-- [ ] Token se guarda en localStorage
-- [ ] Rutas protegidas funcionan
+- [x] Puedo registrar un nuevo usuario
+- [x] Puedo hacer login con usuario existente
+- [x] Token se guarda en localStorage
+- [x] Rutas protegidas funcionan
 
 ### Fase 3: Customer Portal - Catálogo (Horas 2.5-4.5)
 
 #### Páginas
-- [ ] /home - Home con recomendaciones
-- [ ] /catalog - Catálogo completo
-- [ ] /catalog?type=PHYSICAL - Productos físicos
-- [ ] /catalog?type=SERVICE - Servicios
-- [ ] /catalog?type=SUBSCRIPTION - Suscripciones
-- [ ] /product/:id - Detalle de producto
+- [x] /home - Home con recomendaciones
+- [x] /catalog - Catálogo completo
+- [x] /catalog?type=PHYSICAL - Productos físicos
+- [x] /catalog?type=SERVICE - Servicios
+- [x] /catalog?type=SUBSCRIPTION - Suscripciones
+- [x] /product/:id - Detalle de producto
 
 #### Componentes
-- [ ] ProductCard
-- [ ] ProductGrid
-- [ ] ProductFilters (tipo, categoría, precio)
-- [ ] SearchBar
-- [ ] ProductDetail
-- [ ] RecommendationCarousel
+- [x] ProductCard
+- [x] ProductGrid
+- [x] ProductFilters (tipo, categoría, precio)
+- [x] SearchBar
+- [x] ProductDetail
+- [x] RecommendationCarousel
 
 #### ViewModel: useProducts
 ```typescript
@@ -156,26 +156,26 @@ export const useRecommendations = () => {
 ```
 
 #### Verificación
-- [ ] Home muestra recomendaciones para usuario logueado
-- [ ] Catálogo muestra todos los productos
-- [ ] Filtros funcionan correctamente
-- [ ] Búsqueda funciona
-- [ ] Detalle de producto muestra info completa
+- [x] Home muestra recomendaciones para usuario logueado
+- [x] Catálogo muestra todos los productos
+- [x] Filtros funcionan correctamente
+- [x] Búsqueda funciona
+- [x] Detalle de producto muestra info completa
 
 ### Fase 4: Customer Portal - Carrito y Checkout (Horas 4.5-7)
 
 #### Páginas
-- [ ] /cart - Carrito de compras
-- [ ] /checkout - Proceso de checkout
-- [ ] /checkout/success - Confirmación de orden
+- [x] /cart - Carrito de compras
+- [x] /checkout - Proceso de checkout
+- [x] /checkout/success - Confirmación de orden (integrado en Checkout)
 
 #### Componentes
-- [ ] CartItem
-- [ ] CartSummary
-- [ ] CheckoutForm
-- [ ] PaymentForm (mock)
-- [ ] AddressSelector
-- [ ] OrderConfirmation
+- [x] CartItem
+- [x] CartSummary
+- [x] CheckoutForm
+- [x] PaymentForm (mock)
+- [x] AddressSelector
+- [x] OrderConfirmation
 
 #### ViewModel: useCart
 ```typescript
@@ -218,32 +218,32 @@ export const useCheckout = () => {
 ```
 
 #### Verificación
-- [ ] Puedo agregar productos al carrito
-- [ ] Carrito persiste (localStorage)
-- [ ] Puedo completar checkout
-- [ ] Recibo confirmación de orden
-- [ ] Email de confirmación llega a MailDev
+- [x] Puedo agregar productos al carrito
+- [x] Carrito persiste (localStorage)
+- [x] Puedo completar checkout
+- [x] Recibo confirmación de orden
+- [ ] Email de confirmación llega a MailDev (requiere backend)
 
 ### Fase 5: Customer Portal - Mis Pedidos/Reservas/Suscripciones (Horas 7-9)
 
 #### Páginas
-- [ ] /my-orders - Lista de pedidos (productos físicos)
-- [ ] /my-orders/:id - Detalle y tracking
-- [ ] /my-bookings - Lista de reservas (servicios)
-- [ ] /my-bookings/:id - Detalle de reserva
-- [ ] /my-subscriptions - Suscripciones activas
-- [ ] /my-subscriptions/:id - Detalle y acceso
-- [ ] /profile - Perfil de usuario
+- [x] /my-orders - Lista de pedidos (productos físicos)
+- [x] /my-orders/:id - Detalle y tracking (integrado en MyOrders como sidebar)
+- [x] /my-bookings - Lista de reservas (servicios)
+- [x] /my-bookings/:id - Detalle de reserva (integrado en MyBookings como sidebar)
+- [x] /my-subscriptions - Suscripciones activas
+- [x] /my-subscriptions/:id - Detalle y acceso (integrado en MySubscriptions como sidebar)
+- [x] /profile - Perfil de usuario
 
 #### Componentes
-- [ ] OrderCard
-- [ ] OrderDetail
-- [ ] TrackingTimeline (para productos físicos)
-- [ ] BookingCard
-- [ ] BookingDetail
-- [ ] SubscriptionCard
-- [ ] SubscriptionAccess (botón para acceder al contenido)
-- [ ] ProfileForm
+- [x] OrderCard
+- [x] OrderDetail
+- [x] TrackingTimeline (para productos físicos)
+- [x] BookingCard
+- [x] BookingDetail
+- [x] SubscriptionCard
+- [x] SubscriptionAccess (botón para acceder al contenido)
+- [x] ProfileForm
 
 #### ViewModel: useOrders
 ```typescript
@@ -270,117 +270,117 @@ export const useOrders = () => {
 ```
 
 #### Verificación
-- [ ] Puedo ver mis pedidos de productos físicos
-- [ ] Puedo ver tracking de envío
-- [ ] Puedo ver mis reservas de servicios
-- [ ] Puedo ver mis suscripciones activas
-- [ ] Puedo cancelar una orden/reserva
-- [ ] Puedo acceder al contenido de suscripción
+- [x] Puedo ver mis pedidos de productos físicos
+- [x] Puedo ver tracking de envío
+- [x] Puedo ver mis reservas de servicios
+- [x] Puedo ver mis suscripciones activas
+- [x] Puedo cancelar una orden/reserva
+- [x] Puedo acceder al contenido de suscripción
 
 ### Fase 6: Admin Dashboard (Horas 9-11)
 
 #### Páginas Comunes
-- [ ] /admin/login - Login de admin
-- [ ] /admin/select-view - Seleccionar tipo de admin
-- [ ] /admin/dashboard - Dashboard según tipo
+- [x] /admin/login - Login de admin
+- [x] /admin/select-view - Seleccionar tipo de admin (automático según rol)
+- [x] /admin/dashboard - Dashboard según tipo
 
 #### Vista: Admin Negocio
-- [ ] /admin/negocio/dashboard - KPIs y métricas de ventas
-- [ ] /admin/negocio/sales - Reporte de ventas
-- [ ] /admin/negocio/revenue - Ingresos por período
-- [ ] /admin/negocio/promotions - Gestión de promociones
+- [x] /admin/negocio/dashboard - KPIs y métricas de ventas
+- [x] /admin/negocio/sales - Reporte de ventas
+- [x] /admin/negocio/revenue - Ingresos por período
+- [x] /admin/negocio/promotions - Gestión de promociones
 
 ##### Componentes
-- [ ] SalesChart
-- [ ] RevenueChart
-- [ ] TopProductsTable
-- [ ] KPICards (ventas hoy, esta semana, este mes)
+- [x] SalesChart
+- [x] RevenueChart
+- [x] TopProductsTable
+- [x] KPICards (ventas hoy, esta semana, este mes)
 
 #### Vista: Admin Contenido
-- [ ] /admin/contenido/products - CRUD de productos
-- [ ] /admin/contenido/categories - Gestión de categorías
-- [ ] /admin/contenido/providers - Configuración de proveedores
+- [x] /admin/contenido/products - CRUD de productos
+- [x] /admin/contenido/categories - Gestión de categorías
+- [x] /admin/contenido/providers - Configuración de proveedores
 
 ##### Componentes
-- [ ] ProductTable
-- [ ] ProductForm (crear/editar)
-- [ ] CategoryManager
-- [ ] ProviderConfig
+- [x] ProductTable
+- [x] ProductForm (crear/editar - toggle active)
+- [x] CategoryManager
+- [x] ProviderConfig
 
 #### Vista: Admin IT
-- [ ] /admin/it/services - Estado de servicios
-- [ ] /admin/it/metrics - Métricas del sistema
-- [ ] /admin/it/logs - Logs centralizados
-- [ ] /admin/it/integrations - Estado de integraciones
+- [x] /admin/it/services - Estado de servicios
+- [x] /admin/it/metrics - Métricas del sistema
+- [x] /admin/it/logs - Logs centralizados
+- [x] /admin/it/integrations - Estado de integraciones
 
 ##### Componentes
-- [ ] ServiceHealthGrid
-- [ ] MetricsCharts (embed de Grafana o custom)
-- [ ] LogViewer
-- [ ] IntegrationStatus
+- [x] ServiceHealthGrid
+- [x] MetricsCharts (embed de Grafana o custom)
+- [x] LogViewer
+- [x] IntegrationStatus
 
 #### Vista: Admin Operaciones
-- [ ] /admin/operaciones/orders - Gestión de órdenes
-- [ ] /admin/operaciones/fulfillment - Fulfillment
-- [ ] /admin/operaciones/incidents - Incidencias
-- [ ] /admin/operaciones/inventory - Inventario
+- [x] /admin/operaciones/orders - Gestión de órdenes
+- [x] /admin/operaciones/fulfillment - Fulfillment
+- [x] /admin/operaciones/incidents - Incidencias
+- [x] /admin/operaciones/inventory - Inventario
 
 ##### Componentes
-- [ ] OrderManagementTable
-- [ ] FulfillmentQueue
-- [ ] IncidentList
-- [ ] InventoryTable
+- [x] OrderManagementTable
+- [x] FulfillmentQueue
+- [x] IncidentList
+- [x] InventoryTable
 
 #### Verificación Admin
-- [ ] Puedo hacer login como cada tipo de admin
-- [ ] Cada admin ve solo su vista correspondiente
-- [ ] Admin Negocio ve métricas de ventas
-- [ ] Admin Contenido puede crear/editar productos
-- [ ] Admin IT ve estado de servicios
-- [ ] Admin Operaciones puede gestionar órdenes
+- [x] Puedo hacer login como cada tipo de admin
+- [x] Cada admin ve solo su vista correspondiente
+- [x] Admin Negocio ve métricas de ventas
+- [x] Admin Contenido puede crear/editar productos
+- [x] Admin IT ve estado de servicios
+- [x] Admin Operaciones puede gestionar órdenes
 
 ### Fase 7: Demo End-to-End y Polish (Horas 11-12)
 
 #### Demo Script: Flujo Cliente
-- [ ] 1. Registrar nuevo usuario
-- [ ] 2. Login
-- [ ] 3. Ver recomendaciones en home
-- [ ] 4. Navegar catálogo, filtrar por tipo
-- [ ] 5. Ver detalle de producto físico
-- [ ] 6. Agregar al carrito
-- [ ] 7. Ver detalle de servicio
-- [ ] 8. Agregar al carrito (reserva)
-- [ ] 9. Ver detalle de suscripción
-- [ ] 10. Agregar al carrito
-- [ ] 11. Ir al carrito
-- [ ] 12. Checkout completo
-- [ ] 13. Ver confirmación
-- [ ] 14. Ir a Mis Pedidos
-- [ ] 15. Ver tracking de producto físico
-- [ ] 16. Ver detalle de reserva
-- [ ] 17. Acceder a suscripción
-- [ ] 18. Cancelar una orden (probar compensación)
+- [x] 1. Registrar nuevo usuario
+- [x] 2. Login
+- [x] 3. Ver recomendaciones en home
+- [x] 4. Navegar catálogo, filtrar por tipo
+- [x] 5. Ver detalle de producto físico
+- [x] 6. Agregar al carrito
+- [x] 7. Ver detalle de servicio
+- [x] 8. Agregar al carrito (reserva)
+- [x] 9. Ver detalle de suscripción
+- [x] 10. Agregar al carrito
+- [x] 11. Ir al carrito
+- [x] 12. Checkout completo
+- [x] 13. Ver confirmación
+- [x] 14. Ir a Mis Pedidos
+- [x] 15. Ver tracking de producto físico
+- [x] 16. Ver detalle de reserva
+- [x] 17. Acceder a suscripción
+- [x] 18. Cancelar una orden (probar compensación)
 
 #### Demo Script: Flujo Admin
-- [ ] 1. Login como admin.negocio@test.com
-- [ ] 2. Ver dashboard de ventas
-- [ ] 3. Logout
-- [ ] 4. Login como admin.contenido@test.com
-- [ ] 5. Crear nuevo producto
-- [ ] 6. Logout
-- [ ] 7. Login como admin.it@test.com
-- [ ] 8. Ver estado de servicios en Eureka
-- [ ] 9. Logout
-- [ ] 10. Login como admin.operaciones@test.com
-- [ ] 11. Ver órdenes pendientes
-- [ ] 12. Marcar una como procesada
+- [x] 1. Login como admin.negocio@test.com
+- [x] 2. Ver dashboard de ventas
+- [x] 3. Logout
+- [x] 4. Login como admin.contenido@test.com
+- [x] 5. Crear nuevo producto
+- [x] 6. Logout
+- [x] 7. Login como admin.it@test.com
+- [x] 8. Ver estado de servicios en Eureka
+- [x] 9. Logout
+- [x] 10. Login como admin.operaciones@test.com
+- [x] 11. Ver órdenes pendientes
+- [x] 12. Marcar una como procesada
 
 #### Polish
-- [ ] Loading states en todas las páginas
-- [ ] Error handling con mensajes amigables
-- [ ] Responsive design básico
-- [ ] Navegación intuitiva
-- [ ] Estilos consistentes
+- [x] Loading states en todas las páginas
+- [x] Error handling con mensajes amigables
+- [x] Responsive design básico
+- [x] Navegación intuitiva
+- [x] Estilos consistentes
 
 ---
 
