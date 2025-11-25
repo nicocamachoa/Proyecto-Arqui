@@ -125,11 +125,25 @@ open http://localhost:16686
 
 ```
 allconnect-market/
-├── infrastructure/          # Track 1
+├── infrastructure/              # Track 1
 │   ├── docker-compose.yml
-│   ├── k8s/
-│   └── scripts/
-├── services/               # Track 2
+│   ├── scripts/                 # SQL init, etc.
+│   └── platform/
+│       ├── eureka-server/       # Spring Boot
+│       └── gateway/             # Spring Cloud Gateway
+├── k8s/                         # Kubernetes manifests
+│   ├── kustomization.yaml
+│   ├── namespace.yaml
+│   ├── configmaps/
+│   ├── secrets/
+│   ├── volumes/
+│   ├── deployments/
+│   │   ├── infrastructure/      # MySQL, Redis, Kafka, RabbitMQ
+│   │   ├── platform/            # Eureka, Gateway
+│   │   ├── services/            # Microservices
+│   │   └── integration/         # Integration layer
+│   └── ingress/
+├── services/                    # Track 2
 │   ├── order-service/
 │   ├── catalog-service/
 │   ├── customer-service/
@@ -138,7 +152,7 @@ allconnect-market/
 │   ├── billing-service/
 │   ├── security-service/
 │   └── recommendation-service/
-├── integration/            # Track 3
+├── integration/                 # Track 3
 │   ├── integration-service/
 │   ├── adapters/
 │   │   ├── https-adapter/
@@ -148,13 +162,13 @@ allconnect-market/
 │       ├── rest-provider/
 │       ├── soap-provider/
 │       └── grpc-provider/
-├── frontend/               # Track 4
+├── frontend/                    # Track 4
 │   ├── customer-portal/
 │   └── admin-dashboard/
-└── docs/
-    ├── ARQUITECTURA_DECISIONES.md
-    ├── TRACKS_DIVISION.md
-    └── CLAUDE*.md
+├── shared/                      # Shared code
+│   ├── common-models/
+│   └── common-utils/
+└── *.md                         # Documentation at root
 ```
 
 ## PRIORIDADES (En orden)
