@@ -1,1013 +1,551 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36 OPR/123.0.0.0" version="29.1.1">
-  <diagram id="DevelopmentView" name="Development View">
-    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="5000" pageHeight="3500" math="0" shadow="0">
+<mxfile host="app.diagrams.net" agent="Claude Code" version="29.1.1">
+  <diagram name="Vista de Desarrollo - AllConnect Market" id="development-view">
+    <mxGraphModel dx="2800" dy="1800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3200" pageHeight="2400" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="PresentationModules" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;container=0;" value="PresentationModules" vertex="1">
-          <mxGeometry height="730" width="480" x="100" y="680" as="geometry" />
+
+        <!-- ==================== TITLE ==================== -->
+        <mxCell id="title" value="Vista de Desarrollo - AllConnect Market&#xa;Organizacion de Modulos de Codigo Fuente" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="900" y="20" width="600" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="ESBLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;fontStyle=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;container=0;" value="ESBLayer" vertex="1">
-          <mxGeometry height="500" width="830" x="1110" y="210" as="geometry" />
+
+        <!-- ==================== FRONTEND MODULES ==================== -->
+        <mxCell id="frontend-package" value="&lt;&lt;package&gt;&gt;&#xa;frontend" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="100" y="100" width="700" height="520" as="geometry" />
         </mxCell>
-        <mxCell id="EnterpriseServices" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;fontStyle=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;container=0;" value="EnterpriseServices" vertex="1">
-          <mxGeometry height="890" width="880" x="760" y="830" as="geometry" />
+
+        <!-- WebUI Module -->
+        <mxCell id="webui-module" value="WebUIModule&#xa;&lt;&lt;React MVVM&gt;&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="120" y="150" width="320" height="450" as="geometry" />
         </mxCell>
-        <mxCell id="SharedServices" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;fontStyle=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;container=0;" value="SharedServices" vertex="1">
-          <mxGeometry height="830" width="590" x="2190" y="450" as="geometry" />
+
+        <mxCell id="webui-views" value="views/&#xa;&lt;&lt;React Components&gt;&gt;&#xa;&#xa;CatalogView.tsx&#xa;CartView.tsx&#xa;CheckoutView.tsx&#xa;ProductDetailView.tsx&#xa;LoginView.tsx&#xa;ProfileView.tsx" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=8;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="130" y="195" width="145" height="140" as="geometry" />
         </mxCell>
-        <mxCell id="ProviderIntegrationLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;container=0;" value="ProviderIntegrationLayer" vertex="1">
-          <mxGeometry height="460" width="520" x="1690" y="1360" as="geometry" />
+
+        <mxCell id="webui-viewmodels" value="viewmodels/&#xa;&lt;&lt;State Management&gt;&gt;&#xa;&#xa;CartViewModel.ts&#xa;CatalogViewModel.ts&#xa;CheckoutViewModel.ts&#xa;UserViewModel.ts" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=8;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="285" y="195" width="145" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="DataAccessLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;fontStyle=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;container=0;" value="DataAccessLayer" vertex="1">
-          <mxGeometry height="252.75" width="610" x="100" y="1557.25" as="geometry" />
+
+        <mxCell id="webui-services" value="services/&#xa;&lt;&lt;API Clients&gt;&gt;&#xa;&#xa;CatalogService.ts&#xa;OrderService.ts&#xa;CustomerService.ts&#xa;PaymentService.ts" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=8;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="130" y="345" width="145" height="110" as="geometry" />
         </mxCell>
-        <mxCell id="InfrastructureModules" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;fontStyle=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;container=0;" value="InfrastructureModules" vertex="1">
-          <mxGeometry height="500" width="485" x="1685" y="830" as="geometry" />
+
+        <mxCell id="webui-hooks" value="hooks/&#xa;&lt;&lt;Custom Hooks&gt;&gt;&#xa;&#xa;useCart.ts&#xa;useAuth.ts&#xa;useCatalog.ts" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=8;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="285" y="325" width="145" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="ExternalIntegrations" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;fontStyle=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;container=0;" value="ExternalIntegrations" vertex="1">
-          <mxGeometry height="260" width="700" x="791.56" y="1740" as="geometry" />
+
+        <mxCell id="webui-components" value="components/&#xa;&lt;&lt;Reusable UI&gt;&gt;&#xa;&#xa;ProductCard.tsx&#xa;CartItem.tsx&#xa;SearchBar.tsx&#xa;Navbar.tsx" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=8;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="130" y="465" width="145" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="SharedLibraries" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;container=0;" value="SharedLibraries" vertex="1">
-          <mxGeometry height="392.02" width="590" x="490" y="270" as="geometry" />
+
+        <mxCell id="webui-utils" value="utils/&#xa;&lt;&lt;Utilities&gt;&gt;&#xa;&#xa;formatters.ts&#xa;validators.ts&#xa;api-client.ts" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=8;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="285" y="425" width="145" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="comp1" edge="1" parent="1" source="WebUIViews" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" target="WebUIModule">
+
+        <!-- AdminPanel Module -->
+        <mxCell id="admin-module" value="AdminPanelModule&#xa;&lt;&lt;React MVVM&gt;&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="460" y="150" width="320" height="450" as="geometry" />
+        </mxCell>
+
+        <mxCell id="admin-views" value="views/&#xa;&lt;&lt;React Components&gt;&gt;&#xa;&#xa;DashboardView.tsx&#xa;MetricsView.tsx&#xa;ProviderManagementView.tsx&#xa;OrdersView.tsx&#xa;UsersView.tsx" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=8;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="470" y="195" width="145" height="130" as="geometry" />
+        </mxCell>
+
+        <mxCell id="admin-viewmodels" value="viewmodels/&#xa;&lt;&lt;State Management&gt;&gt;&#xa;&#xa;DashboardViewModel.ts&#xa;MetricsViewModel.ts&#xa;ProviderViewModel.ts" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=8;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="625" y="195" width="145" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="admin-services" value="services/&#xa;&lt;&lt;API Clients&gt;&gt;&#xa;&#xa;AdminService.ts&#xa;MonitoringService.ts&#xa;ReportsService.ts" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=8;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="470" y="335" width="145" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="admin-charts" value="charts/&#xa;&lt;&lt;Visualization&gt;&gt;&#xa;&#xa;SalesChart.tsx&#xa;LatencyChart.tsx&#xa;TrafficChart.tsx" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=8;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="625" y="305" width="145" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="admin-components" value="components/&#xa;&lt;&lt;Reusable UI&gt;&gt;&#xa;&#xa;DataTable.tsx&#xa;Sidebar.tsx&#xa;StatCard.tsx" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=8;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="470" y="445" width="145" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="admin-utils" value="utils/&#xa;&lt;&lt;Utilities&gt;&gt;&#xa;&#xa;date-utils.ts&#xa;chart-helpers.ts" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=8;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="625" y="415" width="145" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== BACKEND SERVICES MODULES ==================== -->
+        <mxCell id="services-package" value="&lt;&lt;package&gt;&gt;&#xa;services" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;fontStyle=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="100" y="660" width="1100" height="580" as="geometry" />
+        </mxCell>
+
+        <!-- Order Service Module -->
+        <mxCell id="order-module" value="order-service/&#xa;&lt;&lt;Spring Boot Module&gt;&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="120" y="710" width="250" height="250" as="geometry" />
+        </mxCell>
+
+        <mxCell id="order-controller" value="controller/&#xa;OrderController.java&#xa;CartController.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="130" y="755" width="110" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="order-service-layer" value="service/&#xa;OrderService.java&#xa;CartService.java&#xa;PricingEngine.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="250" y="755" width="110" height="65" as="geometry" />
+        </mxCell>
+
+        <mxCell id="order-repository" value="repository/&#xa;OrderRepository.java&#xa;CartRepository.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="130" y="820" width="110" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="order-entity" value="entity/&#xa;OrderEntity.java&#xa;CartItemEntity.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="250" y="830" width="110" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="order-saga" value="saga/&#xa;CheckoutSagaOrchestrator.java&#xa;CompensationHandler.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="130" y="885" width="230" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Catalog Service Module -->
+        <mxCell id="catalog-module" value="catalog-service/&#xa;&lt;&lt;Spring Boot Module&gt;&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="390" y="710" width="250" height="250" as="geometry" />
+        </mxCell>
+
+        <mxCell id="catalog-controller" value="controller/&#xa;CatalogController.java&#xa;ProductController.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="400" y="755" width="110" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="catalog-service-layer" value="service/&#xa;CatalogService.java&#xa;InventoryService.java&#xa;SearchService.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="520" y="755" width="110" height="65" as="geometry" />
+        </mxCell>
+
+        <mxCell id="catalog-repository" value="repository/&#xa;ProductRepository.java&#xa;CategoryRepository.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="400" y="820" width="110" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="catalog-entity" value="entity/&#xa;ProductEntity.java&#xa;CategoryEntity.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="520" y="830" width="110" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="catalog-cache" value="cache/&#xa;CatalogCacheManager.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="400" y="895" width="230" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Customer Service Module -->
+        <mxCell id="customer-module" value="customer-service/&#xa;&lt;&lt;Spring Boot Module&gt;&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="660" y="710" width="250" height="250" as="geometry" />
+        </mxCell>
+
+        <mxCell id="customer-controller" value="controller/&#xa;CustomerController.java&#xa;AuthController.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="670" y="755" width="110" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="customer-service-layer" value="service/&#xa;CustomerService.java&#xa;ProfileService.java&#xa;AuthService.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="790" y="755" width="110" height="65" as="geometry" />
+        </mxCell>
+
+        <mxCell id="customer-repository" value="repository/&#xa;UserRepository.java&#xa;ProfileRepository.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="670" y="820" width="110" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="customer-entity" value="entity/&#xa;UserEntity.java&#xa;ProfileEntity.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="790" y="830" width="110" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="customer-security" value="security/&#xa;JwtTokenProvider.java&#xa;MFAHandler.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="670" y="895" width="230" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Payment Service Module -->
+        <mxCell id="payment-module" value="payment-service/&#xa;&lt;&lt;Spring Boot Module&gt;&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="930" y="710" width="250" height="250" as="geometry" />
+        </mxCell>
+
+        <mxCell id="payment-controller" value="controller/&#xa;PaymentController.java&#xa;RefundController.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="940" y="755" width="110" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="payment-service-layer" value="service/&#xa;PaymentService.java&#xa;RefundService.java&#xa;ValidationService.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="755" width="110" height="65" as="geometry" />
+        </mxCell>
+
+        <mxCell id="payment-gateway" value="gateway/&#xa;PaymentGatewayFacade.java&#xa;StripeAdapter.java&#xa;MercadoPagoAdapter.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="940" y="820" width="110" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="payment-repository" value="repository/&#xa;PaymentRepository.java&#xa;TransactionRepository.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="830" width="110" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="payment-encryption" value="encryption/&#xa;EncryptionService.java (BouncyCastle)&#xa;TokenizationService.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="940" y="900" width="230" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- Notification Service Module -->
+        <mxCell id="notification-module" value="notification-service/&#xa;&lt;&lt;Spring Boot Module&gt;&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="120" y="980" width="250" height="240" as="geometry" />
+        </mxCell>
+
+        <mxCell id="notification-controller" value="controller/&#xa;NotificationController.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="130" y="1025" width="110" height="45" as="geometry" />
+        </mxCell>
+
+        <mxCell id="notification-service-layer" value="service/&#xa;NotificationService.java&#xa;TemplateService.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="250" y="1025" width="110" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="notification-channels" value="channels/&#xa;EmailChannel.java&#xa;SMSChannel.java&#xa;PushChannel.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="130" y="1080" width="110" height="65" as="geometry" />
+        </mxCell>
+
+        <mxCell id="notification-templates" value="templates/&#xa;&lt;&lt;Thymeleaf&gt;&gt;&#xa;email-templates/&#xa;sms-templates/" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="250" y="1090" width="110" height="65" as="geometry" />
+        </mxCell>
+
+        <mxCell id="notification-kafka" value="kafka/&#xa;NotificationEventConsumer.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="130" y="1165" width="230" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- Billing Service Module -->
+        <mxCell id="billing-module" value="billing-service/&#xa;&lt;&lt;Spring Boot Module&gt;&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="390" y="980" width="250" height="240" as="geometry" />
+        </mxCell>
+
+        <mxCell id="billing-controller" value="controller/&#xa;BillingController.java&#xa;InvoiceController.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="400" y="1025" width="110" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="billing-service-layer" value="service/&#xa;BillingService.java&#xa;InvoiceGenerator.java&#xa;TaxCalculator.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="520" y="1025" width="110" height="65" as="geometry" />
+        </mxCell>
+
+        <mxCell id="billing-repository" value="repository/&#xa;InvoiceRepository.java&#xa;TaxRuleRepository.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="400" y="1090" width="110" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="billing-entity" value="entity/&#xa;InvoiceEntity.java&#xa;TaxRuleEntity.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="520" y="1100" width="110" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Recommendation Service Module -->
+        <mxCell id="recommendation-module" value="recommendation-service/&#xa;&lt;&lt;Spring Boot Module&gt;&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="660" y="980" width="250" height="240" as="geometry" />
+        </mxCell>
+
+        <mxCell id="recommendation-controller" value="controller/&#xa;RecommendationController.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="670" y="1025" width="115" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="recommendation-service-layer" value="service/&#xa;RecommendationService.java&#xa;BehaviorAnalyzer.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="795" y="1025" width="105" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="recommendation-algorithms" value="algorithms/&#xa;CollaborativeFiltering.java&#xa;ContentBasedFiltering.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="670" y="1085" width="115" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="recommendation-ml" value="ml/&#xa;MLModelClient.java&#xa;PersonalizationEngine.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="795" y="1095" width="105" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Security Service Module -->
+        <mxCell id="security-module" value="security-service/&#xa;&lt;&lt;Spring Boot Module&gt;&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="930" y="980" width="250" height="240" as="geometry" />
+        </mxCell>
+
+        <mxCell id="security-controller" value="controller/&#xa;AuthController.java&#xa;TokenController.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="940" y="1025" width="110" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="security-service-layer" value="service/&#xa;AuthenticationService.java&#xa;AuthorizationService.java&#xa;TokenService.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="1025" width="110" height="65" as="geometry" />
+        </mxCell>
+
+        <mxCell id="security-oauth" value="oauth/&#xa;OAuth2Config.java&#xa;JwtConfig.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="940" y="1090" width="110" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="security-crypto" value="crypto/&#xa;E2EEncryption.java (AES-256)&#xa;CertManager.java (RSA-2048)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="1100" width="110" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== INTEGRATION MODULES ==================== -->
+        <mxCell id="integration-package" value="&lt;&lt;package&gt;&gt;&#xa;integration" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;fontStyle=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="840" y="100" width="560" height="520" as="geometry" />
+        </mxCell>
+
+        <!-- Integration Service Module -->
+        <mxCell id="integration-service-module" value="integration-service/&#xa;&lt;&lt;Spring Boot Module&gt;&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="860" y="150" width="260" height="450" as="geometry" />
+        </mxCell>
+
+        <mxCell id="integration-controller" value="controller/&#xa;IntegrationController.java&#xa;ProviderController.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="870" y="195" width="115" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="integration-service-layer" value="service/&#xa;IntegrationService.java&#xa;ProviderFacade.java&#xa;AsyncRequestManager.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="995" y="195" width="115" height="-65" as="geometry" />
+        </mxCell>
+
+        <mxCell id="integration-facade" value="facade/&#xa;ProviderFacade.java&#xa;IntegrationFacade.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="870" y="260" width="115" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="integration-async" value="async/&#xa;AsyncRequestManager.java&#xa;CallbackHandler.java&#xa;RequestQueue.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="995" y="260" width="115" height="65" as="geometry" />
+        </mxCell>
+
+        <mxCell id="integration-resilience" value="resilience/&#xa;&lt;&lt;Resilience4j&gt;&gt;&#xa;CircuitBreakerConfig.java&#xa;RetryConfig.java&#xa;TimeoutConfig.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="870" y="325" width="115" height="85" as="geometry" />
+        </mxCell>
+
+        <mxCell id="integration-translator" value="translator/&#xa;ProviderDataTranslator.java&#xa;SchemaMapper.java&#xa;ResponseParser.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="995" y="335" width="115" height="65" as="geometry" />
+        </mxCell>
+
+        <mxCell id="integration-factory" value="factory/&#xa;&lt;&lt;Abstract Factory&gt;&gt;&#xa;ProtocolAdapterFactory.java&#xa;IProtocolAdapter.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="870" y="420" width="240" height="65" as="geometry" />
+        </mxCell>
+
+        <mxCell id="integration-repository" value="repository/&#xa;ProviderRepository.java&#xa;IntegrationLogRepository.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="870" y="495" width="240" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Protocol Adapters (Node.js) -->
+        <mxCell id="adapters-module" value="protocol-adapters/&#xa;&lt;&lt;Node.js Modules&gt;&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="150" width="240" height="450" as="geometry" />
+        </mxCell>
+
+        <mxCell id="https-adapter" value="https-adapter/&#xa;&#xa;index.js&#xa;HttpsClient.js&#xa;ResponseTransformer.js&#xa;config.js" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="195" width="110" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="soap-adapter" value="soap-adapter/&#xa;&#xa;index.js&#xa;SoapClient.js&#xa;WsdlParser.js&#xa;XmlTransformer.js" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="195" width="110" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rpc-adapter" value="rpc-adapter/&#xa;&#xa;index.js&#xa;GrpcClient.js&#xa;ProtoLoader.js&#xa;StreamHandler.js" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="305" width="110" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="adapter-common" value="common/&#xa;&#xa;BaseAdapter.js&#xa;Logger.js&#xa;ErrorHandler.js&#xa;HealthCheck.js" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="305" width="110" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="adapter-interface" value="IProtocolAdapter Interface&#xa;&#xa;+ connect(): Promise&lt;void&gt;&#xa;+ fetchData(params): Promise&lt;any&gt;&#xa;+ transformResponse(data): any&#xa;+ healthCheck(): Promise&lt;boolean&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;align=left;fontSize=9;spacingLeft=5;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="1150" y="415" width="220" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="adapter-package-json" value="package.json&#xa;Dependencies:&#xa;- axios, soap, @grpc/grpc-js&#xa;- express, winston" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="515" width="220" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== SHARED LIBRARIES ==================== -->
+        <mxCell id="shared-package" value="&lt;&lt;package&gt;&gt;&#xa;shared-libs" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;fontStyle=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="100" width="560" height="520" as="geometry" />
+        </mxCell>
+
+        <!-- Domain Models Module -->
+        <mxCell id="domain-module" value="domain-models/&#xa;&lt;&lt;Java Library&gt;&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="1460" y="150" width="260" height="220" as="geometry" />
+        </mxCell>
+
+        <mxCell id="domain-models" value="models/&#xa;&#xa;Order.java&#xa;Product.java&#xa;User.java&#xa;CartItem.java&#xa;Provider.java&#xa;Payment.java&#xa;Invoice.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1470" y="195" width="115" height="130" as="geometry" />
+        </mxCell>
+
+        <mxCell id="domain-enums" value="enums/&#xa;&#xa;OrderStatus.java&#xa;ProductType.java&#xa;PaymentMethod.java&#xa;ProtocolType.java&#xa;NotificationType.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1595" y="195" width="115" height="105" as="geometry" />
+        </mxCell>
+
+        <mxCell id="domain-vo" value="valueobjects/&#xa;Money.java, Address.java, Email.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1470" y="335" width="240" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Common Utils Module -->
+        <mxCell id="utils-module" value="common-utils/&#xa;&lt;&lt;Java Library&gt;&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="1740" y="150" width="240" height="220" as="geometry" />
+        </mxCell>
+
+        <mxCell id="utils-http" value="http/&#xa;HttpClientFactory.java&#xa;RestTemplateConfig.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1750" y="195" width="110" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="utils-validation" value="validation/&#xa;InputValidator.java&#xa;SchemaValidator.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1870" y="195" width="100" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="utils-serialization" value="serialization/&#xa;JsonSerializer.java (Jackson)&#xa;XmlSerializer.java (JAXB)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1750" y="260" width="110" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="utils-datetime" value="datetime/&#xa;DateTimeUtils.java&#xa;TimeZoneHandler.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1870" y="260" width="100" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="utils-exceptions" value="exceptions/&#xa;BusinessException.java&#xa;ValidationException.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1750" y="325" width="220" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- SOAP Client Module -->
+        <mxCell id="soap-module" value="soap-client/&#xa;&lt;&lt;Java Library - JAX-WS RI&gt;&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="1460" y="390" width="260" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="soap-client-classes" value="client/&#xa;SoapClientFactory.java&#xa;WsdlParser.java&#xa;JaxbMarshaller.java&#xa;SoapMessageHandler.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1470" y="430" width="240" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- Event Messaging Module -->
+        <mxCell id="event-module" value="event-messaging/&#xa;&lt;&lt;Java Library&gt;&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="1740" y="390" width="240" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="event-classes" value="kafka/&#xa;KafkaProducerConfig.java&#xa;KafkaConsumerConfig.java&#xa;EventPublisher.java&#xa;EventConsumer.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1750" y="430" width="220" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- Infrastructure Commons Module -->
+        <mxCell id="infra-module" value="infra-commons/&#xa;&lt;&lt;Java Library&gt;&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="1460" y="520" width="520" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="infra-logging" value="logging/&#xa;LoggerConfig.java (SLF4J)&#xa;StructuredLogger.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1470" y="560" width="120" height="45" as="geometry" />
+        </mxCell>
+
+        <mxCell id="infra-monitoring" value="monitoring/&#xa;MicrometerConfig.java&#xa;HealthIndicator.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1600" y="560" width="120" height="45" as="geometry" />
+        </mxCell>
+
+        <mxCell id="infra-cache" value="cache/&#xa;RedisCacheConfig.java&#xa;CacheService.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1730" y="560" width="120" height="45" as="geometry" />
+        </mxCell>
+
+        <mxCell id="infra-config" value="config/&#xa;ConfigLoader.java&#xa;EnvConfig.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=9;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1860" y="560" width="110" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== DATA ACCESS MODULE ==================== -->
+        <mxCell id="data-package" value="&lt;&lt;package&gt;&gt;&#xa;data-access" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;fontStyle=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="660" width="760" height="580" as="geometry" />
+        </mxCell>
+
+        <!-- Data Access Module -->
+        <mxCell id="data-module" value="data-access-module/&#xa;&lt;&lt;Spring Data JPA&gt;&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="710" width="720" height="510" as="geometry" />
+        </mxCell>
+
+        <mxCell id="data-repositories" value="repositories/&#xa;&lt;&lt;Repository Pattern&gt;&gt;&#xa;&#xa;OrderRepository.java&#xa;ProductRepository.java&#xa;UserRepository.java&#xa;ProviderRepository.java&#xa;PaymentRepository.java&#xa;NotificationRepository.java&#xa;InvoiceRepository.java&#xa;&#xa;extends JpaRepository&lt;T, ID&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=8;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="760" width="200" height="190" as="geometry" />
+        </mxCell>
+
+        <mxCell id="data-entities" value="entities/&#xa;&lt;&lt;JPA Entities&gt;&gt;&#xa;&#xa;OrderEntity.java&#xa;ProductEntity.java&#xa;UserEntity.java&#xa;ProviderEntity.java&#xa;PaymentEntity.java&#xa;NotificationEntity.java&#xa;InvoiceEntity.java&#xa;CartItemEntity.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=8;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="1500" y="760" width="200" height="180" as="geometry" />
+        </mxCell>
+
+        <mxCell id="data-mappers" value="mappers/&#xa;&lt;&lt;Data Mapping&gt;&gt;&#xa;&#xa;OrderMapper.java&#xa;ProductMapper.java&#xa;UserMapper.java&#xa;PaymentMapper.java&#xa;&#xa;(MapStruct or manual)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=8;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="1720" y="760" width="180" height="150" as="geometry" />
+        </mxCell>
+
+        <mxCell id="data-config" value="config/&#xa;&lt;&lt;Configuration&gt;&gt;&#xa;&#xa;DataSourceConfig.java&#xa;  - HikariCP connection pool&#xa;  - XA DataSource (Atomikos)&#xa;&#xa;JpaConfig.java&#xa;  - EntityManagerFactory&#xa;  - TransactionManager&#xa;&#xa;JtaConfig.java&#xa;  - Atomikos UserTransaction&#xa;  - JTA TransactionManager" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;fontSize=10;spacingLeft=8;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="970" width="220" height="180" as="geometry" />
+        </mxCell>
+
+        <mxCell id="data-specifications" value="specifications/&#xa;&lt;&lt;Query Specifications&gt;&gt;&#xa;&#xa;OrderSpecifications.java&#xa;ProductSpecifications.java&#xa;&#xa;(Criteria API)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=8;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="1520" y="960" width="180" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="data-auditing" value="auditing/&#xa;&lt;&lt;JPA Auditing&gt;&gt;&#xa;&#xa;AuditingConfig.java&#xa;AuditAware.java&#xa;BaseEntity.java" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=8;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="1720" y="930" width="180" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="data-migrations" value="migrations/&#xa;&lt;&lt;Flyway/Liquibase&gt;&gt;&#xa;&#xa;V1__initial_schema.sql&#xa;V2__add_indexes.sql&#xa;V3__add_audit_columns.sql" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=8;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="1720" y="1050" width="180" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== DEPENDENCY ARROWS ==================== -->
+
+        <!-- Frontend depends on Services (API) -->
+        <mxCell id="dep-frontend-services" edge="1" parent="1" source="frontend-package" target="services-package" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;dashed=1;strokeColor=#0050ef;" value="&lt;&lt;uses API&gt;&gt;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="204" y="900" />
+              <mxPoint x="450" y="640" />
+              <mxPoint x="450" y="640" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="comp2" edge="1" parent="1" source="WebUIViewModels" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" target="WebUIModule">
+
+        <!-- Services depends on Shared Libs -->
+        <mxCell id="dep-services-shared" edge="1" parent="1" source="services-package" target="shared-package" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;dashed=1;strokeColor=#82b366;" value="&lt;&lt;imports&gt;&gt;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="204" y="730" />
+              <mxPoint x="1420" y="950" />
+              <mxPoint x="1420" y="360" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="comp3" edge="1" parent="1" source="WebUIServices" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="WebUIModule">
+
+        <!-- Services depends on Data Access -->
+        <mxCell id="dep-services-data" edge="1" parent="1" source="services-package" target="data-package" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;dashed=1;strokeColor=#008a00;" value="&lt;&lt;uses&gt;&gt;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="comp4" edge="1" parent="1" source="AdminPanelViews" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;" target="AdminPanelModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="260" y="1216" />
-              <mxPoint x="260" y="1247" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp5" edge="1" parent="1" source="AdminPanelViewModels" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=0.977;entryY=0.701;entryDx=0;entryDy=0;entryPerimeter=0;" target="AdminPanelModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="270" y="1279" />
-              <mxPoint x="270" y="1260" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp6" edge="1" parent="1" source="AdminPanelServices" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="AdminPanelModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="170" y="1355" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp7" edge="1" parent="1" source="UIControllerRequestLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="UIControllerModule">
+
+        <!-- Integration depends on Shared Libs -->
+        <mxCell id="dep-integration-shared" edge="1" parent="1" source="integration-package" target="shared-package" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;dashed=1;strokeColor=#82b366;" value="&lt;&lt;imports&gt;&gt;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="comp8" edge="1" parent="1" source="UIControllerSessionLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=1;entryY=0.75;entryDx=0;entryDy=0;exitX=0;exitY=0.47;exitDx=0;exitDy=0;exitPerimeter=0;" target="UIControllerModule">
+
+        <!-- Data Access depends on Shared Libs (domain models) -->
+        <mxCell id="dep-data-shared" edge="1" parent="1" source="data-package" target="shared-package" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;dashed=1;strokeColor=#82b366;" value="&lt;&lt;imports domain&gt;&gt;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="280" y="1058" />
-              <mxPoint x="280" y="1003" />
+              <mxPoint x="1720" y="640" />
+              <mxPoint x="1720" y="630" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="comp9" edge="1" parent="1" source="UIControllerAuthLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=0.793;entryY=0.995;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryPerimeter=0;" target="UIControllerModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp10" edge="1" parent="1" source="RoutingLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=0.335;entryY=0.996;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.727;exitY=0.013;exitDx=0;exitDy=0;exitPerimeter=0;" target="ESBModule">
+
+        <!-- Services depends on Integration -->
+        <mxCell id="dep-services-integration" edge="1" parent="1" source="catalog-module" target="integration-service-module" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;dashed=1;strokeColor=#d79b00;" value="&lt;&lt;integrates&gt;&gt;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="1210" y="340" />
+              <mxPoint x="515" y="640" />
+              <mxPoint x="990" y="640" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="comp11" edge="1" parent="1" source="SecurityLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;exitX=0.358;exitY=-0.003;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.576;entryY=0.995;entryDx=0;entryDy=0;entryPerimeter=0;" target="ESBModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp12" edge="1" parent="1" source="OrchestrationLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="ESBModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp13" edge="1" parent="1" source="MonitoringLayerESB" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=1;entryY=1;entryDx=0;entryDy=0;exitX=0.25;exitY=0;exitDx=0;exitDy=0;" target="ESBModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1395" y="330" />
-              <mxPoint x="1310" y="330" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp14" edge="1" parent="1" source="RegistryLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=0.25;entryY=1;entryDx=0;entryDy=0;exitX=0.451;exitY=0.036;exitDx=0;exitDy=0;exitPerimeter=0;" target="UDDIModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp15" edge="1" parent="1" source="VersioningLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="UDDIModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1618" y="340" />
-              <mxPoint x="1505" y="340" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp16" edge="1" parent="1" source="ProcessLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="BPELEngineModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp17" edge="1" parent="1" source="WorkflowDefinitions" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="BPELEngineModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp18" edge="1" parent="1" source="QueueLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=0.645;entryY=0.986;entryDx=0;entryDy=0;entryPerimeter=0;" target="MessageBrokerModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp19" edge="1" parent="1" source="RoutingBrokerLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="MessageBrokerModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1860" y="282.29" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp20" edge="1" parent="1" source="CatalogAPILayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;exitX=0;exitY=0.25;exitDx=0;exitDy=0;" target="CatalogServiceModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1010" y="928" />
-              <mxPoint x="1010" y="907" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp21" edge="1" parent="1" source="CatalogRepositoryLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" target="CatalogServiceModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1140" y="1040" />
-              <mxPoint x="1010" y="1040" />
-              <mxPoint x="1010" y="1010" />
-              <mxPoint x="1010" y="921" />
-            </Array>
-            <mxPoint x="1010" y="910" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp22" edge="1" parent="1" source="CatalogCacheLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="CatalogServiceModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1010" y="872" />
-              <mxPoint x="1010" y="907" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp24" edge="1" parent="1" source="OrderAPILayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="OrderServiceModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp25" edge="1" parent="1" source="OrderBusinessLogicLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="OrderServiceModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp26" edge="1" parent="1" source="OrderRepositoryLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="OrderServiceModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp27" edge="1" parent="1" source="CustomerAPILayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=0.991;entryY=0.919;entryDx=0;entryDy=0;entryPerimeter=0;" target="CustomerServiceModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp28" edge="1" parent="1" source="CustomerAuthLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" target="CustomerServiceModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="983" y="1120" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp29" edge="1" parent="1" source="CustomerRepositoryLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="CustomerServiceModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp30" edge="1" parent="1" source="RecommendationAPILayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=0.673;entryY=0.025;entryDx=0;entryDy=0;entryPerimeter=0;" target="RecommendationServiceModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp31" edge="1" parent="1" source="RecommendationMLLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.999;entryY=0.59;entryDx=0;entryDy=0;entryPerimeter=0;" target="RecommendationServiceModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1583" y="1600" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp32" edge="1" parent="1" source="RecommendationAlgorithmsLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=0.214;entryY=0.996;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryPerimeter=0;" target="RecommendationServiceModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1330" y="1640" />
-            </Array>
-            <mxPoint x="1330" y="1650" as="sourcePoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp33" edge="1" parent="1" source="RecommendationRepositoryLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" target="RecommendationServiceModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp38" edge="1" parent="1" source="PaymentAPILayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" target="PaymentServiceModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="2353" y="480" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp39" edge="1" parent="1" source="PaymentGatewayLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="PaymentServiceModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp40" edge="1" parent="1" source="PaymentAdaptersLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;" target="PaymentServiceModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="2575" y="590" />
-              <mxPoint x="2450" y="590" />
-              <mxPoint x="2450" y="553" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp41" edge="1" parent="1" source="PaymentEncryptionLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="PaymentServiceModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp42" edge="1" parent="1" source="PaymentComplianceLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" target="PaymentServiceModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="2565" y="670" />
-              <mxPoint x="2450" y="670" />
-              <mxPoint x="2450" y="600" />
-              <mxPoint x="2353" y="600" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp43" edge="1" parent="1" source="IntegrationAPILayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="IntegrationServiceModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp44" edge="1" parent="1" source="IntegrationAsyncLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=0.874;entryY=0.99;entryDx=0;entryDy=0;entryPerimeter=0;" target="IntegrationServiceModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="2488" y="870" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp45" edge="1" parent="1" source="IntegrationAdaptersLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=0.345;entryY=0.998;entryDx=0;entryDy=0;entryPerimeter=0;" target="IntegrationServiceModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp46" edge="1" parent="1" source="IntegrationTranslationLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=0.639;entryY=1.004;entryDx=0;entryDy=0;entryPerimeter=0;" target="IntegrationServiceModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="2466" y="940" />
-              <mxPoint x="2420" y="940" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp47" edge="1" parent="1" source="IntegrationResilienceLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" target="IntegrationServiceModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="2530" y="940" />
-              <mxPoint x="2530" y="880" />
-              <mxPoint x="2450" y="880" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp48" edge="1" parent="1" source="SecurityAPILayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="SecurityServiceModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp49" edge="1" parent="1" source="SecurityAuthLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="SecurityServiceModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp50" edge="1" parent="1" source="SecurityEncryptionLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" target="SecurityServiceModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="2600" y="1200" />
-              <mxPoint x="2438" y="1200" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp51" edge="1" parent="1" source="SecurityAuditLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="SecurityServiceModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="2530" y="1165" />
-              <mxPoint x="2530" y="1120" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp52" edge="1" parent="1" source="ProviderIntegrationAPILayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;exitX=0.017;exitY=0.516;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" target="ProviderIntegrationServiceModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1850" y="1430" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp53" edge="1" parent="1" source="ProviderAsyncLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=1;entryY=0;entryDx=0;entryDy=0;" target="ProviderIntegrationServiceModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp54" edge="1" parent="1" source="ProviderAdaptersLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="ProviderIntegrationServiceModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1930" y="1590" />
-              <mxPoint x="1930" y="1549" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp55" edge="1" parent="1" source="ProviderTranslationLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" target="ProviderIntegrationServiceModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1920" y="1684" />
-              <mxPoint x="1920" y="1610" />
-              <mxPoint x="1850" y="1610" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp56" edge="1" parent="1" source="ProviderResilienceLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="ProviderIntegrationServiceModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1880" y="1630" />
-              <mxPoint x="1800" y="1630" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp57" edge="1" parent="1" source="RepositoryLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="DataAccessModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp58" edge="1" parent="1" source="EntityLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="DataAccessModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp59" edge="1" parent="1" source="MapperLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="DataAccessModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp60" edge="1" parent="1" source="ConnectionLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" target="DataAccessModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="585" y="1690" />
-              <mxPoint x="450" y="1690" />
-              <mxPoint x="450" y="1658" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp61" edge="1" parent="1" source="LoggingLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="InfraCommonsModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp62" edge="1" parent="1" source="MonitoringLayerInfra" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="InfraCommonsModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp63" edge="1" parent="1" source="CacheLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="InfraCommonsModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp64" edge="1" parent="1" source="ConfigLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="InfraCommonsModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp65" edge="1" parent="1" source="EventLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="EventMessagingModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp66" edge="1" parent="1" source="EventHandlersLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="EventMessagingModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp67" edge="1" parent="1" source="MessagingLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="EventMessagingModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp68" edge="1" parent="1" source="LogisticsLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="ExternalClientsModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp69" edge="1" parent="1" source="BillingLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="ExternalClientsModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="970" y="1965" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp70" edge="1" parent="1" source="MarketingLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=0.774;entryY=0.996;entryDx=0;entryDy=0;entryPerimeter=0;" target="ExternalClientsModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1052" y="1918" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp75" edge="1" parent="1" source="ModelsLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="DomainModelsModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp77" edge="1" parent="1" source="ValueObjectsLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=0.75;entryY=1;entryDx=0;entryDy=0;exitX=-0.008;exitY=0.539;exitDx=0;exitDy=0;exitPerimeter=0;" target="DomainModelsModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="920" y="582.02" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp78" edge="1" parent="1" source="SOAPClientLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" target="SOAPClientModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="627" y="525.02" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp79" edge="1" parent="1" source="MarshallingLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.574;entryY=0.957;entryDx=0;entryDy=0;entryPerimeter=0;" target="SOAPClientModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="603" y="625.02" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="dep100" edge="1" parent="1" source="WebUIServices" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;strokeWidth=1;fillColor=#0050ef;strokeColor=#001DBC;" target="SOAPClientModule" value="">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="630" y="821" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="dep101" edge="1" parent="1" source="AdminPanelServices" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;strokeWidth=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fillColor=#0050ef;strokeColor=#001DBC;" target="SOAPClientModule" value="uses">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="630" y="1355" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="dep103" edge="1" parent="1" source="ESBModule" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 5;endArrow=open;strokeWidth=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=-0.006;entryY=0.797;entryDx=0;entryDy=0;entryPerimeter=0;" target="UDDIModule" value="discovers services">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points" />
-            <mxPoint x="1480" y="139.29" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="dep104" edge="1" parent="1" source="RoutingLayer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 5;endArrow=open;strokeWidth=1;" target="BPELEngineModule" value="orchestrates">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1179" y="629.29" />
-              <mxPoint x="1179" y="629.29" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="dep105" edge="1" parent="1" source="ESBModule" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 5;endArrow=open;strokeWidth=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" target="MessageBrokerModule" value="messaging">
-          <mxGeometry relative="1" x="-0.3029" as="geometry">
-            <mxPoint as="offset" />
-            <Array as="points">
-              <mxPoint x="1235" y="233.29" />
-              <mxPoint x="1632" y="233.29" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="dep106" edge="1" parent="1" source="CatalogIntegrationLayer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;strokeWidth=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;fillColor=#f0a30a;strokeColor=#BD7000;" target="DataAccessModule" value="uses">
-          <mxGeometry relative="1" x="0.4159" as="geometry">
-            <mxPoint as="offset" />
-            <Array as="points">
-              <mxPoint x="700" y="997" />
-              <mxPoint x="700" y="1540" />
-              <mxPoint x="380" y="1540" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="dep107" edge="1" parent="1" source="OrderBusinessLogicLayer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;strokeWidth=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;fillColor=#f0a30a;strokeColor=#BD7000;" target="DataAccessModule" value="uses">
-          <mxGeometry relative="1" x="0.1426" as="geometry">
-            <mxPoint as="offset" />
-            <Array as="points">
-              <mxPoint x="300" y="1470" />
-            </Array>
-            <mxPoint x="790" y="1456" as="sourcePoint" />
-            <mxPoint x="300" y="1620.830303030303" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="dep108" edge="1" parent="1" source="CustomerRepositoryLayer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;strokeWidth=1;entryX=0.432;entryY=0.007;entryDx=0;entryDy=0;exitX=0.01;exitY=0.636;exitDx=0;exitDy=0;exitPerimeter=0;entryPerimeter=0;fillColor=#f0a30a;strokeColor=#BD7000;" target="DataAccessModule" value="uses">
-          <mxGeometry relative="1" x="0.2323" as="geometry">
-            <mxPoint as="offset" />
-            <Array as="points">
-              <mxPoint x="831" y="1277" />
-              <mxPoint x="660" y="1277" />
-              <mxPoint x="660" y="1500" />
-              <mxPoint x="330" y="1500" />
-              <mxPoint x="330" y="1616" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="dep109" edge="1" parent="1" source="NotificationServiceModule" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;strokeWidth=1;entryX=1;entryY=0;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;fillColor=#f0a30a;strokeColor=#BD7000;" target="DataAccessModule" value="uses">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="420" y="1573" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="dep110" edge="1" parent="1" source="CatalogServiceModule" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;strokeWidth=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;fillColor=#f0a30a;strokeColor=#BD7000;" target="InfraCommonsModule" value="logging, cache">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="942" y="760" />
-              <mxPoint x="1855" y="760" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="dep111" edge="1" parent="1" source="OrderServiceModule" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;strokeWidth=1;" target="InfraCommonsModule" value="logging">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1730" y="1353" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="dep112" edge="1" parent="1" source="CustomerServiceModule" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 5;endArrow=open;strokeWidth=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;fillColor=#f0a30a;strokeColor=#BD7000;" target="InfraCommonsModule" value="logging">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="dep113" edge="1" parent="1" source="RecommendationServiceModule" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 5;endArrow=open;strokeWidth=1;" target="InfraCommonsModule" value="logging, cache">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1560" y="1594" />
-              <mxPoint x="1560" y="925" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="dep114" edge="1" parent="1" source="CatalogServiceModule" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;strokeWidth=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;fillColor=#f0a30a;strokeColor=#BD7000;" target="DomainModelsModule" value="domain">
-          <mxGeometry relative="1" x="-0.2391" as="geometry">
-            <mxPoint as="offset" />
-            <Array as="points">
-              <mxPoint x="900" y="670" />
-              <mxPoint x="900" y="670" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="dep115" edge="1" parent="1" source="OrderServiceModule" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;strokeWidth=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.462;entryY=0.971;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=#f0a30a;strokeColor=#BD7000;" target="DomainModelsModule" value="domain">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="730" y="1353" />
-              <mxPoint x="730" y="760" />
-              <mxPoint x="880" y="760" />
-            </Array>
-            <mxPoint x="831.2408235294121" y="1227.02" as="sourcePoint" />
-            <mxPoint x="880" y="570" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="dep116" edge="1" parent="1" source="CustomerServiceModule" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;strokeWidth=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;fillColor=#f0a30a;strokeColor=#BD7000;" target="DomainModelsModule" value="domain">
-          <mxGeometry relative="1" x="-0.1059" as="geometry">
-            <mxPoint as="offset" />
-            <Array as="points">
-              <mxPoint x="868" y="1080" />
-              <mxPoint x="670" y="1080" />
-              <mxPoint x="670" y="720" />
-              <mxPoint x="860" y="720" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="dep117" edge="1" parent="1" source="IntegrationServiceModule" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;strokeWidth=1;entryX=0.75;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;fillColor=#e51400;strokeColor=#B20000;" target="EventMessagingModule" value="events">
-          <mxGeometry relative="1" x="0.0853" as="geometry">
-            <mxPoint as="offset" />
-            <Array as="points">
-              <mxPoint x="2200" y="785" />
-              <mxPoint x="2200" y="1340" />
-              <mxPoint x="1848" y="1340" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="dep118" edge="1" parent="1" source="CatalogIntegrationLayer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 5;endArrow=open;strokeWidth=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fillColor=#f0a30a;strokeColor=#BD7000;" target="EventMessagingModule" value="events">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1450" y="997" />
-              <mxPoint x="1450" y="1240" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="dep119" edge="1" parent="1" source="CatalogIntegrationLayer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;strokeWidth=1;fillColor=#fa6800;strokeColor=#C73500;" target="ProviderIntegrationServiceModule" value="integrates">
-          <mxGeometry relative="1" x="-0.1092" as="geometry">
-            <mxPoint as="offset" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="dep120" edge="1" parent="1" source="ProviderIntegrationServiceModule" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 5;endArrow=open;strokeWidth=1;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" target="EventMessagingModule" value="publishes events">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1710" y="1538" />
-              <mxPoint x="1670" y="1538" />
-              <mxPoint x="1670" y="1260" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="dep121" edge="1" parent="1" source="ProviderIntegrationServiceModule" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 5;endArrow=open;strokeWidth=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" target="InfraCommonsModule" value="logging, monitoring">
-          <mxGeometry relative="1" x="0.3522" as="geometry">
-            <mxPoint as="offset" />
-            <Array as="points">
-              <mxPoint x="1660" y="1553" />
-              <mxPoint x="1660" y="948" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="dep122" edge="1" parent="1" source="ProviderIntegrationServiceModule" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;strokeWidth=1;entryX=0.789;entryY=0.992;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=#b1ddf0;strokeColor=#10739e;" target="DataAccessModule" value="provider repository">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1741" y="2010" />
-              <mxPoint x="385" y="2010" />
-              <mxPoint x="385" y="1690" />
-            </Array>
-            <mxPoint x="1741" y="1530" as="sourcePoint" />
-            <mxPoint x="384.61999999999955" y="1649.28" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="dep123" edge="1" parent="1" source="OrderServiceModule" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;strokeWidth=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.75;exitDx=0;exitDy=0;fillColor=#f0a30a;strokeColor=#BD7000;" target="ExternalClientsModule" value="integrates">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="740" y="1370" />
-              <mxPoint x="740" y="1845" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="dep124" edge="1" parent="1" source="RecommendationServiceModule" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;strokeWidth=1;entryX=1;entryY=0.25;entryDx=0;entryDy=0;exitX=0.652;exitY=0.984;exitDx=0;exitDy=0;exitPerimeter=0;" target="ExternalClientsModule" value="integrates">
-          <mxGeometry relative="1" x="-0.1405" as="geometry">
-            <mxPoint as="offset" />
-            <Array as="points">
-              <mxPoint x="1430" y="1770" />
-              <mxPoint x="1150" y="1770" />
-              <mxPoint x="1150" y="1823" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="DataAccessModule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;" value="DataAccessModule&lt;div&gt;&amp;lt;&amp;lt;Spring Data JPA&amp;gt;&amp;gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="57.21969696969698" width="160" x="260" y="1615.240303030303" as="geometry" />
-        </mxCell>
-        <mxCell id="RepositoryLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="RepositoryLayer &amp;lt;Repository Pattern&amp;gt;&amp;gt;&lt;div&gt;+ OrderRepository&lt;br&gt;+ ProductRepository&lt;br&gt;+ UserRepository&lt;br&gt;+ ProviderRepository&lt;br&gt;+ BaseRepository&lt;/div&gt;" vertex="1">
-          <mxGeometry height="94.34090909090912" width="195" x="242.5" y="1710.6948484848485" as="geometry" />
-        </mxCell>
-        <mxCell id="EntityLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="EntityLaye&amp;nbsp;&lt;div&gt;&amp;lt;&amp;lt;JPA Entities&amp;gt;&amp;gt;&lt;div&gt;+ OrderEntity&lt;br&gt;+ ProductEntity&lt;br&gt;+ UserEntity&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="71.72878787878788" width="100" x="110" y="1607.9857575757576" as="geometry" />
-        </mxCell>
-        <mxCell id="MapperLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="MapperLayer &amp;lt;&amp;lt;Data Mapping&amp;gt;&amp;gt;&lt;div&gt;+ OrderMapper&lt;br&gt;+ ProductMapper&lt;/div&gt;" vertex="1">
-          <mxGeometry height="46.05151515151516" width="160" x="500" y="1620.8281818181817" as="geometry" />
-        </mxCell>
-        <mxCell id="ConnectionLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="ConnectionLayer &amp;lt;&amp;lt;Connection Management&amp;gt;&amp;gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ DatabaseConnectionPool (HikariCP)&lt;br&gt;+ TransactionManager&lt;/div&gt;" vertex="1">
-          <mxGeometry height="59.72272727272729" width="230" x="470.3" y="1700.0045454545455" as="geometry" />
-        </mxCell>
-        <mxCell id="CommonUtilsModule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;" value="CommonUtilsModule&lt;div&gt;&amp;lt;&amp;lt;Utility Library&amp;gt;&amp;gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="61.99" width="136.75" x="520" y="370.22" as="geometry" />
-        </mxCell>
-        <mxCell id="DomainModelsModule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;" value="DomainModelsModule&amp;nbsp;&lt;div&gt;&amp;lt;&amp;lt;Domain Library&amp;gt;&amp;gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="61.6" width="136.82" x="816.9300000000001" y="479.89234042553187" as="geometry" />
-        </mxCell>
-        <mxCell id="ModelsLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="ModelsLayer&amp;nbsp;&lt;div&gt;&amp;lt;&amp;lt;Domain Models&amp;gt;&amp;gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ Order&lt;/span&gt;&lt;/div&gt;&lt;div&gt;+ Product&lt;br&gt;+ User&lt;br&gt;+ CartItem&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="81.51" width="124.66" x="823.01" y="373.73" as="geometry" />
-        </mxCell>
-        <mxCell id="EnumsLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="EnumsLayer &amp;lt;&amp;lt;Enumerations&amp;gt;&amp;gt;&lt;div&gt;+ OrderStatus&lt;br&gt;+ ProductType&lt;br&gt;+ PaymentMethod&lt;/div&gt;" vertex="1">
-          <mxGeometry height="59.98978723404255" width="104.25" x="970" y="479.8902127659575" as="geometry" />
-        </mxCell>
-        <mxCell id="ValueObjectsLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="ValueObjectsLayer &amp;lt;&amp;lt;Value Objects&amp;gt;&amp;gt;&lt;div&gt;+ Money&lt;br&gt;+ Address&lt;/div&gt;" vertex="1">
-          <mxGeometry height="49.93043478260872" width="105" x="915.9971320754717" y="570.0010736246396" as="geometry" />
-        </mxCell>
-        <mxCell id="SOAPClientModule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;" value="SOAPClientModule&lt;div&gt;&amp;lt;&amp;lt;SOAP Library&amp;gt;&amp;gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="44" width="136.5" x="524.25" y="541.49" as="geometry" />
-        </mxCell>
-        <mxCell id="SOAPClientLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="SOAPClientLayer&lt;div&gt;&amp;lt;&amp;lt;SOAP Client&amp;gt;&amp;gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ SOAPClientFactory (JAX-WS RI)&lt;br&gt;+ WSDLParser&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="80" width="116.37" x="688.76" y="505.49" as="geometry" />
-        </mxCell>
-        <mxCell id="MarshallingLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="MarshallingLayer&amp;lt;&amp;lt;Marshalling&amp;gt;&amp;gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ JAXBMarshaller&lt;/div&gt;" vertex="1">
-          <mxGeometry height="47.36085106382979" width="161.5" x="667.94" y="601.5944680851064" as="geometry" />
-        </mxCell>
-        <mxCell id="ValidationLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="ValidationLayer&lt;div&gt;&amp;lt;&amp;lt;Validation&amp;gt;&amp;gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ InputValidator&amp;nbsp;&lt;br&gt;+ SchemaValidator&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="61.7" width="112.88" x="692.25" y="370.51" as="geometry" />
-        </mxCell>
-        <mxCell id="comp71" edge="1" parent="1" source="ValidationLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="CommonUtilsModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="DateTimeLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="DateTimeLayer&lt;div&gt;&amp;nbsp;&amp;lt;Date &amp;amp; Time&amp;gt;&amp;gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ DateTimeUtils&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="50.1" width="119.25" x="683.63" y="448.16999999999996" as="geometry" />
-        </mxCell>
-        <mxCell id="comp73" edge="1" parent="1" source="DateTimeLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=1;entryY=0.75;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="CommonUtilsModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="743" y="442.02" />
-              <mxPoint x="670" y="442.02" />
-              <mxPoint x="670" y="417.02" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="HTTPLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="HTTPLayer&amp;lt;&amp;lt;HTTP Client&amp;gt;&amp;gt;&lt;div&gt;+HTTPClientFactory&amp;nbsp;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="35.96" width="139.82" x="518.47" y="455.24" as="geometry" />
-        </mxCell>
-        <mxCell id="comp74" edge="1" parent="1" source="HTTPLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="CommonUtilsModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points" />
-            <mxPoint x="594.5" y="391.4317647058824" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="SerializationLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="SerializationLayer &amp;lt;&amp;lt;Serialization&amp;gt;&amp;gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ JSONSerializer (Jackson)&lt;/span&gt;&lt;/div&gt;&lt;div&gt;+ XMLSerializer (JAXB)&lt;/div&gt;" vertex="1">
-          <mxGeometry height="62.83" width="116.63" x="700.3" y="292.02" as="geometry" />
-        </mxCell>
-        <mxCell id="comp72" edge="1" parent="1" source="SerializationLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=0.864;entryY=0.001;entryDx=0;entryDy=0;entryPerimeter=0;" target="CommonUtilsModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="638" y="322.02" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp76" edge="1" parent="1" source="EnumsLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="DomainModelsModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points" />
-            <mxPoint x="899" y="470.78595744680854" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="CatalogServiceModule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;" value="CatalogServiceModule&amp;nbsp;&lt;div&gt;&amp;lt;&amp;lt;Spring Boot Service&amp;gt;&amp;gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="56.85" width="167.11" x="816.9300000000001" y="878.77" as="geometry" />
-        </mxCell>
-        <mxCell id="CatalogAPILayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="CatalogAPILayer&amp;lt;&amp;lt;Service Interface&amp;gt;&amp;gt;&lt;div&gt;+ CatalogService (WSDL)&lt;br&gt;+ CatalogServiceImpl&lt;br&gt;+ SOAP Endpoints&lt;/div&gt;" vertex="1">
-          <mxGeometry height="73.15" width="190" x="1150" y="910" as="geometry" />
-        </mxCell>
-        <mxCell id="CatalogRepositoryLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="CatalogRepositoryLayer&amp;lt;&amp;lt;Repository Pattern&amp;gt;&amp;gt;&lt;div&gt;+ ProductRepository&lt;br&gt;+ JPA Entities&lt;/div&gt;" vertex="1">
-          <mxGeometry height="46.84" width="176.33" x="1156.84" y="1016.58" as="geometry" />
-        </mxCell>
-        <mxCell id="CatalogCacheLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="CatalogCacheLayer&lt;div&gt;&amp;lt;&amp;lt;Caching Strategy&amp;gt;&amp;gt;&lt;div&gt;+ CatalogCacheManager&lt;br&gt;+ Redis Integration&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="63.41" width="138.22" x="1160" y="840" as="geometry" />
-        </mxCell>
-        <mxCell id="OrderServiceModule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;" value="OrderServiceModule&amp;lt;br&amp;gt;&amp;lt;&amp;lt;Spring Boot Service&amp;gt;&amp;gt;" vertex="1">
-          <mxGeometry height="66.44" width="230.2183529411765" x="791.5608235294118" y="1320" as="geometry" />
-        </mxCell>
-        <mxCell id="OrderAPILayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="OrderAPILayer&amp;lt;br&amp;gt;&amp;lt;&amp;lt;Service Interface&amp;gt;&amp;gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ OrderService (WSDL)&lt;br&gt;+ OrderServiceImpl&lt;br&gt;+ SOAP Endpoints&lt;/div&gt;" vertex="1">
-          <mxGeometry height="66.71" width="213.78" x="1074.25" y="1268.96" as="geometry" />
-        </mxCell>
-        <mxCell id="OrderBusinessLogicLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="OrderBusinessLogicLayer&amp;lt;&amp;lt;Business Rules&amp;gt;&amp;gt;&lt;div&gt;+ PricingEngine&lt;br&gt;+ DiscountCalculator&lt;br&gt;+ BusinessRulesEngine (Drools)&lt;/div&gt;" vertex="1">
-          <mxGeometry height="80.41" width="213.78" x="799.78" y="1420" as="geometry" />
-        </mxCell>
-        <mxCell id="OrderRepositoryLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="OrderRepositoryLayer&amp;lt;br&amp;gt;&amp;lt;&amp;lt;Repository Pattern&amp;gt;&amp;gt;&lt;div&gt;+ OrderRepository&lt;br&gt;+ JPA Entities&lt;/div&gt;" vertex="1">
-          <mxGeometry height="56.43" width="213.78" x="1034.67" y="1400" as="geometry" />
-        </mxCell>
-        <mxCell id="CustomerServiceModule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;" value="CustomerServiceModule&amp;lt;br&amp;gt;&amp;lt;&amp;lt;Spring Boot Service&amp;gt;&amp;gt;" vertex="1">
-          <mxGeometry height="85.34246575342466" width="230.22222222222226" x="809.9988888888888" y="1129.996712328767" as="geometry" />
-        </mxCell>
-        <mxCell id="CustomerAPILayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="CustomerAPILayer&amp;lt;br&amp;gt;&amp;lt;&amp;lt;Service Interface&amp;gt;&amp;gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ CustomerService (WSDL)&lt;br&gt;+ CustomerServiceImpl&lt;br&gt;+ SOAP Endpoints&lt;/div&gt;" vertex="1">
-          <mxGeometry height="70" width="213.78" x="1071.33" y="1176.85" as="geometry" />
-        </mxCell>
-        <mxCell id="CustomerAuthLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="CustomerAuthLayer&amp;lt;br&amp;gt;&amp;lt;&amp;lt;Authentication&amp;gt;&amp;gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ MFAHandler (TOTP)&lt;br&gt;+ AuthenticationService&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="203.78" x="1058.1100000000001" y="1090" as="geometry" />
-        </mxCell>
-        <mxCell id="CustomerRepositoryLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="CustomerRepositoryLayer&amp;lt;&amp;lt;Repository Pattern&amp;gt;&amp;gt;&lt;div&gt;+ UserRepository&lt;br&gt;+ JPA Entities&lt;/div&gt;" vertex="1">
-          <mxGeometry height="63.16" width="191.78" x="829.22" y="1246.85" as="geometry" />
-        </mxCell>
-        <mxCell id="RecommendationServiceModule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;" value="RecommendationServiceModule&lt;div&gt;&amp;lt;&amp;lt;Spring Boot Service&amp;gt;&amp;gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="73.15068493150685" width="230.22222222222226" x="1280.0033333333336" y="1556.852602739726" as="geometry" />
-        </mxCell>
-        <mxCell id="RecommendationAPILayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="RecommendationAPILayer&lt;div&gt;&amp;lt;&amp;lt;Service Interface&amp;gt;&amp;gt;&lt;div&gt;+ RecommendationService (WSDL)&lt;br&gt;+ SOAP Endpoints&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="50" width="171.89" x="1350" y="1487.9" as="geometry" />
-        </mxCell>
-        <mxCell id="RecommendationMLLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="RecommendationMLLayer&amp;lt;&amp;lt;ML &amp;amp; AI&amp;gt;&amp;gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ PersonalizationEngine&lt;br&gt;+ BehaviorAnalyzer&lt;br&gt;+ MLModelClient (gRPC)&lt;/div&gt;" vertex="1">
-          <mxGeometry height="70" width="190" x="1440" y="1640.69" as="geometry" />
-        </mxCell>
-        <mxCell id="RecommendationAlgorithmsLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="RecommendationAlgorithmsLayer&amp;gt;&amp;lt;&amp;lt;Algorithms&amp;gt;&amp;gt;&lt;div&gt;&amp;gt;+ CollaborativeFiltering&lt;br&gt;+ ContentBasedFiltering&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="181.78" x="1240" y="1650.69" as="geometry" />
-        </mxCell>
-        <mxCell id="RecommendationRepositoryLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="RecommendationRepositoryLayer&lt;div&gt;&amp;lt;&amp;lt;Repository Pattern&amp;gt;&amp;gt;&lt;div&gt;+ RecommendationRepository&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="63.56" width="161.78" x="1260" y="1380" as="geometry" />
-        </mxCell>
-        <mxCell id="NotificationAPILayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="NotificationAPILayer&amp;lt;br&amp;gt;&amp;lt;&amp;lt;Service Interface&amp;gt;&amp;gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ NotificationService (WSDL)&lt;/span&gt;&lt;/div&gt;&lt;div&gt;+ SOAP Endpoints&lt;/div&gt;" vertex="1">
-          <mxGeometry height="46.84210526315789" width="230.22222222222226" x="1034.6722222222222" y="1529.9994736842107" as="geometry" />
-        </mxCell>
-        <mxCell id="NotificationChannelsLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="NotificationChannelsLayer&amp;lt;&amp;lt;Channel Adapters&amp;gt;&amp;gt;&lt;div&gt;+ EmailChannel&lt;br&gt;+ SMSChannel&lt;br&gt;+ PushNotificationChannel&lt;/div&gt;" vertex="1">
-          <mxGeometry height="71.58" width="201.55" x="1034.6699999999998" y="1580" as="geometry" />
-        </mxCell>
-        <mxCell id="NotificationTemplatesLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="NotificationTemplatesLayer&amp;lt;br&amp;gt;&amp;lt;&amp;lt;Template Engine&amp;gt;&amp;gt;&lt;div&gt;+ TemplateEngine (Thymeleaf)&lt;br&gt;+ Email Templates&lt;br&gt;+ SMS Templates&lt;/div&gt;" vertex="1">
-          <mxGeometry height="64.38" width="204.63" x="789.25" y="1630" as="geometry" />
-        </mxCell>
-        <mxCell id="NotificationTrackingLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="NotificationTrackingLayer&amp;lt;&amp;lt;Delivery Tracking&amp;gt;&amp;gt;&lt;div&gt;+ DeliveryTracker&lt;/div&gt;" vertex="1">
-          <mxGeometry height="46.84" width="175.33" x="1047.78" y="1660.21" as="geometry" />
-        </mxCell>
-        <mxCell id="NotificationServiceModule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;" value="NotificationServiceModule&amp;nbsp;&lt;div&gt;&amp;lt;&amp;lt;Spring Boot Service&amp;gt;&amp;gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="70.09" width="200" x="791.5600000000001" y="1537.9" as="geometry" />
-        </mxCell>
-        <mxCell id="comp34" edge="1" parent="1" source="NotificationAPILayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="NotificationServiceModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp35" edge="1" parent="1" source="NotificationChannelsLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="NotificationServiceModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1020" y="1616" />
-              <mxPoint x="1020" y="1570" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="comp36" edge="1" parent="1" source="NotificationTemplatesLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;" target="NotificationServiceModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="comp37" edge="1" parent="1" source="NotificationTrackingLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" target="NotificationServiceModule">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1020" y="1684" />
-              <mxPoint x="1020" y="1620" />
-              <mxPoint x="942" y="1620" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="rsw9TT4FHc8W8PWqM51S-3" edge="1" parent="1" source="RecommendationRepositoryLayer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 5;endArrow=open;strokeWidth=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" target="NotificationServiceModule" value="">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1300" y="1474" />
-              <mxPoint x="1300" y="1474" />
-              <mxPoint x="1300" y="1520" />
-              <mxPoint x="892" y="1520" />
-            </Array>
-            <mxPoint x="1310" y="1474" as="sourcePoint" />
-            <mxPoint x="1078.5882352941176" y="3610" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="CatalogIntegrationLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="CatalogIntegrationLayer&lt;div&gt;&amp;lt;&amp;lt;Provider Integration&amp;gt;&amp;gt;&lt;div&gt;+ ProviderSyncService&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="55.78" width="137.84" x="815.91" y="960" as="geometry" />
-        </mxCell>
-        <mxCell id="comp23" edge="1" parent="1" source="CatalogIntegrationLayer" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;strokeWidth=1;entryX=0.396;entryY=0.983;entryDx=0;entryDy=0;entryPerimeter=0;" target="CatalogServiceModule">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="rsw9TT4FHc8W8PWqM51S-1" edge="1" parent="1" source="CatalogRepositoryLayer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 5;endArrow=open;strokeWidth=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;" target="CatalogIntegrationLayer" value="">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="721.6470588235294" y="1108" as="sourcePoint" />
-            <mxPoint x="486.5882352941176" y="3680" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="ExternalClientsModule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;" value="ExternalClientsModule&amp;lt;br&amp;gt;&amp;lt;&amp;lt;Integration Library&amp;gt;&amp;gt;" vertex="1">
-          <mxGeometry height="90" width="300" x="820" y="1800" as="geometry" />
-        </mxCell>
-        <mxCell id="LogisticsLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="LogisticsLayer&lt;div&gt;&amp;lt;&amp;lt;Logistics Integration&amp;gt;&amp;gt;&lt;div&gt;+ LogisticsAPIClient (REST)&lt;br&gt;+ ShipmentTracker&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="50" width="160" x="1190" y="1820" as="geometry" />
-        </mxCell>
-        <mxCell id="BillingLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="BillingLayer&amp;lt;br&amp;gt;&amp;lt;&amp;lt;Billing Integration&amp;gt;&amp;gt;&lt;div&gt;+ BillingAPIClient (SOAP)&lt;br&gt;+ InvoiceGenerator&lt;/div&gt;" vertex="1">
-          <mxGeometry height="50" width="300" x="1160" y="1940" as="geometry" />
-        </mxCell>
-        <mxCell id="MarketingLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="MarketingLayer&amp;lt;&amp;lt;Marketing Integration&amp;gt;&amp;gt;&lt;div&gt;+ MarketingAPIClient (REST)&lt;br&gt;+ BehaviorTracker&lt;/div&gt;" vertex="1">
-          <mxGeometry height="50" width="310" x="1160" y="1880" as="geometry" />
-        </mxCell>
-        <mxCell id="WebUIModule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;" value="WebUIModule&lt;div&gt;&amp;lt;&amp;lt;React MVVM Module&amp;gt;&amp;gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="92.7105" width="120" x="114" y="764.8065" as="geometry" />
-        </mxCell>
-        <mxCell id="WebUIViews" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="WebUIViews &amp;lt;&amp;lt;View Layer&amp;gt;&amp;gt;&lt;div&gt;+ CatalogView&lt;br&gt;+ CartView&lt;br&gt;+ CheckoutView&lt;br&gt;+ RecommendationsWidget&lt;/div&gt;" vertex="1">
-          <mxGeometry height="61.588499999999996" width="148" x="311" y="870.0015" as="geometry" />
-        </mxCell>
-        <mxCell id="WebUIViewModels" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="WebUIViewModels&amp;lt;&amp;lt;ViewModel Layer&amp;gt;&amp;gt;&lt;div&gt;&lt;br&gt;&lt;div&gt;+ cartStore&lt;br&gt;+ userStore&lt;br&gt;+ catalogViewModel&lt;br&gt;+ checkoutViewModel&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="75.30649999999999" width="251.99999999999994" x="280" y="689.5" as="geometry" />
-        </mxCell>
-        <mxCell id="WebUIServices" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="WebUIServices &amp;lt;&amp;lt;Service Layer&amp;gt;&amp;gt;&lt;div&gt;&lt;br&gt;&lt;div&gt;+ CatalogServiceClient&lt;br&gt;+ OrderServiceClient&lt;br&gt;+ AuthServiceClient&lt;br&gt;+ soapClientHelper&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="77.25399999999999" width="250" x="281" y="775" as="geometry" />
-        </mxCell>
-        <mxCell id="AdminPanelModule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;" value="AdminPanelModule &amp;lt;&amp;lt;React MVVM Module&amp;gt;&amp;gt;" vertex="1">
-          <mxGeometry height="69.084" width="124" x="110" y="1212" as="geometry" />
-        </mxCell>
-        <mxCell id="AdminPanelViews" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="AdminPanelView &amp;lt;&amp;lt;View Layer&amp;gt;&amp;gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ DashboardView&lt;br&gt;+ MetricsView&lt;br&gt;+ ProviderManagementView&lt;br&gt;+ SalesChart&lt;br&gt;+ LatencyChart&lt;/div&gt;" vertex="1">
-          <mxGeometry height="100.74749999999999" width="198" x="350" y="1140.003" as="geometry" />
-        </mxCell>
-        <mxCell id="AdminPanelViewModels" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="AdminPanelViewModels&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;lt;&amp;lt;ViewModel Layer&amp;gt;&amp;gt;&lt;/span&gt;&lt;div&gt;&lt;div&gt;&lt;div&gt;+dashboardStore&lt;br&gt;+ metricsStore&lt;br&gt;+ providerStore&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="57" width="220" x="339" y="1250" as="geometry" />
-        </mxCell>
-        <mxCell id="AdminPanelServices" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="AdminPanelServices&amp;lt;br&amp;gt;&amp;lt;&amp;lt;Service Layer&amp;gt;&amp;gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ AdminServiceClient&lt;br&gt;+ MonitoringServiceClient&lt;/div&gt;" vertex="1">
-          <mxGeometry height="76.475" width="207" x="311" y="1316.5" as="geometry" />
-        </mxCell>
-        <mxCell id="UIControllerModule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;" value="UIControllerModule&lt;div&gt;&amp;lt;&amp;lt;Node.js Module&amp;gt;&amp;gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="82.40299999999999" width="150" x="103" y="941.5445" as="geometry" />
-        </mxCell>
-        <mxCell id="UIControllerRequestLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="UIControllerRequestLayer&amp;lt;br&amp;gt;&amp;lt;&amp;lt;Request Processing&amp;gt;&amp;gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ RequestRouter&lt;br&gt;+ RequestValidator&lt;br&gt;+ ServiceInvoker&lt;/div&gt;" vertex="1">
-          <mxGeometry height="66.5" width="268" x="300" y="949.28" as="geometry" />
-        </mxCell>
-        <mxCell id="UIControllerSessionLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="UIControllerSessionLayer &amp;lt;&amp;lt;Session Management&amp;gt;&amp;gt;&lt;div&gt;&lt;br&gt;&lt;div&gt;+ SessionValidator&lt;br&gt;+ SessionStore (Redis)&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="72.10499999999999" width="257" x="311" y="1023.9475" as="geometry" />
-        </mxCell>
-        <mxCell id="UIControllerAuthLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="UIControllerAuthLayer &amp;lt;&amp;lt;Authentication&amp;gt;&amp;gt; MFAHandler&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ AuthMiddleware&lt;/div&gt;" vertex="1">
-          <mxGeometry height="61.807" width="220" x="110" y="1100" as="geometry" />
-        </mxCell>
-        <mxCell id="RoutingLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="RoutingLayer&lt;div&gt;&amp;lt;&amp;lt;Routing &amp;amp; Mediation&amp;gt;&amp;gt;&lt;div&gt;+ MessageRouter&lt;br&gt;+ RouteConfiguration&lt;br&gt;+ TransformationEngine&lt;br&gt;+ ContentBasedRouter&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="83.15" width="130" x="1115" y="351.31000000000006" as="geometry" />
-        </mxCell>
-        <mxCell id="rsw9TT4FHc8W8PWqM51S-18" edge="1" parent="1" source="ESBModule" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 5;endArrow=open;strokeWidth=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" target="RoutingLayer" value="">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points" />
-            <mxPoint x="1179" y="297.29" as="sourcePoint" />
-            <mxPoint x="1179" y="690.29" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="ESBModule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;" value="ESBModule &amp;lt;&amp;lt;ESB Module&amp;gt;&amp;gt;" vertex="1">
-          <mxGeometry height="58.00000000000001" width="150" x="1160" y="249.2857142857143" as="geometry" />
-        </mxCell>
-        <mxCell id="SecurityLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="SecurityLayer&amp;lt;br&amp;gt;&lt;div&gt;&amp;lt;&amp;lt;Security &amp;amp; Policy&amp;gt;&amp;gt;&lt;div&gt;&lt;br&gt;&lt;div&gt;+ SecurityPolicyEnforcer&lt;br&gt;+ AuthenticationFilter&lt;br&gt;+ EncryptionHandler&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="74.91" width="134.11" x="1200" y="464.96999999999997" as="geometry" />
-        </mxCell>
-        <mxCell id="OrchestrationLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="OrchestrationLayer&lt;div&gt;&amp;lt;&amp;lt;BPEL Orchestration&amp;gt;&amp;gt;&lt;div&gt;&lt;br&gt;&lt;div&gt;+ BPELEngineAdapter&lt;br&gt;+ ServiceInvoker&lt;br&gt;+ ProcessExecutor&lt;br&gt;+ WorkflowCoordinator&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="90.84" width="138" x="1251" y="351.31000000000006" as="geometry" />
-        </mxCell>
-        <mxCell id="MonitoringLayerESB" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="MonitoringLayer&amp;lt;&amp;lt;Observability&amp;gt;&amp;gt;&lt;div&gt;+ ESBMetricsCollector&lt;br&gt;+ HealthCheckEndpoint&lt;/div&gt;" vertex="1">
-          <mxGeometry height="49.49" width="164" x="1353.94" y="477.68" as="geometry" />
-        </mxCell>
-        <mxCell id="UDDIModule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;" value="UDDIModule &amp;lt;&amp;lt;Service Registry&amp;gt;&amp;gt;" vertex="1">
-          <mxGeometry height="49.714285714285715" width="150" x="1430" y="253.42999999999998" as="geometry" />
-        </mxCell>
-        <mxCell id="RegistryLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="RegistryLayer&amp;lt;Registry Core&amp;gt;&amp;gt;&lt;div&gt;+ ServiceRegistry&lt;br&gt;+ WSDLPublisher&lt;br&gt;+ ServiceDiscovery&lt;/div&gt;" vertex="1">
-          <mxGeometry height="50" width="150" x="1400" y="370.22" as="geometry" />
-        </mxCell>
-        <mxCell id="VersioningLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="VersioningLayer&lt;div&gt;&amp;lt;&amp;lt;Version Management&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;+ ContractVersionManager&lt;br&gt;+ SchemaValidator&lt;/div&gt;" vertex="1">
-          <mxGeometry height="69.59" width="135" x="1550" y="428.68" as="geometry" />
-        </mxCell>
-        <mxCell id="BPELEngineModule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;" value="BPELEngineModule &amp;lt;&amp;lt;BPEL Engine&amp;gt;&amp;gt;" vertex="1">
-          <mxGeometry height="60" width="178" x="1140.11" y="570" as="geometry" />
-        </mxCell>
-        <mxCell id="ProcessLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="ProcessLayer&amp;lt;&amp;lt;Process Execution&amp;gt;&amp;gt;&lt;div&gt;+ ProcessExecutor&lt;br&gt;+ WorkflowCoordinator&lt;br&gt;+ CompensationHandler&lt;/div&gt;" vertex="1">
-          <mxGeometry height="50" width="190" x="1134.1100000000001" y="648.9599999999999" as="geometry" />
-        </mxCell>
-        <mxCell id="WorkflowDefinitions" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="WorkflowDefinitions&amp;lt;&amp;lt;BPEL Definitions&amp;gt;&amp;gt;&lt;div&gt;+ checkout-workflow&lt;br&gt;+ inventory-sync-workflow&lt;br&gt;+ order-fulfillment-workflow&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="210" x="1380" y="570" as="geometry" />
-        </mxCell>
-        <mxCell id="MessageBrokerModule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;" value="MessageBrokerModule &amp;lt;&amp;lt;Message Broker&amp;gt;&amp;gt;" vertex="1">
-          <mxGeometry height="58.00000000000001" width="168" x="1590" y="253.42571428571432" as="geometry" />
-        </mxCell>
-        <mxCell id="QueueLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="QueueLayer&amp;lt;&amp;lt;Queue Management&amp;gt;&amp;gt;&lt;div&gt;+ QueueManager&lt;br&gt;+ MessagePersistence&lt;br&gt;+ DeliveryGuarantee&lt;/div&gt;" vertex="1">
-          <mxGeometry height="80" width="140" x="1630" y="325" as="geometry" />
-        </mxCell>
-        <mxCell id="RoutingBrokerLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="RoutingBrokerLayer&amp;lt;&amp;lt;Message Routing&amp;gt;&amp;gt;&lt;div&gt;+ ContentBasedRouter&lt;br&gt;+ PriorityHandler&lt;/div&gt;" vertex="1">
-          <mxGeometry height="71.43" width="156" x="1780" y="329.29" as="geometry" />
-        </mxCell>
-        <mxCell id="ProviderIntegrationServiceModule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;" value="ProviderIntegrationServiceModule &amp;lt;&amp;lt;Spring Boot Service&amp;gt;&amp;gt;" vertex="1">
-          <mxGeometry height="61.090909090909086" width="199.23076923076923" x="1700.5892307692307" y="1518.909090909091" as="geometry" />
-        </mxCell>
-        <mxCell id="ProviderIntegrationAPILayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="ProviderIntegrationAPILayer&lt;div&gt;&amp;lt;Service Interface&amp;gt;&amp;gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ ProviderIntegrationFacade (WSDL)&lt;/span&gt;&lt;/div&gt;&lt;div&gt;+ ProviderIntegrationFacadeImpl&lt;br&gt;+ SOAP Endpoints&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="70" width="179.52" x="1986.4" y="1392.97" as="geometry" />
-        </mxCell>
-        <mxCell id="ProviderAsyncLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="ProviderAsyncLayer&amp;lt;br&amp;gt;&amp;lt;&amp;lt;Async Management&amp;gt;&amp;gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ AsyncRequestManager&lt;br&gt;+ CallbackHandler&lt;br&gt;+ ProviderRequestQueue&lt;/div&gt;" vertex="1">
-          <mxGeometry height="61.090909090909086" width="246.92" x="1953.08" y="1487.9027272727271" as="geometry" />
-        </mxCell>
-        <mxCell id="ProviderAdaptersLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="ProviderAdaptersLayer&amp;lt;br&amp;gt;&amp;lt;&amp;lt;Protocol Adapters&amp;gt;&amp;gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ ProtocolAdapterFactory&lt;br&gt;+ IProtocolAdapter (interface)&lt;br&gt;+ HTTPSAdapter&lt;br&gt;+ SOAPAdapter&lt;br&gt;+ RPCAdapter&lt;/div&gt;" vertex="1">
-          <mxGeometry height="78.54545454545455" width="252.31" x="1950" y="1556.8481818181817" as="geometry" />
-        </mxCell>
-        <mxCell id="ProviderTranslationLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="ProviderTranslationLayer&amp;lt;br&amp;gt;&amp;lt;&amp;lt;Data Translation&amp;gt;&amp;gt;&lt;div&gt;&lt;br&gt;&lt;div&gt;+ ProviderDataTranslator&lt;br&gt;+ SchemaMapper&lt;br&gt;+ ProviderResponseParser&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="61.090909090909086" width="251.54" x="1946.63" y="1653.0881818181817" as="geometry" />
-        </mxCell>
-        <mxCell id="ProviderResilienceLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="ProviderResilienceLayer&amp;lt;br&amp;gt;&amp;lt;&amp;lt;Resilience &amp;amp; Retry&amp;gt;&amp;gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ CircuitBreaker (Resilience4j)&lt;br&gt;+ RetryPolicy&lt;br&gt;+ TimeoutHandler&lt;/div&gt;" vertex="1">
-          <mxGeometry height="61.090909090909086" width="261.54" x="1750" y="1749.9963636363634" as="geometry" />
-        </mxCell>
-        <mxCell id="InfraCommonsModule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;" value="InfraCommonsModule&lt;div&gt;&amp;lt;&amp;lt;Infrastructure Library&amp;gt;&amp;gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="90" width="192" x="1710.6" y="880" as="geometry" />
-        </mxCell>
-        <mxCell id="LoggingLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="LoggingLayer&amp;lt;br&amp;gt;&amp;lt;&amp;lt;Logging&amp;gt;&amp;gt;&lt;div&gt;+ LoggerFactory (SLF4J)&lt;br&gt;+ StructuredLogger&lt;br&gt;+ LogAggregator (ELK)&lt;/div&gt;" vertex="1">
-          <mxGeometry height="50" width="179.2" x="1947.4" y="840" as="geometry" />
-        </mxCell>
-        <mxCell id="MonitoringLayerInfra" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="MonitoringLayer&amp;lt;&amp;lt;Monitoring &amp;amp; Observability&amp;gt;&amp;gt;&lt;div&gt;+ MetricsCollector (Micrometer)&lt;br&gt;+ HealthCheckEndpoint&lt;br&gt;+ AlertingService (Prometheus)&lt;/div&gt;" vertex="1">
-          <mxGeometry height="80" width="179.2" x="1947.4" y="897.36" as="geometry" />
-        </mxCell>
-        <mxCell id="CacheLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="CacheLayer&amp;lt;br&amp;gt;&amp;lt;&amp;lt;Caching&amp;gt;&amp;gt;&lt;div&gt;+ RedisCacheService&lt;br&gt;+ CacheInvalidationStrategy&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="152.6" x="1947.4" y="1000" as="geometry" />
-        </mxCell>
-        <mxCell id="ConfigLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="ConfigLayer&lt;div&gt;&amp;lt;&amp;lt;Configuration Management&amp;gt;&amp;gt;&lt;div&gt;+ ConfigurationManager&lt;br&gt;+ EnvironmentConfigLoader&amp;nbsp;&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="70" width="152.1" x="1850" y="1063.42" as="geometry" />
-        </mxCell>
-        <mxCell id="EventMessagingModule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;" value="EventMessagingModule&amp;lt;&amp;lt;Event-Driven Library&amp;gt;&amp;gt;" vertex="1">
-          <mxGeometry height="80" width="192" x="1704.2" y="1200" as="geometry" />
-        </mxCell>
-        <mxCell id="EventLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="EventLayer&amp;lt;br&amp;gt;&amp;lt;&amp;lt;Event Processing&amp;gt;&amp;gt;&amp;lt;br&amp;gt;───────────&amp;lt;br&amp;gt;+ EventBus&lt;br&gt;+ EventPublisher&lt;br&gt;+ EventConsumer" vertex="1">
-          <mxGeometry height="65" width="179.2" x="1966.6" y="1135" as="geometry" />
-        </mxCell>
-        <mxCell id="EventHandlersLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="EventHandlersLayer&amp;lt;br&amp;gt;&amp;lt;&amp;lt;Event Handlers&amp;gt;&amp;gt;&lt;div&gt;+ InventoryUpdateHandler&lt;br&gt;+ PriceChangeHandler&lt;br&gt;+ OrderEventHandler&lt;/div&gt;" vertex="1">
-          <mxGeometry height="55" width="179.2" x="1966.6" y="1210" as="geometry" />
-        </mxCell>
-        <mxCell id="MessagingLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="MessagingLayer&lt;div&gt;&amp;lt;&amp;lt;Message Queue&amp;gt;&amp;gt;+ MessageQueueClient (Kafka)&lt;/div&gt;" vertex="1">
-          <mxGeometry height="50" width="179.2" x="1966.6" y="1275" as="geometry" />
-        </mxCell>
-        <mxCell id="PaymentServiceModule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;" value="PaymentServiceModule&lt;div&gt;&amp;lt;&amp;lt;Spring Boot Service&amp;gt;&amp;gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="54.76" width="170" x="2225.91" y="498.27" as="geometry" />
-        </mxCell>
-        <mxCell id="PaymentAPILayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="PaymentAPILayer&amp;lt;&amp;lt;Service Interface&amp;gt;&amp;gt;&lt;div&gt;+ PaymentService (WSDL)&lt;br&gt;+ SOAP Endpoints&lt;/div&gt;" vertex="1">
-          <mxGeometry height="50" width="200" x="2460" y="455.49" as="geometry" />
-        </mxCell>
-        <mxCell id="PaymentGatewayLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="PaymentGatewayLayer&amp;lt;&amp;lt;Gateway Facade&amp;gt;&amp;gt;&lt;div&gt;+ PaymentGatewayFacade&lt;/div&gt;" vertex="1">
-          <mxGeometry height="50" width="220" x="2455" y="510" as="geometry" />
-        </mxCell>
-        <mxCell id="PaymentAdaptersLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="PaymentAdaptersLayer&amp;lt;&amp;lt;Adapter Pattern&amp;gt;&amp;gt;&lt;div&gt;+ IPaymentAdapter&lt;br&gt;+ CreditCardAdapter&lt;br&gt;+ DigitalWalletAdapter&lt;/div&gt;" vertex="1">
-          <mxGeometry height="50" width="230" x="2460" y="605.24" as="geometry" />
-        </mxCell>
-        <mxCell id="PaymentEncryptionLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="PaymentEncryptionLayer&lt;div&gt;&amp;lt;&amp;lt;Encryption &amp;amp; Security&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;+ EncryptionService (BouncyCastle)&lt;br&gt;+ PCIDSSValidator&lt;/div&gt;" vertex="1">
-          <mxGeometry height="50" width="181.83" x="2220" y="619.93" as="geometry" />
-        </mxCell>
-        <mxCell id="rsw9TT4FHc8W8PWqM51S-8" edge="1" parent="1" source="PaymentComplianceLayer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="PaymentEncryptionLayer" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="PaymentComplianceLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="PaymentComplianceLayer&amp;lt;br&amp;gt;&amp;lt;&amp;lt;PCI Compliance&amp;gt;&amp;gt;&lt;div&gt;+ PCIComplianceAuditor&lt;br&gt;+ TokenizationService&lt;/div&gt;" vertex="1">
-          <mxGeometry height="50" width="250" x="2440" y="689.5" as="geometry" />
-        </mxCell>
-        <mxCell id="IntegrationServiceModule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;" value="IntegrationServiceModule&lt;div&gt;&amp;lt;&amp;lt;Spring Boot Service&amp;gt;&amp;gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="80" width="300" x="2225.91" y="764.81" as="geometry" />
-        </mxCell>
-        <mxCell id="IntegrationAPILayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="IntegrationAPILayer&amp;lt;&amp;lt;Service Interface&amp;gt;&amp;gt;&lt;div&gt;+ IntegrationService (WSDL)&lt;br&gt;+ SOAP Endpoints&lt;/div&gt;" vertex="1">
-          <mxGeometry height="50" width="200" x="2550" y="779.81" as="geometry" />
-        </mxCell>
-        <mxCell id="IntegrationAsyncLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="IntegrationAsyncLayer&amp;lt;&amp;lt;Async Processing&amp;gt;&amp;gt;&lt;div&gt;+ AsyncRequestManager&lt;br&gt;+ CallbackHandler&lt;br&gt;+ ProviderRequestQueue&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="220" x="2550" y="840" as="geometry" />
-        </mxCell>
-        <mxCell id="IntegrationAdaptersLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="IntegrationAdaptersLayer&lt;div&gt;&amp;lt;&amp;lt;Protocol Adapters&amp;gt;&amp;gt;&lt;div&gt;+ ProtocolAdapterFactory&lt;br&gt;+ IProtocolAdapter&lt;br&gt;+ HTTPSAdapter&lt;br&gt;+ SOAPAdapter&lt;br&gt;+ RPCAdapter&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="97.64" width="137.05" x="2258.8599999999997" y="870" as="geometry" />
-        </mxCell>
-        <mxCell id="IntegrationTranslationLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="IntegrationTranslationLaye&lt;div&gt;&amp;lt;&amp;lt;Data Translation&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;+ ProviderDataTranslator&lt;br&gt;+ SchemaMapper&lt;/div&gt;" vertex="1">
-          <mxGeometry height="56.85" width="140" x="2395.91" y="968.43" as="geometry" />
-        </mxCell>
-        <mxCell id="IntegrationResilienceLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="IntegrationResilienceLayer&lt;div&gt;&amp;lt;&amp;lt;Resilience Pattern&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;+ CircuitBreaker (Resilience4j)&lt;br&gt;+ RetryPolicy&lt;/div&gt;" vertex="1">
-          <mxGeometry height="58.43" width="160" x="2545" y="910" as="geometry" />
-        </mxCell>
-        <mxCell id="SecurityServiceModule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;align=center;" value="SecurityServiceModule&amp;lt;br&amp;gt;&amp;lt;&amp;lt;Spring Boot Service&amp;gt;&amp;gt;" vertex="1">
-          <mxGeometry height="100" width="300" x="2212.95" y="1063.42" as="geometry" />
-        </mxCell>
-        <mxCell id="SecurityAPILayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="SecurityAPILayer&amp;lt;&amp;lt;Service Interface&amp;gt;&amp;gt;&lt;div&gt;+ SecurityService (WSDL)&lt;br&gt;+ SOAP Endpoints&lt;/div&gt;" vertex="1">
-          <mxGeometry height="50" width="184.09" x="2270.8999999999996" y="1212" as="geometry" />
-        </mxCell>
-        <mxCell id="SecurityAuthLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="SecurityAuthLayer&lt;div&gt;&amp;lt;&amp;lt;Authentication &amp;amp; Authorization&amp;gt;&amp;gt;&lt;div&gt;+ AuthenticationHandler (OAuth2)&lt;br&gt;+ AuthorizationHandler (JWT)&lt;br&gt;+ MFAValidator&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="68.42" width="170" x="2540" y="1050" as="geometry" />
-        </mxCell>
-        <mxCell id="SecurityEncryptionLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="SecurityEncryptionLayer&lt;div&gt;&amp;lt;&amp;lt;Encryption Services&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;+ E2EEncryptionService (AES-256)&lt;br&gt;+ CertificateManager (RSA-2048)&lt;/div&gt;" vertex="1">
-          <mxGeometry height="50" width="177.05" x="2512.95" y="1212" as="geometry" />
-        </mxCell>
-        <mxCell id="SecurityAuditLayer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;fontSize=10;spacingLeft=5;" value="SecurityAuditLayer&lt;div&gt;&amp;lt;&amp;lt;Audit &amp;amp; Compliance&amp;gt;&amp;gt;&lt;div&gt;+ SecurityAuditor&lt;br&gt;+ AccessLogger&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="50" width="130" x="2540" y="1140" as="geometry" />
-        </mxCell>
-        <mxCell id="rsw9TT4FHc8W8PWqM51S-21" edge="1" parent="1" source="RepositoryLayer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;strokeWidth=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;fillColor=#b1ddf0;strokeColor=#10739e;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="ESBModule" value="Discorver Server">
-          <mxGeometry relative="1" x="-0.0002" as="geometry">
-            <mxPoint as="offset" />
-            <Array as="points">
-              <mxPoint x="80" y="1758" />
-              <mxPoint x="80" y="200" />
-              <mxPoint x="1198" y="200" />
-            </Array>
-            <mxPoint x="2176" y="2060" as="sourcePoint" />
-            <mxPoint x="821" y="2152" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
+
+        <!-- ==================== LEGEND ==================== -->
+        <mxCell id="legend" value="Leyenda" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=12;fontStyle=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="100" y="1280" width="450" height="150" as="geometry" />
+        </mxCell>
+
+        <mxCell id="legend-frontend" value="Frontend (React)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="120" y="1315" width="100" height="25" as="geometry" />
+        </mxCell>
+
+        <mxCell id="legend-services" value="Backend Services" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="230" y="1315" width="100" height="25" as="geometry" />
+        </mxCell>
+
+        <mxCell id="legend-integration" value="Integration" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="340" y="1315" width="100" height="25" as="geometry" />
+        </mxCell>
+
+        <mxCell id="legend-shared" value="Shared Libraries" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="120" y="1350" width="100" height="25" as="geometry" />
+        </mxCell>
+
+        <mxCell id="legend-data" value="Data Access" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="230" y="1350" width="100" height="25" as="geometry" />
+        </mxCell>
+
+        <mxCell id="legend-module" value="Module" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="340" y="1350" width="100" height="25" as="geometry" />
+        </mxCell>
+
+        <mxCell id="legend-text" value="Tecnologias: React 18+, Spring Boot 3.3, Spring Data JPA,&#xa;Java 21, Node.js, TypeScript, HikariCP, JTA/Atomikos,&#xa;Jackson, JAXB, JAX-WS RI, Resilience4j, Micrometer" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="120" y="1385" width="420" height="40" as="geometry" />
+        </mxCell>
+
       </root>
     </mxGraphModel>
   </diagram>
