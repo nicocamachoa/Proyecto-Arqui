@@ -1,0 +1,199 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "REST Provider - Productos Fisicos";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { color: #2c3e50; margin-bottom: 10px; }
+        .subtitle { color: #7f8c8d; margin-bottom: 30px; }
+        .card { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .card h2 { color: #e67e22; margin-bottom: 15px; border-bottom: 2px solid #e67e22; padding-bottom: 10px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; color: #34495e; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; }
+        input:focus, select:focus { outline: none; border-color: #e67e22; }
+        button { background: #e67e22; color: white; padding: 12px 24px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; margin-right: 10px; margin-top: 10px; }
+        button:hover { background: #d35400; }
+        button.secondary { background: #3498db; }
+        button.secondary:hover { background: #2980b9; }
+        .result { background: #ecf0f1; padding: 15px; border-radius: 4px; margin-top: 15px; white-space: pre-wrap; font-family: monospace; font-size: 13px; max-height: 300px; overflow-y: auto; }
+        .result.success { border-left: 4px solid #27ae60; }
+        .result.error { border-left: 4px solid #e74c3c; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
+        .badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; margin-left: 10px; }
+        .badge-rest { background: #e67e22; color: white; }
+        .status-bar { background: #27ae60; color: white; padding: 10px 20px; border-radius: 4px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>REST Provider <span class="badge badge-rest">REST API</span></h1>
+        <p class="subtitle">Proveedor de Productos Fisicos - Puerto 4001</p>
+
+        <div class="status-bar">
+            <span>Estado del Servicio: <strong id="healthStatus">Verificando...</strong></span>
+            <span>API: http://localhost:4001</span>
+        </div>
+
+        <div class="grid">
+            <!-- Productos -->
+            <div class="card">
+                <h2>Catalogo de Productos</h2>
+                <button onclick="getProducts()">Ver Todos los Productos</button>
+                <div class="form-group" style="margin-top: 15px;">
+                    <label>Buscar Producto por ID:</label>
+                    <input type="text" id="productId" placeholder="Ej: PROD001" />
+                </div>
+                <button class="secondary" onclick="getProduct()">Buscar Producto</button>
+                <div id="productResult" class="result" style="display:none;"></div>
+            </div>
+
+            <!-- Crear Orden -->
+            <div class="card">
+                <h2>Crear Nueva Orden</h2>
+                <div class="form-group">
+                    <label>ID Cliente:</label>
+                    <input type="text" id="customerId" value="CUST001" />
+                </div>
+                <div class="form-group">
+                    <label>Email Cliente:</label>
+                    <input type="email" id="customerEmail" value="cliente@ejemplo.com" />
+                </div>
+                <div class="form-group">
+                    <label>ID Producto:</label>
+                    <input type="text" id="orderProductId" value="PROD001" />
+                </div>
+                <div class="form-group">
+                    <label>Cantidad:</label>
+                    <input type="number" id="quantity" value="2" min="1" />
+                </div>
+                <div class="form-group">
+                    <label>Direccion de Envio:</label>
+                    <input type="text" id="shippingAddress" value="Calle 123, Bogota, Colombia" />
+                </div>
+                <button onclick="createOrder()">Crear Orden</button>
+                <div id="orderResult" class="result" style="display:none;"></div>
+            </div>
+
+            <!-- Consultar Orden -->
+            <div class="card">
+                <h2>Consultar Estado de Orden</h2>
+                <div class="form-group">
+                    <label>ID de Orden:</label>
+                    <input type="text" id="orderId" placeholder="Ej: ORD-XXXXX" />
+                </div>
+                <button onclick="getOrderStatus()">Consultar Estado</button>
+                <button class="secondary" onclick="cancelOrder()">Cancelar Orden</button>
+                <div id="statusResult" class="result" style="display:none;"></div>
+            </div>
+
+            <!-- Inventario -->
+            <div class="card">
+                <h2>Verificar Inventario</h2>
+                <div class="form-group">
+                    <label>ID Producto:</label>
+                    <input type="text" id="inventoryProductId" value="PROD001" />
+                </div>
+                <button onclick="checkInventory()">Verificar Disponibilidad</button>
+                <div id="inventoryResult" class="result" style="display:none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:4001';
+
+        async function apiCall(url, options = {}) {
+            try {
+                const response = await fetch(url, {
+                    ...options,
+                    headers: { 'Content-Type': 'application/json', ...options.headers }
+                });
+                const data = await response.json();
+                return { success: response.ok, data };
+            } catch (error) {
+                return { success: false, data: { error: error.message } };
+            }
+        }
+
+        function showResult(elementId, data, success) {
+            const el = document.getElementById(elementId);
+            el.style.display = 'block';
+            el.className = 'result ' + (success ? 'success' : 'error');
+            el.textContent = JSON.stringify(data, null, 2);
+        }
+
+        async function checkHealth() {
+            const result = await apiCall(`${API_BASE}/health`);
+            document.getElementById('healthStatus').textContent = result.success ? 'Activo' : 'Inactivo';
+        }
+
+        async function getProducts() {
+            const result = await apiCall(`${API_BASE}/api/products`);
+            showResult('productResult', result.data, result.success);
+        }
+
+        async function getProduct() {
+            const id = document.getElementById('productId').value;
+            if (!id) { alert('Ingrese un ID de producto'); return; }
+            const result = await apiCall(`${API_BASE}/api/products/${id}`);
+            showResult('productResult', result.data, result.success);
+        }
+
+        async function createOrder() {
+            const order = {
+                customerId: document.getElementById('customerId').value,
+                customerEmail: document.getElementById('customerEmail').value,
+                items: [{
+                    productId: document.getElementById('orderProductId').value,
+                    quantity: parseInt(document.getElementById('quantity').value)
+                }],
+                shippingAddress: document.getElementById('shippingAddress').value
+            };
+            const result = await apiCall(`${API_BASE}/api/orders`, {
+                method: 'POST',
+                body: JSON.stringify(order)
+            });
+            showResult('orderResult', result.data, result.success);
+            if (result.success && result.data.orderId) {
+                document.getElementById('orderId').value = result.data.orderId;
+            }
+        }
+
+        async function getOrderStatus() {
+            const id = document.getElementById('orderId').value;
+            if (!id) { alert('Ingrese un ID de orden'); return; }
+            const result = await apiCall(`${API_BASE}/api/orders/${id}/status`);
+            showResult('statusResult', result.data, result.success);
+        }
+
+        async function cancelOrder() {
+            const id = document.getElementById('orderId').value;
+            if (!id) { alert('Ingrese un ID de orden'); return; }
+            const result = await apiCall(`${API_BASE}/api/orders/${id}`, { method: 'DELETE' });
+            showResult('statusResult', result.data, result.success);
+        }
+
+        async function checkInventory() {
+            const id = document.getElementById('inventoryProductId').value;
+            if (!id) { alert('Ingrese un ID de producto'); return; }
+            const result = await apiCall(`${API_BASE}/api/inventory/${id}`);
+            showResult('inventoryResult', result.data, result.success);
+        }
+
+        // Check health on load
+        checkHealth();
+        setInterval(checkHealth, 30000);
+    </script>
+</body>
+</html>
