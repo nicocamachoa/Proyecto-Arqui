@@ -1,0 +1,69 @@
+# Eureka Server Deployment
+# NOTE: This is a placeholder. Update the image when the Eureka server is built.
+# Build command: cd infrastructure/platform/eureka-server && docker build -t allconnect/eureka-server:latest .
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eureka
+  namespace: allconnect
+  labels:
+    app: eureka
+    tier: platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eureka
+  template:
+    metadata:
+      labels:
+        app: eureka
+    spec:
+      containers:
+        - name: eureka
+          # TODO: Replace with actual image when built
+          image: allconnect/eureka-server:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8761
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "kubernetes"
+            - name: EUREKA_INSTANCE_HOSTNAME
+              value: "eureka-service"
+            - name: EUREKA_CLIENT_REGISTER_WITH_EUREKA
+              value: "false"
+            - name: EUREKA_CLIENT_FETCH_REGISTRY
+              value: "false"
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8761
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8761
+            initialDelaySeconds: 60
+            periodSeconds: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eureka-service
+  namespace: allconnect
+spec:
+  selector:
+    app: eureka
+  ports:
+    - port: 8761
+      targetPort: 8761
+  type: ClusterIP

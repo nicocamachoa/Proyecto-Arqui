@@ -1,0 +1,91 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  namespace: allconnect
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+      evaluation_interval: 15s
+
+    scrape_configs:
+      # Prometheus self-monitoring
+      - job_name: 'prometheus'
+        static_configs:
+          - targets: ['localhost:9090']
+
+      # Infrastructure services
+      - job_name: 'mysql'
+        static_configs:
+          - targets: ['mysql-service:3306']
+
+      - job_name: 'redis'
+        static_configs:
+          - targets: ['redis-service:6379']
+
+      - job_name: 'kafka'
+        static_configs:
+          - targets: ['kafka-service:9092']
+
+      - job_name: 'rabbitmq'
+        static_configs:
+          - targets: ['rabbitmq-service:15672']
+
+      # Platform services
+      - job_name: 'eureka'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['eureka-service:8761']
+
+      - job_name: 'gateway'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['gateway-service:8080']
+
+      # Business microservices
+      - job_name: 'order-service'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['order-service:8091']
+
+      - job_name: 'catalog-service'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['catalog-service:8092']
+
+      - job_name: 'customer-service'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['customer-service:8093']
+
+      - job_name: 'payment-service'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['payment-service:8094']
+
+      - job_name: 'notification-service'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['notification-service:8095']
+
+      - job_name: 'billing-service'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['billing-service:8096']
+
+      - job_name: 'security-service'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['security-service:8097']
+
+      - job_name: 'recommendation-service'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['recommendation-service:8098']
+
+      # Integration service
+      - job_name: 'integration-service'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['integration-service:8085']

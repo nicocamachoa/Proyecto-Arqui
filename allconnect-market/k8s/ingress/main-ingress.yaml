@@ -4,35 +4,80 @@ metadata:
   name: allconnect-ingress
   namespace: allconnect
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
 spec:
   ingressClassName: nginx
   rules:
     - host: allconnect.local
       http:
         paths:
-          # Frontend - Web UI
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: tomcat-service
-                port:
-                  number: 8080
-          # Frontend - Admin Panel
-          - path: /admin
-            pathType: Prefix
-            backend:
-              service:
-                name: tomcat-service
-                port:
-                  number: 8081
-          # API Gateway - All API calls
-          - path: /api
-            pathType: Prefix
+          # API Gateway - All API calls (most specific first)
+          - path: /api(/|$)(.*)
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: gateway-service
                 port:
                   number: 8080
+          # Admin Dashboard - React App
+          - path: /admin(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: admin-dashboard-service
+                port:
+                  number: 3010
+          # Observability UIs
+          - path: /grafana(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: grafana-service
+                port:
+                  number: 3000
+          - path: /prometheus(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: prometheus-service
+                port:
+                  number: 9090
+          - path: /jaeger(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: jaeger-service
+                port:
+                  number: 16686
+          - path: /maildev(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: maildev-service
+                port:
+                  number: 1080
+          - path: /rabbitmq(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: rabbitmq-service
+                port:
+                  number: 15672
+          # Eureka Dashboard
+          - path: /eureka(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: eureka-service
+                port:
+                  number: 8761
+          # Customer Portal - React App (default route)
+          - path: /(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: customer-portal-service
+                port:
+                  number: 3000

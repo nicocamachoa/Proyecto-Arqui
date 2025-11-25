@@ -9,4 +9,5 @@ spec:
   resources:
     requests:
       storage: 5Gi
-  storageClassName: hostpath
+  # Uses default StorageClass - works on Docker Desktop, Minikube, and most cloud providers
+  # storageClassName: standard

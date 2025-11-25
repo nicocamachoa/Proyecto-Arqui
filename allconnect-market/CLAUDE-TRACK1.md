@@ -15,86 +15,87 @@ Actualiza este checklist frecuentemente marcando con [x] lo completado:
 ### Fase 1: Infraestructura Base (Horas 0-2)
 
 #### Docker Compose Básico
-- [ ] Crear docker-compose.yml con estructura base
-- [ ] MySQL 8.0 funcionando en puerto 3306
-- [ ] Redis 7 funcionando en puerto 6379
-- [ ] Verificar conectividad entre contenedores
-- [ ] Crear scripts de inicialización de BD
+- [x] Crear docker-compose.yml con estructura base
+- [x] MySQL 8.0 funcionando en puerto 3306
+- [x] Redis 7 funcionando en puerto 6379
+- [x] Verificar conectividad entre contenedores
+- [x] Crear scripts de inicialización de BD
 
 #### Bases de Datos
-- [ ] Schema `orders_db` creado
-- [ ] Schema `catalog_db` creado
-- [ ] Schema `customers_db` creado
-- [ ] Schema `payments_db` creado
-- [ ] Schema `notifications_db` creado
-- [ ] Schema `billing_db` creado
-- [ ] Schema `security_db` creado
-- [ ] Schema `recommendations_db` creado
-- [ ] Usuario de aplicación creado con permisos
+- [x] Schema `orders_db` creado
+- [x] Schema `catalog_db` creado
+- [x] Schema `customers_db` creado
+- [x] Schema `payments_db` creado
+- [x] Schema `notifications_db` creado
+- [x] Schema `billing_db` creado
+- [x] Schema `security_db` creado
+- [x] Schema `recommendations_db` creado
+- [x] Usuario de aplicación creado con permisos
 
 #### Datos Iniciales
-- [ ] Script SQL con usuarios de prueba cargado
-- [ ] Script SQL con categorías cargado
-- [ ] Script SQL con productos de ejemplo cargado
-- [ ] Verificar que datos existen ejecutando queries
+- [x] Script SQL con usuarios de prueba cargado
+- [x] Script SQL con categorías cargado
+- [x] Script SQL con productos de ejemplo cargado
+- [x] Verificar que datos existen ejecutando queries
 
 ### Fase 2: Mensajería (Horas 2-3)
 
 #### Kafka (KRaft mode)
-- [ ] Kafka broker funcionando en puerto 9092
+- [x] Kafka broker funcionando en puerto 9092 (apache/kafka:3.7.0 - KRaft mode)
 - [ ] Topics creados: order-events, payment-events, notification-events
 - [ ] Verificar productor/consumidor de prueba
 - [ ] UI de Kafka configurada (opcional: kafka-ui)
 
 #### RabbitMQ
-- [ ] RabbitMQ funcionando en puertos 5672/15672
-- [ ] Management UI accesible
+- [x] RabbitMQ funcionando en puertos 5672/15672
+- [x] Management UI accesible (http://localhost:15672 - user: allconnect_user / pass: allconnect_pass_2025)
 - [ ] Exchanges y queues para notificaciones creados
 - [ ] Verificar conexión de prueba
 
 ### Fase 3: Platform Services (Horas 3-5)
 
 #### Eureka Server
-- [ ] Proyecto Spring Boot creado
-- [ ] Configuración de Eureka Server
-- [ ] Funcionando en puerto 8761
-- [ ] Dashboard accesible en http://localhost:8761
-- [ ] Verificar que acepta registros de servicios
+- [x] Proyecto Spring Boot creado (infrastructure/platform/eureka-server/)
+- [x] Configuración de Eureka Server (Spring Boot 3.2.5, Spring Cloud 2023.0.1)
+- [x] Funcionando en puerto 8761
+- [x] Dashboard accesible en http://localhost:8761
+- [x] Verificar que acepta registros de servicios (Health endpoint UP)
 
 #### API Gateway (Spring Cloud Gateway)
-- [ ] Proyecto Spring Boot creado
-- [ ] Registrado en Eureka
-- [ ] Funcionando en puerto 8080
-- [ ] Rutas configuradas para TODOS los servicios:
-  - [ ] /api/customers/** → localhost:8093
-  - [ ] /api/catalog/** → localhost:8092
-  - [ ] /api/orders/** → localhost:8091
-  - [ ] /api/payments/** → localhost:8094
-  - [ ] /api/notifications/** → localhost:8095
-  - [ ] /api/billing/** → localhost:8096
-  - [ ] /api/security/** → localhost:8097
-  - [ ] /api/recommendations/** → localhost:8098
-  - [ ] /api/integration/** → localhost:8085
-- [ ] CORS configurado para frontend
+- [x] Proyecto Spring Boot creado (infrastructure/platform/gateway/)
+- [x] Registrado en Eureka (API-GATEWAY registrado exitosamente)
+- [x] Funcionando en puerto 8080 (Netty server)
+- [x] Rutas configuradas para TODOS los servicios (usando lb:// para load balancing via Eureka):
+  - [x] /api/orders/** → lb://ORDER-SERVICE
+  - [x] /api/catalog/** → lb://CATALOG-SERVICE
+  - [x] /api/customers/** → lb://CUSTOMER-SERVICE
+  - [x] /api/payments/** → lb://PAYMENT-SERVICE
+  - [x] /api/notifications/** → lb://NOTIFICATION-SERVICE
+  - [x] /api/billing/** → lb://BILLING-SERVICE
+  - [x] /api/security/** → lb://SECURITY-SERVICE
+  - [x] /api/recommendations/** → lb://RECOMMENDATION-SERVICE
+  - [x] /api/integration/** → lb://INTEGRATION-SERVICE
+- [x] CORS configurado para frontend (allowedOrigins: "*", all methods/headers)
 - [ ] Rate limiting básico (opcional)
-- [ ] Health endpoint funcionando
+- [x] Health endpoint funcionando (/actuator/health retorna UP)
+- [x] Gateway routes endpoint funcionando (/actuator/gateway/routes)
 
 #### MailDev (Email Testing)
-- [ ] MailDev funcionando en puertos 1080 (UI) / 1025 (SMTP)
-- [ ] UI accesible en http://localhost:1080
+- [x] MailDev funcionando en puertos 1080 (UI) / 1025 (SMTP)
+- [x] UI accesible en http://localhost:1080
 - [ ] Verificar envío de email de prueba
 
 ### Fase 4: Observabilidad (Horas 5-7)
 
 #### Prometheus
-- [ ] Prometheus funcionando en puerto 9090
-- [ ] Configuración para scrapear todos los servicios
-- [ ] Métricas básicas visibles
+- [x] Prometheus funcionando en puerto 9090
+- [x] Configuración para scrapear todos los servicios (prometheus/prometheus.yml)
+- [ ] Métricas básicas visibles (requiere servicios Spring Boot corriendo)
 - [ ] Alertas básicas configuradas (opcional)
 
 #### Grafana
-- [ ] Grafana funcionando en puerto 3000
-- [ ] Datasource de Prometheus configurado
+- [x] Grafana funcionando en puerto 3001 (3001 para evitar conflicto con frontend)
+- [x] Datasource de Prometheus configurado (auto-provisioned)
 - [ ] Dashboard básico con:
   - [ ] Estado de servicios (up/down)
   - [ ] Requests por segundo
@@ -102,32 +103,45 @@ Actualiza este checklist frecuentemente marcando con [x] lo completado:
   - [ ] Errores por servicio
 
 #### Jaeger
-- [ ] Jaeger funcionando en puerto 16686
-- [ ] UI accesible
-- [ ] Configuración de tracing para servicios
+- [x] Jaeger funcionando en puerto 16686
+- [x] UI accesible (http://localhost:16686)
+- [ ] Configuración de tracing para servicios (requiere servicios Spring Boot)
 
 ### Fase 5: Kubernetes (Horas 7-9)
 
 #### Namespace y Configuración
-- [ ] Namespace `allconnect` creado
-- [ ] ConfigMaps creados
-- [ ] Secrets creados (DB credentials, JWT secret)
+- [x] Namespace `allconnect` creado (k8s/namespace.yaml)
+- [x] ConfigMaps creados (app-config.yaml, prometheus-config.yaml)
+- [x] Secrets creados (db-credentials.yaml, jwt-secret.yaml)
 
 #### Deployments de Infraestructura
-- [ ] MySQL Deployment + Service + PVC
-- [ ] Redis Deployment + Service
-- [ ] Kafka Deployment + Service
-- [ ] RabbitMQ Deployment + Service
+- [x] MySQL Deployment + Service + PVC (mysql-deployment.yaml, mysql-pvc.yaml)
+- [x] Redis Deployment + Service (redis-deployment.yaml)
+- [x] Kafka Deployment + Service (kafka-deployment.yaml) - KRaft mode
+- [x] RabbitMQ Deployment + Service (rabbitmq-deployment.yaml)
+- [x] MailDev Deployment + Service (maildev-deployment.yaml) - AGREGADO
+
+#### Observability en K8s (NUEVO)
+- [x] Prometheus Deployment + Service + ConfigMap (prometheus-deployment.yaml)
+- [x] Grafana Deployment + Service + Datasources ConfigMap (grafana-deployment.yaml)
+- [x] Jaeger Deployment + Service (jaeger-deployment.yaml)
 
 #### Platform en K8s
-- [ ] Eureka Deployment + Service
-- [ ] Gateway Deployment + Service
-- [ ] Ingress configurado
+- [x] Eureka Deployment + Service (eureka-deployment.yaml) - Placeholder, descomentar cuando imagen lista
+- [x] Gateway Deployment + Service (gateway-deployment.yaml) - Placeholder, descomentar cuando imagen lista
+- [x] Ingress configurado (main-ingress.yaml) - Rutas para API, Admin, Observability UIs
+
+#### Correcciones realizadas
+- [x] app-config.yaml: Corregidos puertos de servicios (8091-8098), agregadas variables observability
+- [x] mysql-pvc.yaml: Cambiado storageClassName de 'hostpath' a default
+- [x] main-ingress.yaml: Eliminadas referencias a tomcat (no existe), configurado para React frontend
+- [x] kustomization.yaml: Actualizado de commonLabels (deprecated) a labels, agregados nuevos recursos
 
 #### Verificación K8s
-- [ ] `kubectl get pods -n allconnect` muestra todo Running
-- [ ] Servicios accesibles via NodePort o Ingress
-- [ ] Logs accesibles via `kubectl logs`
+- [x] `kubectl kustomize k8s/` genera manifiestos sin errores
+- [ ] `kubectl get pods -n allconnect` muestra todo Running (requiere cluster K8s)
+- [ ] Servicios accesibles via NodePort o Ingress (requiere cluster K8s)
+- [ ] Logs accesibles via `kubectl logs` (requiere cluster K8s)
 
 ### Fase 6: Soporte e Integración (Horas 9-12)
 

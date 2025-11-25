@@ -1,0 +1,224 @@
+services:
+  # ===========================================
+  # DATABASE - MySQL 8.0
+  # ===========================================
+  mysql:
+    image: mysql:8.0
+    container_name: allconnect-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: allconnect_root_2025
+      MYSQL_USER: allconnect_user
+      MYSQL_PASSWORD: allconnect_pass_2025
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./scripts/init-databases.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pallconnect_root_2025"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - allconnect-network
+    restart: unless-stopped
+
+  # ===========================================
+  # CACHE - Redis 7
+  # ===========================================
+  redis:
+    image: redis:7-alpine
+    container_name: allconnect-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - allconnect-network
+    restart: unless-stopped
+
+  # ===========================================
+  # MESSAGING - Kafka (KRaft mode with Apache Official Image)
+  # ===========================================
+  kafka:
+    image: apache/kafka:3.7.0
+    container_name: allconnect-kafka
+    environment:
+      # KRaft mode configuration
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      # Auto-create topics for development
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      # Cluster ID (required for KRaft)
+      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+      # Topic defaults
+      KAFKA_NUM_PARTITIONS: 3
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+    ports:
+      - "9092:9092"
+    volumes:
+      - kafka_data:/var/lib/kafka/data
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    networks:
+      - allconnect-network
+    restart: unless-stopped
+
+  # ===========================================
+  # MESSAGING - RabbitMQ
+  # ===========================================
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: allconnect-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: allconnect_user
+      RABBITMQ_DEFAULT_PASS: allconnect_pass_2025
+    ports:
+      - "5672:5672"    # AMQP protocol
+      - "15672:15672"  # Management UI
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    networks:
+      - allconnect-network
+    restart: unless-stopped
+
+  # ===========================================
+  # EMAIL TESTING - MailDev
+  # ===========================================
+  maildev:
+    image: maildev/maildev
+    container_name: allconnect-maildev
+    ports:
+      - "1080:1080"  # Web UI
+      - "1025:1025"  # SMTP server
+    networks:
+      - allconnect-network
+    restart: unless-stopped
+
+  # ===========================================
+  # MONITORING - Prometheus
+  # ===========================================
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: allconnect-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - allconnect-network
+    restart: unless-stopped
+
+  # ===========================================
+  # VISUALIZATION - Grafana
+  # ===========================================
+  grafana:
+    image: grafana/grafana:latest
+    container_name: allconnect-grafana
+    ports:
+      - "3001:3000"  # 3001 to avoid conflict with frontend
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+      # Auto-provision Prometheus datasource
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+    depends_on:
+      - prometheus
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:3000/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - allconnect-network
+    restart: unless-stopped
+
+  # ===========================================
+  # TRACING - Jaeger
+  # ===========================================
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: allconnect-jaeger
+    ports:
+      - "16686:16686"  # Jaeger UI
+      - "14268:14268"  # Accept thrift directly from clients
+      - "14250:14250"  # Accept gRPC from agents
+      - "6831:6831/udp"  # Accept jaeger.thrift over compact thrift protocol (agent)
+      - "6832:6832/udp"  # Accept jaeger.thrift over binary thrift protocol (agent)
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+      - SPAN_STORAGE_TYPE=memory
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:16686/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - allconnect-network
+    restart: unless-stopped
+
+# ===========================================
+# NETWORKS
+# ===========================================
+networks:
+  allconnect-network:
+    driver: bridge
+    name: allconnect-network
+
+# ===========================================
+# VOLUMES
+# ===========================================
+volumes:
+  mysql_data:
+    name: allconnect-mysql-data
+  redis_data:
+    name: allconnect-redis-data
+  kafka_data:
+    name: allconnect-kafka-data
+  rabbitmq_data:
+    name: allconnect-rabbitmq-data
+  prometheus_data:
+    name: allconnect-prometheus-data
+  grafana_data:
+    name: allconnect-grafana-data

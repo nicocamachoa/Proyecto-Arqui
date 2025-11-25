@@ -9,39 +9,53 @@ resources:
 
   # Config & Secrets
   - configmaps/app-config.yaml
+  - configmaps/prometheus-config.yaml
   - secrets/db-credentials.yaml
   - secrets/jwt-secret.yaml
 
   # Volumes
   - volumes/mysql-pvc.yaml
 
-  # Infrastructure
+  # Infrastructure - Databases & Messaging
   - deployments/infrastructure/mysql-deployment.yaml
   - deployments/infrastructure/redis-deployment.yaml
   - deployments/infrastructure/kafka-deployment.yaml
   - deployments/infrastructure/rabbitmq-deployment.yaml
+  - deployments/infrastructure/maildev-deployment.yaml
 
-  # Platform (TODO: uncomment when ready)
+  # Infrastructure - Observability
+  - deployments/infrastructure/prometheus-deployment.yaml
+  - deployments/infrastructure/grafana-deployment.yaml
+  - deployments/infrastructure/jaeger-deployment.yaml
+
+  # Platform (uncomment when images are built)
   # - deployments/platform/eureka-deployment.yaml
   # - deployments/platform/gateway-deployment.yaml
-  # - deployments/platform/tomcat-deployment.yaml
 
-  # Services (TODO: uncomment when ready)
+  # Services (uncomment when images are built)
   # - deployments/services/order-service-deployment.yaml
   # - deployments/services/catalog-service-deployment.yaml
   # - deployments/services/customer-service-deployment.yaml
   # - deployments/services/payment-service-deployment.yaml
   # - deployments/services/notification-service-deployment.yaml
+  # - deployments/services/billing-service-deployment.yaml
+  # - deployments/services/security-service-deployment.yaml
+  # - deployments/services/recommendation-service-deployment.yaml
 
-  # Integration (TODO: uncomment when ready)
+  # Integration (uncomment when images are built)
   # - deployments/integration/integration-service-deployment.yaml
   # - deployments/integration/https-adapter-deployment.yaml
   # - deployments/integration/soap-adapter-deployment.yaml
   # - deployments/integration/rpc-adapter-deployment.yaml
 
+  # Frontend (uncomment when images are built)
+  # - deployments/frontend/customer-portal-deployment.yaml
+  # - deployments/frontend/admin-dashboard-deployment.yaml
+
   # Ingress
   - ingress/main-ingress.yaml
 
-commonLabels:
-  project: allconnect-market
-  managed-by: kustomize
+labels:
+  - pairs:
+      project: allconnect-market
+      managed-by: kustomize

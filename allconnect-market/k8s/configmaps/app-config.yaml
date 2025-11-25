@@ -26,10 +26,29 @@ data:
   # Gateway
   GATEWAY_URL: "http://gateway-service:8080"
 
-  # Services URLs (internal)
-  ORDER_SERVICE_URL: "http://order-service:8090"
-  CATALOG_SERVICE_URL: "http://catalog-service:8091"
-  CUSTOMER_SERVICE_URL: "http://customer-service:8092"
-  PAYMENT_SERVICE_URL: "http://payment-service:8093"
-  NOTIFICATION_SERVICE_URL: "http://notification-service:8094"
-  INTEGRATION_SERVICE_URL: "http://integration-service:8095"
+  # MailDev (Email Testing)
+  MAILDEV_HOST: "maildev-service"
+  MAILDEV_SMTP_PORT: "1025"
+  MAILDEV_WEB_PORT: "1080"
+
+  # Observability
+  PROMETHEUS_URL: "http://prometheus-service:9090"
+  GRAFANA_URL: "http://grafana-service:3000"
+  JAEGER_URL: "http://jaeger-service:16686"
+  JAEGER_AGENT_HOST: "jaeger-service"
+  JAEGER_AGENT_PORT: "6831"
+
+  # Services URLs (internal) - Ports as per CLAUDE-TRACK1.md
+  ORDER_SERVICE_URL: "http://order-service:8091"
+  CATALOG_SERVICE_URL: "http://catalog-service:8092"
+  CUSTOMER_SERVICE_URL: "http://customer-service:8093"
+  PAYMENT_SERVICE_URL: "http://payment-service:8094"
+  NOTIFICATION_SERVICE_URL: "http://notification-service:8095"
+  BILLING_SERVICE_URL: "http://billing-service:8096"
+  SECURITY_SERVICE_URL: "http://security-service:8097"
+  RECOMMENDATION_SERVICE_URL: "http://recommendation-service:8098"
+  INTEGRATION_SERVICE_URL: "http://integration-service:8085"
+
+  # Frontend URLs
+  CUSTOMER_PORTAL_URL: "http://customer-portal-service:3000"
+  ADMIN_DASHBOARD_URL: "http://admin-dashboard-service:3010"
