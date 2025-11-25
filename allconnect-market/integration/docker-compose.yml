@@ -1,0 +1,93 @@
+version: '3.8'
+
+services:
+  # REST Provider - Physical Products
+  rest-provider:
+    build:
+      context: ./mock-providers/rest-provider
+      dockerfile: Dockerfile
+    ports:
+      - "4001:4001"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:4001
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4001/api/products"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - integration-network
+
+  # SOAP Provider - Professional Services
+  soap-provider:
+    build:
+      context: ./mock-providers/soap-provider
+      dockerfile: Dockerfile
+    ports:
+      - "4002:4002"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:4002
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4002/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - integration-network
+
+  # gRPC Provider - Digital Subscriptions
+  grpc-provider:
+    build:
+      context: ./mock-providers/grpc-provider
+      dockerfile: Dockerfile
+    ports:
+      - "4003:4003"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:4003
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4003/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - integration-network
+
+  # Integration Service - Spring Boot
+  integration-service:
+    build:
+      context: ./integration-service
+      dockerfile: Dockerfile
+    ports:
+      - "8085:8085"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_ENABLED=false
+      - INTEGRATION_PROVIDERS_0_BASEURL=http://rest-provider:4001
+      - INTEGRATION_PROVIDERS_1_BASEURL=http://soap-provider:4002
+      - INTEGRATION_PROVIDERS_2_HOST=grpc-provider
+      - INTEGRATION_PROVIDERS_2_PORT=4003
+    depends_on:
+      rest-provider:
+        condition: service_healthy
+      soap-provider:
+        condition: service_healthy
+      grpc-provider:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8085/api/integration/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    networks:
+      - integration-network
+
+networks:
+  integration-network:
+    driver: bridge

@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcProvider";
+
+package subscription;
+
+// Subscription Service for digital content (Netflix-like)
+service SubscriptionService {
+    rpc CreateSubscription(CreateSubscriptionRequest) returns (SubscriptionResponse);
+    rpc GetSubscription(GetSubscriptionRequest) returns (SubscriptionResponse);
+    rpc CancelSubscription(CancelSubscriptionRequest) returns (CancelResponse);
+    rpc CheckAccess(CheckAccessRequest) returns (AccessResponse);
+    rpc GetPlans(GetPlansRequest) returns (PlansResponse);
+    rpc GetPlan(GetPlanRequest) returns (PlanResponse);
+}
+
+// Request Messages
+message CreateSubscriptionRequest {
+    string plan_id = 1;
+    string customer_id = 2;
+    string customer_email = 3;
+    string payment_method_id = 4;
+}
+
+message GetSubscriptionRequest {
+    string subscription_id = 1;
+}
+
+message CancelSubscriptionRequest {
+    string subscription_id = 1;
+    string reason = 2;
+}
+
+message CheckAccessRequest {
+    string subscription_id = 1;
+    string content_id = 2;
+}
+
+message GetPlansRequest {
+}
+
+message GetPlanRequest {
+    string plan_id = 1;
+}
+
+// Response Messages
+message SubscriptionResponse {
+    string subscription_id = 1;
+    string plan_id = 2;
+    string plan_name = 3;
+    string customer_id = 4;
+    string status = 5;
+    string start_date = 6;
+    string end_date = 7;
+    repeated string features = 8;
+    bool success = 9;
+    string error_message = 10;
+}
+
+message CancelResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message AccessResponse {
+    bool has_access = 1;
+    string access_url = 2;
+    string expires_at = 3;
+    string error_message = 4;
+}
+
+message PlansResponse {
+    repeated PlanData plans = 1;
+    bool success = 2;
+}
+
+message PlanResponse {
+    PlanData plan = 1;
+    bool success = 2;
+    string error_message = 3;
+}
+
+message PlanData {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    double price = 4;
+    string billing_cycle = 5;
+    repeated string features = 6;
+}

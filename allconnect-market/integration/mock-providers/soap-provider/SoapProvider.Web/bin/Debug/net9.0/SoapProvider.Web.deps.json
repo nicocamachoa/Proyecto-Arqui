@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "SoapProvider.Web/1.0.0": {
+        "runtime": {
+          "SoapProvider.Web.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SoapProvider.Web/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

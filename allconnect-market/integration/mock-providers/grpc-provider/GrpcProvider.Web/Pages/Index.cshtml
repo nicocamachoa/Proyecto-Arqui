@@ -1,0 +1,217 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "gRPC Provider - Suscripciones Digitales";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { color: #2c3e50; margin-bottom: 10px; }
+        .subtitle { color: #7f8c8d; margin-bottom: 30px; }
+        .card { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .card h2 { color: #27ae60; margin-bottom: 15px; border-bottom: 2px solid #27ae60; padding-bottom: 10px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; color: #34495e; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; }
+        input:focus, select:focus { outline: none; border-color: #27ae60; }
+        button { background: #27ae60; color: white; padding: 12px 24px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; margin-right: 10px; margin-top: 10px; }
+        button:hover { background: #219a52; }
+        button.secondary { background: #3498db; }
+        button.secondary:hover { background: #2980b9; }
+        button.danger { background: #e74c3c; }
+        button.danger:hover { background: #c0392b; }
+        .result { background: #ecf0f1; padding: 15px; border-radius: 4px; margin-top: 15px; white-space: pre-wrap; font-family: monospace; font-size: 13px; max-height: 300px; overflow-y: auto; }
+        .result.success { border-left: 4px solid #27ae60; }
+        .result.error { border-left: 4px solid #e74c3c; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
+        .badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; margin-left: 10px; }
+        .badge-grpc { background: #27ae60; color: white; }
+        .status-bar { background: #27ae60; color: white; padding: 10px 20px; border-radius: 4px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .plan-card { background: #f8f9fa; border: 2px solid #dee2e6; border-radius: 8px; padding: 15px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s; }
+        .plan-card:hover { border-color: #27ae60; }
+        .plan-card.selected { border-color: #27ae60; background: #d4edda; }
+        .plan-name { font-weight: bold; color: #2c3e50; }
+        .plan-price { color: #27ae60; font-size: 1.2em; margin: 5px 0; }
+        .plan-features { font-size: 0.9em; color: #6c757d; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>gRPC Provider <span class="badge badge-grpc">gRPC</span></h1>
+        <p class="subtitle">Proveedor de Suscripciones Digitales (Streaming) - Puerto 4003</p>
+
+        <div class="status-bar">
+            <span>Estado del Servicio: <strong id="healthStatus">Verificando...</strong></span>
+            <span>API: http://localhost:4003</span>
+        </div>
+
+        <div class="grid">
+            <!-- Planes Disponibles -->
+            <div class="card">
+                <h2>Planes de Suscripcion</h2>
+                <button onclick="getPlans()">Ver Todos los Planes</button>
+                <div class="form-group" style="margin-top: 15px;">
+                    <label>Buscar Plan por ID:</label>
+                    <input type="text" id="planId" placeholder="Ej: PLAN001" />
+                </div>
+                <button class="secondary" onclick="getPlan()">Buscar Plan</button>
+                <div id="planResult" class="result" style="display:none;"></div>
+            </div>
+
+            <!-- Crear Suscripcion -->
+            <div class="card">
+                <h2>Nueva Suscripcion</h2>
+                <div class="form-group">
+                    <label>Seleccionar Plan:</label>
+                    <select id="subscriptionPlanId">
+                        <option value="PLAN001">PLAN001 - Streaming Premium ($14.99/mes)</option>
+                        <option value="PLAN002">PLAN002 - Streaming Familiar ($19.99/mes)</option>
+                        <option value="PLAN003">PLAN003 - Streaming Basico ($9.99/mes)</option>
+                        <option value="PLAN004">PLAN004 - Musica Premium ($10.99/mes)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>ID Cliente:</label>
+                    <input type="text" id="customerId" value="CUST001" />
+                </div>
+                <div class="form-group">
+                    <label>Email Cliente:</label>
+                    <input type="email" id="customerEmail" value="cliente@ejemplo.com" />
+                </div>
+                <div class="form-group">
+                    <label>Metodo de Pago ID (opcional):</label>
+                    <input type="text" id="paymentMethodId" placeholder="Ej: PM001" />
+                </div>
+                <button onclick="createSubscription()">Crear Suscripcion</button>
+                <div id="subscriptionResult" class="result" style="display:none;"></div>
+            </div>
+
+            <!-- Consultar Suscripcion -->
+            <div class="card">
+                <h2>Gestionar Suscripcion</h2>
+                <div class="form-group">
+                    <label>ID de Suscripcion:</label>
+                    <input type="text" id="subscriptionId" placeholder="Ej: SUB-XXXXX" />
+                </div>
+                <button onclick="getSubscription()">Consultar Suscripcion</button>
+                <button class="danger" onclick="cancelSubscription()">Cancelar Suscripcion</button>
+                <div id="subscriptionStatusResult" class="result" style="display:none;"></div>
+            </div>
+
+            <!-- Verificar Acceso -->
+            <div class="card">
+                <h2>Verificar Acceso a Contenido</h2>
+                <div class="form-group">
+                    <label>ID de Suscripcion:</label>
+                    <input type="text" id="accessSubscriptionId" placeholder="Ej: SUB-XXXXX" />
+                </div>
+                <div class="form-group">
+                    <label>ID de Contenido:</label>
+                    <select id="contentId">
+                        <option value="MOVIE001">MOVIE001 - Pelicula Premium</option>
+                        <option value="SERIES001">SERIES001 - Serie Exclusiva</option>
+                        <option value="MUSIC001">MUSIC001 - Album Musical</option>
+                        <option value="LIVE001">LIVE001 - Evento en Vivo</option>
+                    </select>
+                </div>
+                <button onclick="checkAccess()">Verificar Acceso</button>
+                <div id="accessResult" class="result" style="display:none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:4003';
+
+        async function apiCall(url, options = {}) {
+            try {
+                const response = await fetch(url, {
+                    ...options,
+                    headers: { 'Content-Type': 'application/json', ...options.headers }
+                });
+                const data = await response.json();
+                return { success: response.ok, data };
+            } catch (error) {
+                return { success: false, data: { error: error.message } };
+            }
+        }
+
+        function showResult(elementId, data, success) {
+            const el = document.getElementById(elementId);
+            el.style.display = 'block';
+            el.className = 'result ' + (success ? 'success' : 'error');
+            el.textContent = JSON.stringify(data, null, 2);
+        }
+
+        async function checkHealth() {
+            const result = await apiCall(`${API_BASE}/health`);
+            document.getElementById('healthStatus').textContent = result.success ? 'Activo' : 'Inactivo';
+        }
+
+        async function getPlans() {
+            const result = await apiCall(`${API_BASE}/api/plans`);
+            showResult('planResult', result.data, result.success);
+        }
+
+        async function getPlan() {
+            const id = document.getElementById('planId').value;
+            if (!id) { alert('Ingrese un ID de plan'); return; }
+            const result = await apiCall(`${API_BASE}/api/plans/${id}`);
+            showResult('planResult', result.data, result.success);
+        }
+
+        async function createSubscription() {
+            const subscription = {
+                planId: document.getElementById('subscriptionPlanId').value,
+                customerId: document.getElementById('customerId').value,
+                customerEmail: document.getElementById('customerEmail').value,
+                paymentMethodId: document.getElementById('paymentMethodId').value || null
+            };
+            const result = await apiCall(`${API_BASE}/api/subscriptions`, {
+                method: 'POST',
+                body: JSON.stringify(subscription)
+            });
+            showResult('subscriptionResult', result.data, result.success);
+            if (result.success && result.data.subscriptionId) {
+                document.getElementById('subscriptionId').value = result.data.subscriptionId;
+                document.getElementById('accessSubscriptionId').value = result.data.subscriptionId;
+            }
+        }
+
+        async function getSubscription() {
+            const id = document.getElementById('subscriptionId').value;
+            if (!id) { alert('Ingrese un ID de suscripcion'); return; }
+            const result = await apiCall(`${API_BASE}/api/subscriptions/${id}`);
+            showResult('subscriptionStatusResult', result.data, result.success);
+        }
+
+        async function cancelSubscription() {
+            const id = document.getElementById('subscriptionId').value;
+            if (!id) { alert('Ingrese un ID de suscripcion'); return; }
+            if (!confirm('Esta seguro de cancelar esta suscripcion?')) return;
+            const result = await apiCall(`${API_BASE}/api/subscriptions/${id}`, { method: 'DELETE' });
+            showResult('subscriptionStatusResult', result.data, result.success);
+        }
+
+        async function checkAccess() {
+            const subscriptionId = document.getElementById('accessSubscriptionId').value;
+            const contentId = document.getElementById('contentId').value;
+            if (!subscriptionId) { alert('Ingrese el ID de suscripcion'); return; }
+            const result = await apiCall(`${API_BASE}/api/subscriptions/${subscriptionId}/access/${contentId}`);
+            showResult('accessResult', result.data, result.success);
+        }
+
+        // Check health on load
+        checkHealth();
+        setInterval(checkHealth, 30000);
+    </script>
+</body>
+</html>
