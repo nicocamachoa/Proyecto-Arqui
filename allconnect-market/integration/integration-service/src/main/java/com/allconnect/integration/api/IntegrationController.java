@@ -48,6 +48,27 @@ public class IntegrationController {
     }
 
     // ============================================
+    // Products Endpoints (Aggregated from all providers)
+    // ============================================
+
+    @GetMapping("/products")
+    @Operation(summary = "Get all products", description = "Returns products aggregated from all providers (REST, SOAP, gRPC)")
+    public ResponseEntity<Map<String, Object>> getAllProducts() {
+        Map<String, Object> allProducts = orchestrator.getAllProducts();
+        return ResponseEntity.ok(allProducts);
+    }
+
+    @GetMapping("/products/{productId}")
+    @Operation(summary = "Get product by ID", description = "Returns a single product from the appropriate provider")
+    public ResponseEntity<Map<String, Object>> getProductById(@PathVariable String productId) {
+        Map<String, Object> product = orchestrator.getProductById(productId);
+        if (product != null && !product.isEmpty()) {
+            return ResponseEntity.ok(product);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    // ============================================
     // Order Endpoints (REST Provider - Physical Products)
     // ============================================
 

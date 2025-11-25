@@ -1,0 +1,91 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: integration-service
+
+# Provider Configuration for Docker
+integration:
+  providers:
+    - id: "rest-provider"
+      name: "Physical Products Provider"
+      protocol: "REST"
+      baseUrl: "http://rest-provider:4001"
+      timeout: 5000
+      retries: 3
+      enabled: true
+
+    - id: "soap-provider"
+      name: "Professional Services Provider"
+      protocol: "SOAP"
+      baseUrl: "http://soap-provider:4002"
+      wsdlUrl: "http://soap-provider:4002/BookingService.svc?wsdl"
+      timeout: 10000
+      retries: 2
+      enabled: true
+
+    - id: "grpc-provider"
+      name: "Digital Subscriptions Provider"
+      protocol: "GRPC"
+      host: "grpc-provider"
+      port: 4003
+      baseUrl: "http://grpc-provider:4003"
+      timeout: 5000
+      retries: 3
+      enabled: true
+
+# Eureka Client Configuration (disabled for Docker standalone)
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${random.value}
+
+# Circuit Breaker Configuration (Resilience4j)
+resilience4j:
+  circuitbreaker:
+    instances:
+      restProvider:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        failureRateThreshold: 50
+        eventConsumerBufferSize: 10
+      soapProvider:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        waitDurationInOpenState: 10s
+        failureRateThreshold: 50
+      grpcProvider:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        waitDurationInOpenState: 5s
+        failureRateThreshold: 50
+
+# Actuator endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,circuitbreakers
+  endpoint:
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true
+
+# Logging
+logging:
+  level:
+    com.allconnect.integration: DEBUG
+    org.springframework.web.reactive: DEBUG

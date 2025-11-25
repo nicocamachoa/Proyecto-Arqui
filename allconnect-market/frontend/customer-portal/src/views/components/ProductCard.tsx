@@ -48,7 +48,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           alt={product.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           onError={(e) => {
-            (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x400?text=Producto';
+            (e.target as HTMLImageElement).src = 'https://placehold.co/400x400?text=Producto';
           }}
         />
         {getProviderBadge()}

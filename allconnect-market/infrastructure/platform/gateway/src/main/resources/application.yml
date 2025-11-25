@@ -71,9 +71,9 @@ spring:
           filters:
             - RewritePath=/api/recommendations/(?<segment>.*), /api/recommendations/${segment}
 
-        # Integration Service - Puerto 8085
+        # Integration Service - Puerto 8086 (external network, direct URI)
         - id: integration-service
-          uri: lb://INTEGRATION-SERVICE
+          uri: http://host.docker.internal:8086
           predicates:
             - Path=/api/integration/**
           filters:

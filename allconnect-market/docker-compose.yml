@@ -215,6 +215,8 @@ services:
       - SPRING_DATASOURCE_PASSWORD=allconnect_pass_2025
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
       - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - INTEGRATION_SERVICE_URL=http://allconnect-integration:8085
+      - CATALOG_USE_PROVIDERS=true
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:8092/actuator/health"]
       interval: 30s
@@ -395,7 +397,7 @@ services:
       dockerfile: Dockerfile
     container_name: allconnect-integration
     ports:
-      - "8085:8085"
+      - "8086:8085"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
@@ -407,11 +409,11 @@ services:
       eureka:
         condition: service_healthy
       rest-provider:
-        condition: service_healthy
+        condition: service_started
       soap-provider:
-        condition: service_healthy
+        condition: service_started
       grpc-provider:
-        condition: service_healthy
+        condition: service_started
     networks:
       - allconnect-network
 
@@ -429,12 +431,6 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:4001
-    healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost:4001/api/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
     networks:
       - allconnect-network
 
@@ -448,12 +444,6 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:4002
-    healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost:4002/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
     networks:
       - allconnect-network
 
@@ -467,12 +457,6 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:4003
-    healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost:4003/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
     networks:
       - allconnect-network
 
@@ -486,7 +470,7 @@ services:
       dockerfile: Dockerfile
     container_name: allconnect-customer-portal
     ports:
-      - "3000:80"
+      - "3000:3000"
     depends_on:
       - gateway
     networks:
@@ -498,7 +482,7 @@ services:
       dockerfile: Dockerfile
     container_name: allconnect-admin-dashboard
     ports:
-      - "3002:80"
+      - "3002:3002"
     depends_on:
       - gateway
     networks:

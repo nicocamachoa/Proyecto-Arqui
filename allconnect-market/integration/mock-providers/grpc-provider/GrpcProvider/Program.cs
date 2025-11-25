@@ -49,6 +49,26 @@ app.MapGet("/api/plans", () =>
     return Results.Ok(new { success = true, plans });
 });
 
+// GET /api/subscriptions - List all available subscription plans as products
+// This endpoint is used by the Integration Service to fetch products
+app.MapGet("/api/subscriptions", () =>
+{
+    var products = MockData.Plans.Select((p, index) => new
+    {
+        id = $"SUB{(index + 1):D3}",  // SUB001, SUB002, etc.
+        name = p.Name,
+        description = p.Description,
+        price = p.Price,
+        category = p.BillingCycle == "monthly" ? "Streaming" : "Software",
+        stock = 999,
+        imageUrl = $"https://example.com/images/subscription{index + 1}.jpg",
+        billingCycle = p.BillingCycle,
+        features = p.Features,
+        planId = p.Id
+    });
+    return Results.Ok(products);
+});
+
 app.MapGet("/api/plans/{planId}", (string planId) =>
 {
     var plan = MockData.Plans.FirstOrDefault(p => p.Id == planId);

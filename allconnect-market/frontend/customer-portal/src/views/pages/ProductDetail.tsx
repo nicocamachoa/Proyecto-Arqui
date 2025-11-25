@@ -77,7 +77,7 @@ export const ProductDetail = () => {
               alt={product.name}
               className="w-full h-full object-cover"
               onError={(e) => {
-                (e.target as HTMLImageElement).src = 'https://via.placeholder.com/600x600?text=Producto';
+                (e.target as HTMLImageElement).src = 'https://placehold.co/600x600?text=Producto';
               }}
             />
           </div>

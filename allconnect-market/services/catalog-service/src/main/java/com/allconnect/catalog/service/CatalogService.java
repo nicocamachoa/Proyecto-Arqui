@@ -1,11 +1,14 @@
 package com.allconnect.catalog.service;
 
+import com.allconnect.catalog.client.IntegrationClient;
 import com.allconnect.catalog.dto.*;
 import com.allconnect.catalog.model.*;
 import com.allconnect.catalog.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +31,10 @@ public class CatalogService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final IntegrationClient integrationClient;
+
+    @Value("${catalog.use-providers:true}")
+    private boolean useProviders;
 
     // Product operations
     public Page<ProductResponse> getProducts(Long categoryId, ProductType type,
@@ -39,9 +47,124 @@ public class CatalogService {
     }
 
     public List<ProductResponse> getAllProducts() {
-        return productRepository.findByActiveTrue().stream()
+        List<ProductResponse> allProducts = new ArrayList<>();
+
+        // First, get products from external providers via integration service
+        if (useProviders) {
+            try {
+                log.info("Fetching products from integration service (external providers)");
+                Map<String, Object> integrationResponse = integrationClient.getAllProducts();
+
+                if (integrationResponse != null && integrationResponse.containsKey("products")) {
+                    @SuppressWarnings("unchecked")
+                    List<Map<String, Object>> providerProducts = (List<Map<String, Object>>) integrationResponse.get("products");
+
+                    for (Map<String, Object> p : providerProducts) {
+                        ProductResponse productResponse = mapProviderProduct(p);
+                        allProducts.add(productResponse);
+                    }
+                    log.info("Fetched {} products from providers", allProducts.size());
+                }
+            } catch (Exception e) {
+                log.error("Error fetching from integration service: {}", e.getMessage());
+                // Fall back to database products
+            }
+        }
+
+        // Then, add products from local database (if any)
+        List<ProductResponse> dbProducts = productRepository.findByActiveTrue().stream()
                 .map(this::mapToProductResponse)
                 .collect(Collectors.toList());
+
+        // Merge - avoid duplicates based on providerProductId
+        for (ProductResponse dbProduct : dbProducts) {
+            boolean exists = allProducts.stream()
+                    .anyMatch(p -> p.getProviderProductId() != null &&
+                            p.getProviderProductId().equals(dbProduct.getProviderProductId()));
+            if (!exists) {
+                allProducts.add(dbProduct);
+            }
+        }
+
+        log.info("Total products returned: {} (providers: {}, db: {})",
+                allProducts.size(), allProducts.size() - dbProducts.size(), dbProducts.size());
+        return allProducts;
+    }
+
+    /**
+     * Map a product from the integration service (provider) to ProductResponse
+     */
+    private ProductResponse mapProviderProduct(Map<String, Object> p) {
+        // Generate a unique ID for provider products (negative to avoid collision with DB)
+        Long id = -1L;
+        if (p.get("id") != null) {
+            String idStr = p.get("id").toString();
+            // Extract numeric part: PROD001 -> 1001, SVC001 -> 2001, SUB001 -> 3001
+            String numericPart = idStr.replaceAll("[^0-9]", "");
+            if (!numericPart.isEmpty()) {
+                int num = Integer.parseInt(numericPart);
+                if (idStr.startsWith("PROD")) id = 10000L + num;
+                else if (idStr.startsWith("SVC")) id = 20000L + num;
+                else if (idStr.startsWith("SUB")) id = 30000L + num;
+                else id = (long) num;
+            }
+        }
+
+        // Determine ProductType from providerType or productType field
+        ProductType productType = ProductType.PHYSICAL;
+        String typeStr = p.get("productType") != null ? p.get("productType").toString() : null;
+        if ("SERVICE".equals(typeStr)) productType = ProductType.SERVICE;
+        else if ("DIGITAL".equals(typeStr) || "SUBSCRIPTION".equals(typeStr)) productType = ProductType.SUBSCRIPTION;
+
+        // Determine ProviderType
+        ProviderType providerType = ProviderType.REST;
+        String providerStr = p.get("providerType") != null ? p.get("providerType").toString() : "REST";
+        if ("SOAP".equals(providerStr)) providerType = ProviderType.SOAP;
+        else if ("GRPC".equals(providerStr)) providerType = ProviderType.GRPC;
+
+        // Get price
+        BigDecimal price = BigDecimal.ZERO;
+        if (p.get("price") != null) {
+            price = new BigDecimal(p.get("price").toString());
+        }
+
+        // Get stock
+        Integer stock = 999;
+        if (p.get("stock") != null) {
+            stock = ((Number) p.get("stock")).intValue();
+        }
+
+        // Generate image URL if example.com
+        String imageUrl = p.get("imageUrl") != null ? p.get("imageUrl").toString() : null;
+        if (imageUrl == null || imageUrl.contains("example.com")) {
+            String name = p.get("name") != null ? p.get("name").toString() : "Product";
+            String encodedName = name.length() > 20 ? name.substring(0, 20) : name;
+            encodedName = encodedName.replace(" ", "+");
+            String[] colors = {"6366f1", "8b5cf6", "ec4899", "f59e0b", "10b981", "3b82f6"};
+            String color = colors[(int) (Math.abs(id) % colors.length)];
+            imageUrl = String.format("https://placehold.co/400x400/%s/ffffff?text=%s", color, encodedName);
+        }
+
+        return ProductResponse.builder()
+                .id(id)
+                .name(p.get("name") != null ? p.get("name").toString() : "Unknown")
+                .description(p.get("description") != null ? p.get("description").toString() : "")
+                .price(price)
+                .type(productType)
+                .categoryId(null)
+                .categoryName(p.get("category") != null ? p.get("category").toString() : null)
+                .providerType(providerType)
+                .providerProductId(p.get("id") != null ? p.get("id").toString() : null)
+                .stock(stock)
+                .imageUrl(imageUrl)
+                .brand(p.get("providerName") != null ? p.get("providerName").toString() : null)
+                .sku(p.get("id") != null ? p.get("id").toString() : null)
+                .billingPeriod(null)
+                .durationMinutes(p.get("durationMinutes") != null ? ((Number) p.get("durationMinutes")).intValue() : null)
+                .active(true)
+                .createdAt(null)
+                .updatedAt(null)
+                .build();
     }
 
     public ProductResponse getProductById(Long id) {

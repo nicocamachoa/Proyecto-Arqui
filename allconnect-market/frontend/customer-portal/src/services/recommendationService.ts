@@ -30,8 +30,34 @@ export const recommendationService = {
       return getTrendingProducts();
     }
 
-    const response = await api.get<Product[]>('/recommendations/trending');
-    return response.data;
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const response = await api.get<any>('/recommendations/trending');
+      // Backend returns { products: [...] }
+      const products = response.data.products || response.data || [];
+      return products.map((p: Record<string, unknown>) => ({
+        id: p.productId || p.id,
+        sku: p.sku || '',
+        name: p.name,
+        description: p.description,
+        shortDescription: p.description?.toString().substring(0, 100),
+        price: p.price,
+        productType: p.type || p.productType || 'PHYSICAL',
+        categoryId: p.categoryId,
+        providerType: 'REST',
+        stock: 100,
+        lowStockThreshold: 5,
+        imageUrl: p.imageUrl || `https://placehold.co/300x300/e2e8f0/475569?text=${encodeURIComponent(String(p.name || 'Product').substring(0, 15))}`,
+        isActive: true,
+        isFeatured: false,
+        ratingAverage: p.score ? Number(p.score) * 5 : 4.5,
+        ratingCount: Math.floor(Math.random() * 100),
+        createdAt: new Date().toISOString(),
+      }));
+    } catch (error) {
+      console.error('Error fetching trending:', error);
+      return [];
+    }
   },
 
   getSimilar: async (productId: number): Promise<Product[]> => {

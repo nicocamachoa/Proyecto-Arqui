@@ -26,7 +26,15 @@
       "Bash(timeout /t 30 /nobreak)",
       "Bash(docker-compose logs:*)",
       "Bash(docker logs:*)",
-      "Bash(docker restart:*)"
+      "Bash(docker restart:*)",
+      "Bash(npm install:*)",
+      "Bash(docker build:*)",
+      "Bash(docker run:*)",
+      "Bash(docker stop:*)",
+      "Bash(docker rm:*)",
+      "Bash(docker network:*)",
+      "Bash(tasklist:*)",
+      "Bash(python:*)"
     ],
     "deny": [],
     "ask": []

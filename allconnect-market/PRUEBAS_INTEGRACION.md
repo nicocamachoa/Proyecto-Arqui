@@ -2,13 +2,13 @@
 
 **Fecha:** 25 de Noviembre de 2025
 **Rama:** pruebaIntegracion
-**Estado:** ✅ TODAS LAS PRUEBAS EXITOSAS
+**Estado:** ✅ TODAS LAS PRUEBAS EXITOSAS (incluyendo Frontend)
 
 ---
 
 ## 1. Estado de la Infraestructura
 
-### 1.1 Contenedores Docker (18 servicios)
+### 1.1 Contenedores Docker (20 servicios)
 
 | Servicio | Puerto | Estado | Función |
 |----------|--------|--------|---------|
@@ -30,6 +30,8 @@
 | allconnect-grafana | 3001 | ✅ Running | Dashboards |
 | allconnect-jaeger | 16686 | ✅ Running | Tracing distribuido |
 | allconnect-maildev | 1080 | ✅ Healthy | Testing de emails |
+| **allconnect-customer-portal** | **3000** | ✅ Running | **Frontend Cliente (React)** |
+| **allconnect-admin-dashboard** | **3002** | ✅ Running | **Frontend Admin (React)** |
 
 ---
 
@@ -335,6 +337,8 @@ compensateSaga(orderId)
 | Prometheus | http://localhost:9090 | - |
 | Jaeger UI | http://localhost:16686 | - |
 | MailDev | http://localhost:1080 | - |
+| **Customer Portal** | **http://localhost:3000** | - |
+| **Admin Dashboard** | **http://localhost:3002** | - |
 
 ### Usuarios de Prueba
 
@@ -349,13 +353,15 @@ compensateSaga(orderId)
 ## 6. Conclusiones
 
 ### Lo que funciona:
+- ✅ **Frontend Customer Portal** (React + Vite + Tailwind)
+- ✅ **Frontend Admin Dashboard** (React + Vite + Tailwind)
 - ✅ Autenticación JWT completa (registro, login, validación)
 - ✅ Catálogo de productos (CRUD completo)
 - ✅ Creación de órdenes con Saga Pattern
 - ✅ Compensación automática en caso de fallos
 - ✅ Eventos Kafka para notificaciones y facturación
 - ✅ Service Discovery con Eureka
-- ✅ API Gateway routing
+- ✅ API Gateway routing con CORS habilitado
 - ✅ Circuit Breaker con fallbacks
 - ✅ Observabilidad (Prometheus, Grafana, Jaeger)
 

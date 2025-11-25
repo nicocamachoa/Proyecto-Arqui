@@ -343,7 +343,7 @@ export const Checkout = () => {
                       alt={item.product.name}
                       className="w-16 h-16 object-cover rounded-lg"
                       onError={(e) => {
-                        (e.target as HTMLImageElement).src = 'https://via.placeholder.com/64x64?text=Producto';
+                        (e.target as HTMLImageElement).src = 'https://placehold.co/64x64?text=Producto';
                       }}
                     />
                     <div className="flex-1">
