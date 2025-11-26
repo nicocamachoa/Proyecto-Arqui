@@ -61,7 +61,7 @@ app.MapGet("/api/subscriptions", () =>
         price = p.Price,
         category = p.BillingCycle == "monthly" ? "Streaming" : "Software",
         stock = 999,
-        imageUrl = $"https://example.com/images/subscription{index + 1}.jpg",
+        imageUrl = p.ImageUrl,
         billingCycle = p.BillingCycle,
         features = p.Features,
         planId = p.Id

@@ -87,4 +87,5 @@ message PlanData {
     double price = 4;
     string billing_cycle = 5;
     repeated string features = 6;
+    string image_url = 7;
 }

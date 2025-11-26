@@ -14,7 +14,8 @@ public static class MockData
             Category = "Medical",
             DurationMinutes = 30,
             ProviderName = "Dr. García",
-            Price = 50.00m
+            Price = 50.00m,
+            ImageUrl = "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=500"
         },
         new Service
         {
@@ -24,7 +25,8 @@ public static class MockData
             Category = "Legal",
             DurationMinutes = 60,
             ProviderName = "Abg. Martínez",
-            Price = 100.00m
+            Price = 100.00m,
+            ImageUrl = "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=500"
         },
         new Service
         {
@@ -34,7 +36,8 @@ public static class MockData
             Category = "Fitness",
             DurationMinutes = 60,
             ProviderName = "Ana López",
-            Price = 35.00m
+            Price = 35.00m,
+            ImageUrl = "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=500"
         },
         new Service
         {
@@ -44,7 +47,8 @@ public static class MockData
             Category = "Medical",
             DurationMinutes = 45,
             ProviderName = "Dra. Rodríguez",
-            Price = 75.00m
+            Price = 75.00m,
+            ImageUrl = "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=500"
         },
         new Service
         {
@@ -54,7 +58,8 @@ public static class MockData
             Category = "Education",
             DurationMinutes = 90,
             ProviderName = "Prof. Sánchez",
-            Price = 40.00m
+            Price = 40.00m,
+            ImageUrl = "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=500"
         }
     };
 
