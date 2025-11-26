@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SoapProvider")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c5551c082b35b97f0c154d04569b846fa0da7e17")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e6cb2bd67d7c5c9b9b4d30964dfee68b4dc1a9bb")]
 [assembly: System.Reflection.AssemblyProductAttribute("SoapProvider")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SoapProvider")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
