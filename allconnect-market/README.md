@@ -430,11 +430,9 @@ docker-compose down -v
 ## Documentación
 
 - [Decisiones Arquitectónicas](./ARQUITECTURA_DECISIONES.md)
-- [División de Tracks](./TRACKS_DIVISION.md)
-- [Track 1 - Infraestructura](./CLAUDE-TRACK1.md)
-- [Track 2 - Servicios](./CLAUDE-TRACK2.md)
-- [Track 3 - Integración](./CLAUDE-TRACK3.md)
-- [Track 4 - Frontend](./CLAUDE-TRACK4.md)
+- [Resultados de Pruebas de Integración](./PRUEBAS_INTEGRACION.md)
+- [Infraestructura](./infrastructure/README.md)
+- [Capa de Integración](./integration/README.md)
 
 ---
 
