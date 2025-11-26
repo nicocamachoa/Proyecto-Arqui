@@ -79,14 +79,14 @@ CREATE TABLE IF NOT EXISTS audit_log (
 ) ENGINE=InnoDB;
 
 -- Test users with BCrypt hashed passwords (password: "password123" for all)
--- BCrypt hash for "password123": $2a$10$N9qo8uLOickgx2ZMRZoMy.Mrn5JR0xLOoG4c7dN1xU5PxXqYqYqYq
+-- BCrypt hash for "password123": $2a$10$AqX6QaZCwuDmKgdG3lyfi.0AEg69mRNlQRXfmf8HSrJTLg4bU44uW
 INSERT INTO users (email, password_hash, first_name, last_name, role, enabled, email_verified) VALUES
-('cliente@test.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeKdK.oGOUSIa3iIbnP0.Sht6FDXLsNHK', 'Juan', 'Cliente', 'CUSTOMER', TRUE, TRUE),
-('cliente2@test.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeKdK.oGOUSIa3iIbnP0.Sht6FDXLsNHK', 'Maria', 'Compradora', 'CUSTOMER', TRUE, TRUE),
-('admin.negocio@test.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeKdK.oGOUSIa3iIbnP0.Sht6FDXLsNHK', 'Carlos', 'Negocio', 'ADMIN_NEGOCIO', TRUE, TRUE),
-('admin.contenido@test.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeKdK.oGOUSIa3iIbnP0.Sht6FDXLsNHK', 'Ana', 'Contenido', 'ADMIN_CONTENIDO', TRUE, TRUE),
-('admin.it@test.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeKdK.oGOUSIa3iIbnP0.Sht6FDXLsNHK', 'Pedro', 'TI', 'ADMIN_IT', TRUE, TRUE),
-('admin.operaciones@test.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeKdK.oGOUSIa3iIbnP0.Sht6FDXLsNHK', 'Laura', 'Operaciones', 'ADMIN_OPERACIONES', TRUE, TRUE);
+('cliente@test.com', '$2a$10$AqX6QaZCwuDmKgdG3lyfi.0AEg69mRNlQRXfmf8HSrJTLg4bU44uW', 'Juan', 'Cliente', 'CUSTOMER', TRUE, TRUE),
+('cliente2@test.com', '$2a$10$AqX6QaZCwuDmKgdG3lyfi.0AEg69mRNlQRXfmf8HSrJTLg4bU44uW', 'Maria', 'Compradora', 'CUSTOMER', TRUE, TRUE),
+('admin.negocio@test.com', '$2a$10$AqX6QaZCwuDmKgdG3lyfi.0AEg69mRNlQRXfmf8HSrJTLg4bU44uW', 'Carlos', 'Negocio', 'ADMIN_NEGOCIO', TRUE, TRUE),
+('admin.contenido@test.com', '$2a$10$AqX6QaZCwuDmKgdG3lyfi.0AEg69mRNlQRXfmf8HSrJTLg4bU44uW', 'Ana', 'Contenido', 'ADMIN_CONTENIDO', TRUE, TRUE),
+('admin.it@test.com', '$2a$10$AqX6QaZCwuDmKgdG3lyfi.0AEg69mRNlQRXfmf8HSrJTLg4bU44uW', 'Pedro', 'TI', 'ADMIN_IT', TRUE, TRUE),
+('admin.operaciones@test.com', '$2a$10$AqX6QaZCwuDmKgdG3lyfi.0AEg69mRNlQRXfmf8HSrJTLg4bU44uW', 'Laura', 'Operaciones', 'ADMIN_OPERACIONES', TRUE, TRUE);
 
 -- ============================================
 -- CUSTOMERS_DB - Customer Profiles
