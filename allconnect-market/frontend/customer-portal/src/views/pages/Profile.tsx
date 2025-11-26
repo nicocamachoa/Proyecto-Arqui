@@ -1,20 +1,49 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuthStore } from '../../stores';
+import { useProfile } from '../../viewmodels';
 
 export const Profile = () => {
   const { user } = useAuthStore();
+  const { customer, isLoading, updateProfile } = useProfile();
   const [activeTab, setActiveTab] = useState<'info' | 'security' | 'notifications'>('info');
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: user?.firstName || '',
-    lastName: user?.lastName || '',
-    email: user?.email || '',
-    phone: user?.phone || '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
   });
 
-  const handleSave = () => {
-    // In real app, would call API to update user
-    setIsEditing(false);
+  // Update form data when customer loads
+  useEffect(() => {
+    if (customer) {
+      setFormData({
+        firstName: customer.firstName || user?.firstName || '',
+        lastName: customer.lastName || user?.lastName || '',
+        email: customer.email || user?.email || '',
+        phone: customer.phone || '',
+      });
+    } else if (user) {
+      setFormData({
+        firstName: user.firstName || '',
+        lastName: user.lastName || '',
+        email: user.email || '',
+        phone: '',
+      });
+    }
+  }, [customer, user]);
+
+  const handleSave = async () => {
+    try {
+      await updateProfile({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        phone: formData.phone,
+      });
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Error updating profile:', error);
+    }
   };
 
   return (
@@ -101,7 +130,7 @@ export const Profile = () => {
                   className="input-field"
                 />
               ) : (
-                <p className="text-gray-900">{user?.firstName}</p>
+                <p className="text-gray-900">{formData.firstName}</p>
               )}
             </div>
 
@@ -117,7 +146,7 @@ export const Profile = () => {
                   className="input-field"
                 />
               ) : (
-                <p className="text-gray-900">{user?.lastName}</p>
+                <p className="text-gray-900">{formData.lastName}</p>
               )}
             </div>
 
@@ -133,7 +162,7 @@ export const Profile = () => {
                   className="input-field"
                 />
               ) : (
-                <p className="text-gray-900">{user?.email}</p>
+                <p className="text-gray-900">{formData.email}</p>
               )}
             </div>
 
@@ -150,7 +179,7 @@ export const Profile = () => {
                   placeholder="+1 234 567 8900"
                 />
               ) : (
-                <p className="text-gray-900">{user?.phone || 'No especificado'}</p>
+                <p className="text-gray-900">{formData.phone || 'No especificado'}</p>
               )}
             </div>
           </div>

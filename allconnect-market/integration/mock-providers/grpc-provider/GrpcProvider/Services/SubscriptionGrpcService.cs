@@ -189,7 +189,8 @@ public class SubscriptionGrpcService : SubscriptionService.SubscriptionServiceBa
                 Name = plan.Name,
                 Description = plan.Description,
                 Price = (double)plan.Price,
-                BillingCycle = plan.BillingCycle
+                BillingCycle = plan.BillingCycle,
+                ImageUrl = plan.ImageUrl
             };
             planData.Features.AddRange(plan.Features);
             response.Plans.Add(planData);
@@ -219,7 +220,8 @@ public class SubscriptionGrpcService : SubscriptionService.SubscriptionServiceBa
             Name = plan.Name,
             Description = plan.Description,
             Price = (double)plan.Price,
-            BillingCycle = plan.BillingCycle
+            BillingCycle = plan.BillingCycle,
+            ImageUrl = plan.ImageUrl
         };
         planData.Features.AddRange(plan.Features);
 

@@ -1,6 +1,14 @@
 package com.allconnect.order.model;
 
 public enum OrderStatus {
+    PENDING,
+    CONFIRMED,
+    PROCESSING,
+    SHIPPED,
+    DELIVERED,
+    CANCELLED,
+    REFUNDED,
+    // Saga states
     CREATED,
     PAYMENT_PENDING,
     PAYMENT_COMPLETED,
@@ -8,7 +16,5 @@ public enum OrderStatus {
     PROVIDER_PENDING,
     PROVIDER_CONFIRMED,
     PROVIDER_FAILED,
-    COMPLETED,
-    CANCELLED,
-    REFUNDED
+    COMPLETED
 }

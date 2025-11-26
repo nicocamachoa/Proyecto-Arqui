@@ -131,4 +131,7 @@ public class ServiceData
 
     [DataMember]
     public decimal Price { get; set; }
+
+    [DataMember]
+    public string ImageUrl { get; set; } = string.Empty;
 }

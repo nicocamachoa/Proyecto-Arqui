@@ -188,7 +188,7 @@ export const orderService = {
 
   // Simplified create order for checkout
   createOrderDirect: async (customerId: number, orderData: {
-    items: { productId: number; quantity: number; price: number }[];
+    items: { productId: number; productName: string; productType: string; quantity: number; unitPrice: number }[];
     shippingAddress?: Record<string, string>;
     paymentMethod: string;
   }): Promise<Order> => {
@@ -198,7 +198,7 @@ export const orderService = {
       mockOrderCounter++;
       const orderNumber = `ORD-2024-${String(mockOrderCounter).padStart(4, '0')}`;
 
-      const subtotal = orderData.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      const subtotal = orderData.items.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
       const tax = subtotal * 0.13;
       const total = subtotal + tax;
 
@@ -219,12 +219,12 @@ export const orderService = {
           orderId: mockOrderCounter,
           productId: item.productId,
           productSku: `SKU-${item.productId}`,
-          productName: `Producto ${item.productId}`,
-          productType: 'PHYSICAL' as const,
+          productName: item.productName,
+          productType: item.productType as 'PHYSICAL' | 'SERVICE' | 'SUBSCRIPTION',
           quantity: item.quantity,
-          unitPrice: item.price,
-          price: item.price,
-          totalPrice: item.price * item.quantity,
+          unitPrice: item.unitPrice,
+          price: item.unitPrice,
+          totalPrice: item.unitPrice * item.quantity,
           providerType: 'REST' as const,
           status: 'CONFIRMED' as const,
         })),
@@ -236,7 +236,29 @@ export const orderService = {
       return newOrder;
     }
 
-    const response = await api.post<Order>('/orders', orderData);
+    // Format for backend API
+    const backendRequest = {
+      customerId,
+      items: orderData.items.map(item => ({
+        productId: item.productId,
+        productName: item.productName,
+        productType: item.productType,
+        quantity: item.quantity,
+        unitPrice: item.unitPrice,
+      })),
+      // shippingAddress must be JSON string for MySQL JSON column
+      shippingAddress: orderData.shippingAddress
+        ? JSON.stringify({
+            street: orderData.shippingAddress.address,
+            city: orderData.shippingAddress.city,
+            state: orderData.shippingAddress.state,
+            zipCode: orderData.shippingAddress.zipCode,
+          })
+        : null,
+      paymentMethod: orderData.paymentMethod,
+    };
+
+    const response = await api.post<Order>('/orders', backendRequest);
     return response.data;
   },
 

@@ -64,11 +64,16 @@ export const useProducts = (initialFilters?: ProductFilters) => {
     fetchProducts(reset);
   }, [fetchProducts]);
 
-  // Initial load
+  // Initial load and when initialFilters change
   useEffect(() => {
-    fetchProducts();
+    if (initialFilters) {
+      setFilters(initialFilters);
+      fetchProducts(initialFilters);
+    } else {
+      fetchProducts();
+    }
     fetchCategories();
-  }, []);
+  }, [initialFilters?.productType, initialFilters?.categoryId, initialFilters?.search]);
 
   return {
     products,

@@ -43,14 +43,30 @@ OrderService (Track 2)
 - **Tecnologías**: Spring Boot 3.2, WebClient, Resilience4j
 - **Registro**: Eureka
 
-## Interfaces Genéricas
+## Arquitectura de Adaptadores
 
-El diseño utiliza interfaces genéricas para evitar duplicación de código:
+Los adaptadores están implementados de forma **independiente**, cada uno especializado en su protocolo:
 
-- `IProviderAdapter`: Interfaz principal que todos los adapters implementan
-- `IMessageTransformer`: Transformación de mensajes entre formatos
-- `IProviderRegistry`: Registro de configuraciones de proveedores
-- `AdapterFactory`: Patrón Factory para crear adapters según protocolo
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    IntegrationService                        │
+│                       (Spring Boot)                          │
+│                                                              │
+│  ┌───────────────┐  ┌───────────────┐  ┌───────────────┐   │
+│  │ RestAdapter   │  │ SoapAdapter   │  │ GrpcAdapter   │   │
+│  │ (HTTP/JSON)   │  │ (XML/WSDL)    │  │ (Protobuf)    │   │
+│  │               │  │               │  │               │   │
+│  │ - WebClient   │  │ - JAX-WS      │  │ - gRPC Stub   │   │
+│  │ - Jackson     │  │ - JAXB        │  │ - Protobuf    │   │
+│  └───────────────┘  └───────────────┘  └───────────────┘   │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Decisión de diseño:** Los adaptadores NO heredan de una interfaz genérica común. Cada uno maneja su protocolo de forma especializada, lo que permite:
+- Mayor flexibilidad en el manejo de cada protocolo
+- Código más explícito y fácil de entender
+- Menor acoplamiento entre adaptadores
+- Evolución independiente de cada integración
 
 ## Endpoints
 
@@ -261,18 +277,29 @@ Se incluyen 3 aplicaciones web en Razor Pages para facilitar demos y pruebas int
 
 ## Extensibilidad
 
-Para agregar un nuevo proveedor:
+Para agregar un nuevo proveedor/protocolo:
 
-1. Crear nueva implementación de `IProviderAdapter`
-2. Agregar configuración en `application.yml`
-3. El `AdapterFactory` lo detectará automáticamente
+1. Crear nuevo servicio adaptador especializado (ej: `GraphQLAdapter`)
+2. Implementar los métodos específicos del protocolo
+3. Agregar configuración en `application.yml`
+4. Crear endpoints en el controlador correspondiente
 
 ```java
-@Component
-public class NewProviderAdapter implements IProviderAdapter {
-    @Override
-    public String getProviderType() { return "NEW_PROTOCOL"; }
-    // ... implementar métodos
+@Service
+@Slf4j
+public class GraphQLAdapter {
+
+    private final WebClient webClient;
+
+    public GraphQLAdapter(WebClient.Builder webClientBuilder) {
+        this.webClient = webClientBuilder
+            .baseUrl("http://graphql-provider:4004")
+            .build();
+    }
+
+    public Mono<Object> executeQuery(String query, Map<String, Object> variables) {
+        // Implementación específica de GraphQL
+    }
 }
 ```
 

@@ -50,14 +50,15 @@ export interface Customer {
 export interface Address {
   id: number;
   customerId: number;
-  label: string;
+  label?: string;
   street: string;
-  streetAddress: string;
   city: string;
   state?: string;
-  postalCode?: string;
+  zipCode?: string;
   country: string;
   isDefault: boolean;
+  additionalInfo?: string;
+  addressType?: 'SHIPPING' | 'BILLING' | 'BOTH';
 }
 
 // Product Models

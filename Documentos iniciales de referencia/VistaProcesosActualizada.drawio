@@ -1,0 +1,482 @@
+<mxfile host="app.diagrams.net" agent="Claude Code" version="29.1.1">
+  <diagram id="ProcessViewUpdated" name="Process View (Actualizado)">
+    <mxGraphModel dx="2762" dy="1580" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4000" pageHeight="2500" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- TÍTULO -->
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" value="AllConnect Market - Process View (4+1) - ACTUALIZADO" vertex="1">
+          <mxGeometry height="40" width="900" x="550" y="50" as="geometry" />
+        </mxCell>
+
+        <!-- SUBTÍTULO con cambios -->
+        <mxCell id="subtitle" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=2;fontColor=#666666" value="Arquitectura simplificada: Spring Cloud Gateway (reemplaza WSO2 ESB), Eureka (reemplaza jUDDI), Saga Pattern (reemplaza BPEL), MySQL (reemplaza PostgreSQL+MongoDB), Kafka KRaft (sin Zookeeper)" vertex="1">
+          <mxGeometry height="30" width="1200" x="400" y="85" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== PRESENTATION LAYER ==================== -->
+        <mxCell id="presentationContainer" parent="1" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=150;tabHeight=40;tabPosition=left;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=left;verticalAlign=top;spacingLeft=15;fontSize=14;" value="Presentation Layer" vertex="1">
+          <mxGeometry height="520" width="280" x="50" y="130" as="geometry" />
+        </mxCell>
+
+        <mxCell id="browserProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#000000;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;Browser&lt;/b&gt;&lt;br&gt;(Client Web PC)" vertex="1">
+          <mxGeometry height="70" width="130" x="125" y="190" as="geometry" />
+        </mxCell>
+
+        <mxCell id="nginxProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#000000;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;NGINX Ingress&lt;/b&gt;&lt;br&gt;Load Balancer&lt;br&gt;:80, :443" vertex="1">
+          <mxGeometry height="80" width="130" x="125" y="290" as="geometry" />
+        </mxCell>
+
+        <mxCell id="conn_browser_nginx" edge="1" parent="1" source="browserProcess" target="nginxProcess">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn_browser_nginx_label" connectable="0" parent="conn_browser_nginx" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="HTTPS&lt;br&gt;0..*" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="25" y="-3" as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="customerPortalProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#e1d5e7;strokeColor=#9673a6;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;React App&lt;/b&gt;&lt;br&gt;Customer Portal&lt;br&gt;:3000" vertex="1">
+          <mxGeometry height="80" width="130" x="60" y="410" as="geometry" />
+        </mxCell>
+
+        <mxCell id="adminDashboardProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#e1d5e7;strokeColor=#9673a6;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;React App&lt;/b&gt;&lt;br&gt;Admin Dashboard&lt;br&gt;:3010" vertex="1">
+          <mxGeometry height="80" width="130" x="200" y="410" as="geometry" />
+        </mxCell>
+
+        <mxCell id="conn_nginx_customer" edge="1" parent="1" source="nginxProcess" target="customerPortalProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn_nginx_customer_label" connectable="0" parent="conn_nginx_customer" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="HTTP&lt;br&gt;1..1" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="-25" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="conn_nginx_admin" edge="1" parent="1" source="nginxProcess" target="adminDashboardProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn_nginx_admin_label" connectable="0" parent="conn_nginx_admin" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="HTTP&lt;br&gt;0..1" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="25" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="conn_nginx_gateway" edge="1" parent="1" source="nginxProcess" target="gatewayProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn_nginx_gateway_label" connectable="0" parent="conn_nginx_gateway" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="HTTP/REST&lt;br&gt;1..*" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="0" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ==================== PLATFORM LAYER (reemplaza ESB Layer) ==================== -->
+        <mxCell id="platformContainer" parent="1" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=180;tabHeight=40;tabPosition=left;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;spacingLeft=15;fontSize=14;" value="Platform Layer (reemplaza ESB)" vertex="1">
+          <mxGeometry height="520" width="250" x="360" y="130" as="geometry" />
+        </mxCell>
+
+        <mxCell id="gatewayProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#fff2cc;strokeColor=#d6b656;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;Spring Cloud Gateway&lt;/b&gt;&lt;br&gt;API Gateway + Security&lt;br&gt;:8080&lt;br&gt;&lt;i&gt;(reemplaza WSO2 ESB)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="100" width="180" x="395" y="190" as="geometry" />
+        </mxCell>
+
+        <mxCell id="eurekaProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#fff2cc;strokeColor=#d6b656;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;Eureka Server&lt;/b&gt;&lt;br&gt;Service Discovery&lt;br&gt;:8761&lt;br&gt;&lt;i&gt;(reemplaza jUDDI)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="100" width="180" x="395" y="320" as="geometry" />
+        </mxCell>
+
+        <mxCell id="conn_gateway_eureka" edge="1" parent="1" source="gatewayProcess" target="eurekaProcess">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn_gateway_eureka_label" connectable="0" parent="conn_gateway_eureka" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=1" value="Discovery&lt;br&gt;1..1" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="1" as="geometry">
+            <mxPoint x="30" as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="securityNote" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffc0;strokeColor=#000000;size=14;align=left;verticalAlign=top;spacingLeft=5;spacingTop=5;fontSize=9;" value="&lt;b&gt;Security integrada en Gateway:&lt;/b&gt;&lt;br&gt;• JWT Validation&lt;br&gt;• Rate Limiting&lt;br&gt;• Auth Filter&lt;br&gt;&lt;i&gt;(reemplaza SecurityService separado)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="90" width="160" x="400" y="450" as="geometry" />
+        </mxCell>
+
+        <mxCell id="sagaNote" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffc0;strokeColor=#000000;size=14;align=left;verticalAlign=top;spacingLeft=5;spacingTop=5;fontSize=9;" value="&lt;b&gt;Saga Pattern en OrderService&lt;/b&gt;&lt;br&gt;&lt;i&gt;(reemplaza Apache ODE BPEL)&lt;/i&gt;&lt;br&gt;Orquestación de transacciones distribuidas en código Java" vertex="1">
+          <mxGeometry height="70" width="160" x="400" y="555" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== ENTERPRISE SERVICES LAYER ==================== -->
+        <mxCell id="servicesContainer" parent="1" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=200;tabHeight=40;tabPosition=left;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;verticalAlign=top;spacingLeft=15;fontSize=14;" value="Enterprise Services Layer" vertex="1">
+          <mxGeometry height="700" width="500" x="640" y="130" as="geometry" />
+        </mxCell>
+
+        <mxCell id="orderServiceProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#d5e8d4;strokeColor=#82b366;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;Spring Boot&lt;/b&gt;&lt;br&gt;OrderService&lt;br&gt;:8091&lt;br&gt;&lt;b&gt;+ Saga Orchestrator&lt;/b&gt;" vertex="1">
+          <mxGeometry height="90" width="140" x="680" y="190" as="geometry" />
+        </mxCell>
+
+        <mxCell id="catalogServiceProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#d5e8d4;strokeColor=#82b366;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;Spring Boot&lt;/b&gt;&lt;br&gt;CatalogService&lt;br&gt;:8092" vertex="1">
+          <mxGeometry height="80" width="140" x="680" y="300" as="geometry" />
+        </mxCell>
+
+        <mxCell id="customerServiceProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#d5e8d4;strokeColor=#82b366;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;Spring Boot&lt;/b&gt;&lt;br&gt;CustomerService&lt;br&gt;:8093" vertex="1">
+          <mxGeometry height="80" width="140" x="680" y="400" as="geometry" />
+        </mxCell>
+
+        <mxCell id="paymentServiceProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#d5e8d4;strokeColor=#82b366;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;Spring Boot&lt;/b&gt;&lt;br&gt;PaymentService&lt;br&gt;:8094" vertex="1">
+          <mxGeometry height="80" width="140" x="680" y="500" as="geometry" />
+        </mxCell>
+
+        <mxCell id="notificationServiceProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#d5e8d4;strokeColor=#82b366;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;Spring Boot&lt;/b&gt;&lt;br&gt;NotificationService&lt;br&gt;:8095" vertex="1">
+          <mxGeometry height="80" width="140" x="680" y="600" as="geometry" />
+        </mxCell>
+
+        <mxCell id="billingServiceProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#d5e8d4;strokeColor=#82b366;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;Spring Boot&lt;/b&gt;&lt;br&gt;BillingService&lt;br&gt;:8096" vertex="1">
+          <mxGeometry height="80" width="140" x="680" y="700" as="geometry" />
+        </mxCell>
+
+        <mxCell id="securityServiceProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#d5e8d4;strokeColor=#82b366;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;Spring Boot&lt;/b&gt;&lt;br&gt;SecurityService&lt;br&gt;:8097" vertex="1">
+          <mxGeometry height="80" width="140" x="860" y="190" as="geometry" />
+        </mxCell>
+
+        <mxCell id="recommendationServiceProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#d5e8d4;strokeColor=#82b366;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;Spring Boot&lt;/b&gt;&lt;br&gt;RecommendationService&lt;br&gt;:8098" vertex="1">
+          <mxGeometry height="80" width="140" x="860" y="290" as="geometry" />
+        </mxCell>
+
+        <!-- Conexiones Gateway a Services -->
+        <mxCell id="conn_gateway_order" edge="1" parent="1" source="gatewayProcess" target="orderServiceProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn_gateway_order_label" connectable="0" parent="conn_gateway_order" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontStyle=1" value="REST" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="conn_gateway_catalog" edge="1" parent="1" source="gatewayProcess" target="catalogServiceProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="conn_gateway_customer" edge="1" parent="1" source="gatewayProcess" target="customerServiceProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="conn_gateway_payment" edge="1" parent="1" source="gatewayProcess" target="paymentServiceProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="conn_gateway_security" edge="1" parent="1" source="gatewayProcess" target="securityServiceProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="conn_gateway_recommendation" edge="1" parent="1" source="gatewayProcess" target="recommendationServiceProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Conexiones Saga (OrderService orquesta) -->
+        <mxCell id="conn_order_payment" edge="1" parent="1" source="orderServiceProcess" target="paymentServiceProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;strokeColor=#82b366;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="750" y="290" />
+              <mxPoint x="850" y="290" />
+              <mxPoint x="850" y="540" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn_order_payment_label" connectable="0" parent="conn_order_payment" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontStyle=2;fontColor=#82b366" value="Saga Step" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="conn_order_notification" edge="1" parent="1" source="orderServiceProcess" target="notificationServiceProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;strokeColor=#82b366;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="750" y="290" />
+              <mxPoint x="830" y="290" />
+              <mxPoint x="830" y="640" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="conn_order_billing" edge="1" parent="1" source="orderServiceProcess" target="billingServiceProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;strokeColor=#82b366;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="750" y="290" />
+              <mxPoint x="810" y="290" />
+              <mxPoint x="810" y="740" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Services registran en Eureka -->
+        <mxCell id="conn_services_eureka" edge="1" parent="1" source="servicesContainer" target="eurekaProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;strokeColor=#d6b656;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="620" y="400" />
+              <mxPoint x="620" y="370" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn_services_eureka_label" connectable="0" parent="conn_services_eureka" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontStyle=2;fontColor=#d6b656" value="Register/Discover" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== PROVIDER INTEGRATION LAYER ==================== -->
+        <mxCell id="integrationContainer" parent="1" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=200;tabHeight=40;tabPosition=left;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;spacingLeft=15;fontSize=14;" value="Provider Integration Layer" vertex="1">
+          <mxGeometry height="700" width="420" x="1170" y="130" as="geometry" />
+        </mxCell>
+
+        <mxCell id="integrationServiceProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffe6cc;strokeColor=#d79b00;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;Spring Boot&lt;/b&gt;&lt;br&gt;IntegrationService&lt;br&gt;:8085&lt;br&gt;&lt;i&gt;(Facade + AsyncManager)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="100" width="160" x="1210" y="190" as="geometry" />
+        </mxCell>
+
+        <mxCell id="httpsAdapterProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffe6cc;strokeColor=#d79b00;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;Node.js&lt;/b&gt;&lt;br&gt;HTTPS Adapter&lt;br&gt;:3001" vertex="1">
+          <mxGeometry height="80" width="120" x="1200" y="330" as="geometry" />
+        </mxCell>
+
+        <mxCell id="soapAdapterProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffe6cc;strokeColor=#d79b00;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;Node.js&lt;/b&gt;&lt;br&gt;SOAP Adapter&lt;br&gt;:3002" vertex="1">
+          <mxGeometry height="80" width="120" x="1340" y="330" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rpcAdapterProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffe6cc;strokeColor=#d79b00;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;Node.js&lt;/b&gt;&lt;br&gt;gRPC Adapter&lt;br&gt;:3003" vertex="1">
+          <mxGeometry height="80" width="120" x="1450" y="330" as="geometry" />
+        </mxCell>
+
+        <!-- Mock Providers -->
+        <mxCell id="mockProvidersLabel" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=3" value="Mock Providers (para demo)" vertex="1">
+          <mxGeometry height="20" width="200" x="1270" y="440" as="geometry" />
+        </mxCell>
+
+        <mxCell id="restProviderProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#f5f5f5;strokeColor=#666666;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;Node.js&lt;/b&gt;&lt;br&gt;REST Provider&lt;br&gt;(Productos Físicos)&lt;br&gt;:4001" vertex="1">
+          <mxGeometry height="90" width="120" x="1200" y="470" as="geometry" />
+        </mxCell>
+
+        <mxCell id="soapProviderProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#f5f5f5;strokeColor=#666666;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;Node.js&lt;/b&gt;&lt;br&gt;SOAP Provider&lt;br&gt;(Servicios)&lt;br&gt;:4002" vertex="1">
+          <mxGeometry height="90" width="120" x="1340" y="470" as="geometry" />
+        </mxCell>
+
+        <mxCell id="grpcProviderProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#f5f5f5;strokeColor=#666666;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;Node.js&lt;/b&gt;&lt;br&gt;gRPC Provider&lt;br&gt;(Suscripciones)&lt;br&gt;:4003" vertex="1">
+          <mxGeometry height="90" width="120" x="1450" y="470" as="geometry" />
+        </mxCell>
+
+        <!-- Conexiones Integration -->
+        <mxCell id="conn_catalog_integration" edge="1" parent="1" source="catalogServiceProcess" target="integrationServiceProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn_catalog_integration_label" connectable="0" parent="conn_catalog_integration" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontStyle=1" value="REST&lt;br&gt;1..*" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="conn_order_integration" edge="1" parent="1" source="orderServiceProcess" target="integrationServiceProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1100" y="235" />
+              <mxPoint x="1100" y="240" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="conn_integration_https" edge="1" parent="1" source="integrationServiceProcess" target="httpsAdapterProcess">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn_integration_https_label" connectable="0" parent="conn_integration_https" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9" value="HTTP" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="conn_integration_soap" edge="1" parent="1" source="integrationServiceProcess" target="soapAdapterProcess">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="conn_integration_rpc" edge="1" parent="1" source="integrationServiceProcess" target="rpcAdapterProcess">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Adapters a Providers -->
+        <mxCell id="conn_https_rest" edge="1" parent="1" source="httpsAdapterProcess" target="restProviderProcess">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn_https_rest_label" connectable="0" parent="conn_https_rest" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9" value="HTTPS" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="conn_soap_provider" edge="1" parent="1" source="soapAdapterProcess" target="soapProviderProcess">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn_soap_provider_label" connectable="0" parent="conn_soap_provider" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9" value="SOAP/XML" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="conn_grpc_provider" edge="1" parent="1" source="rpcAdapterProcess" target="grpcProviderProcess">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn_grpc_provider_label" connectable="0" parent="conn_grpc_provider" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9" value="gRPC" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== INFRASTRUCTURE & DATA LAYER ==================== -->
+        <mxCell id="infrastructureContainer" parent="1" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=200;tabHeight=40;tabPosition=left;html=1;fillColor=#f8cecc;strokeColor=#b85450;align=left;verticalAlign=top;spacingLeft=15;fontSize=14;" value="Infrastructure &amp; Data Layer" vertex="1">
+          <mxGeometry height="700" width="280" x="1620" y="130" as="geometry" />
+        </mxCell>
+
+        <mxCell id="mysqlProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#dae8fc;strokeColor=#6c8ebf;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;MySQL 8.0&lt;/b&gt;&lt;br&gt;Main Database&lt;br&gt;:3306&lt;br&gt;&lt;i&gt;(reemplaza PostgreSQL+MongoDB)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="100" width="160" x="1680" y="190" as="geometry" />
+        </mxCell>
+
+        <mxCell id="redisProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#dae8fc;strokeColor=#6c8ebf;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;Redis 7&lt;/b&gt;&lt;br&gt;Cache + Sessions&lt;br&gt;:6379" vertex="1">
+          <mxGeometry height="80" width="160" x="1680" y="320" as="geometry" />
+        </mxCell>
+
+        <mxCell id="kafkaProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#e1d5e7;strokeColor=#9673a6;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;Apache Kafka&lt;/b&gt;&lt;br&gt;KRaft Mode&lt;br&gt;:9092&lt;br&gt;&lt;i&gt;(sin Zookeeper)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="100" width="160" x="1680" y="430" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rabbitmqProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#e1d5e7;strokeColor=#9673a6;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;RabbitMQ&lt;/b&gt;&lt;br&gt;Message Queue&lt;br&gt;:5672, :15672" vertex="1">
+          <mxGeometry height="80" width="160" x="1680" y="560" as="geometry" />
+        </mxCell>
+
+        <mxCell id="maildevProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#f5f5f5;strokeColor=#666666;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;MailDev&lt;/b&gt;&lt;br&gt;Email Testing&lt;br&gt;:1080, :1025" vertex="1">
+          <mxGeometry height="80" width="160" x="1680" y="670" as="geometry" />
+        </mxCell>
+
+        <!-- Conexiones a DB -->
+        <mxCell id="conn_services_mysql" edge="1" parent="1" source="servicesContainer" target="mysqlProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1140" y="300" />
+              <mxPoint x="1140" y="100" />
+              <mxPoint x="1760" y="100" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn_services_mysql_label" connectable="0" parent="conn_services_mysql" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontStyle=1" value="JDBC&lt;br&gt;1..5 pool" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="150" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="conn_catalog_redis" edge="1" parent="1" source="catalogServiceProcess" target="redisProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1150" y="340" />
+              <mxPoint x="1150" y="360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn_catalog_redis_label" connectable="0" parent="conn_catalog_redis" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9" value="Cache" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Kafka connections -->
+        <mxCell id="conn_order_kafka" edge="1" parent="1" source="orderServiceProcess" target="kafkaProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#9673a6;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1160" y="235" />
+              <mxPoint x="1160" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn_order_kafka_label" connectable="0" parent="conn_order_kafka" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#9673a6" value="order.created&lt;br&gt;order.cancelled" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="conn_payment_kafka" edge="1" parent="1" source="paymentServiceProcess" target="kafkaProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#9673a6;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1050" y="540" />
+              <mxPoint x="1050" y="880" />
+              <mxPoint x="1760" y="880" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn_payment_kafka_label" connectable="0" parent="conn_payment_kafka" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#9673a6" value="payment.completed&lt;br&gt;payment.failed" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="200" as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="conn_notification_kafka" edge="1" parent="1" source="notificationServiceProcess" target="kafkaProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#9673a6;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1030" y="640" />
+              <mxPoint x="1030" y="860" />
+              <mxPoint x="1760" y="860" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn_notification_kafka_label" connectable="0" parent="conn_notification_kafka" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#9673a6" value="Consumer" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="180" as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Notification to MailDev -->
+        <mxCell id="conn_notification_mail" edge="1" parent="1" source="notificationServiceProcess" target="maildevProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1010" y="640" />
+              <mxPoint x="1010" y="900" />
+              <mxPoint x="1760" y="900" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn_notification_mail_label" connectable="0" parent="conn_notification_mail" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9" value="SMTP" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="200" as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Integration to RabbitMQ -->
+        <mxCell id="conn_integration_rabbitmq" edge="1" parent="1" source="integrationServiceProcess" target="rabbitmqProcess" style="edgeStyle=orthogonalEdgeStyle;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1290" y="600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn_integration_rabbitmq_label" connectable="0" parent="conn_integration_rabbitmq" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9" value="AMQP&lt;br&gt;Async callbacks" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== OBSERVABILITY LAYER ==================== -->
+        <mxCell id="observabilityContainer" parent="1" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=150;tabHeight=40;tabPosition=left;html=1;fillColor=#f0f0f0;strokeColor=#666666;align=left;verticalAlign=top;spacingLeft=15;fontSize=14;" value="Observability Layer" vertex="1">
+          <mxGeometry height="200" width="400" x="640" y="850" as="geometry" />
+        </mxCell>
+
+        <mxCell id="prometheusProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#666666;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;Prometheus&lt;/b&gt;&lt;br&gt;Metrics&lt;br&gt;:9090" vertex="1">
+          <mxGeometry height="70" width="110" x="670" y="910" as="geometry" />
+        </mxCell>
+
+        <mxCell id="grafanaProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#666666;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;Grafana&lt;/b&gt;&lt;br&gt;Dashboards&lt;br&gt;:3000" vertex="1">
+          <mxGeometry height="70" width="110" x="800" y="910" as="geometry" />
+        </mxCell>
+
+        <mxCell id="jaegerProcess" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#666666;size=0.14;align=center;verticalAlign=middle;" value="&lt;&lt;proceso&gt;&gt;&lt;br&gt;&lt;b&gt;Jaeger&lt;/b&gt;&lt;br&gt;Tracing&lt;br&gt;:16686" vertex="1">
+          <mxGeometry height="70" width="110" x="910" y="910" as="geometry" />
+        </mxCell>
+
+        <mxCell id="conn_prometheus_grafana" edge="1" parent="1" source="prometheusProcess" target="grafanaProcess">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="conn_services_prometheus" edge="1" parent="1" source="servicesContainer" target="prometheusProcess" style="dashed=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn_services_prometheus_label" connectable="0" parent="conn_services_prometheus" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9" value="/actuator/prometheus" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== LEYENDA ==================== -->
+        <mxCell id="legendBox" parent="1" style="shape=rect;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;" value="" vertex="1">
+          <mxGeometry height="180" width="350" x="50" y="700" as="geometry" />
+        </mxCell>
+
+        <mxCell id="legendTitle" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1" value="LEYENDA" vertex="1">
+          <mxGeometry height="20" width="100" x="60" y="710" as="geometry" />
+        </mxCell>
+
+        <mxCell id="legendText" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=10;spacingLeft=5;" value="&lt;b&gt;Conexiones:&lt;/b&gt;&lt;br&gt;─── Síncrono (REST/HTTP/JDBC)&lt;br&gt;- - - Asíncrono (Kafka/eventos)&lt;br&gt;&lt;br&gt;&lt;b&gt;Cardinalidad:&lt;/b&gt;&lt;br&gt;0..* = Múltiples conexiones&lt;br&gt;1..1 = Una conexión&lt;br&gt;1..5 = Pool de conexiones&lt;br&gt;&lt;br&gt;&lt;b&gt;Colores:&lt;/b&gt;&lt;br&gt;🔵 Presentation | 🟡 Platform | 🟢 Services&lt;br&gt;🟠 Integration | 🔴 Infrastructure" vertex="1">
+          <mxGeometry height="140" width="330" x="60" y="735" as="geometry" />
+        </mxCell>
+
+        <!-- Nota de cambios -->
+        <mxCell id="changesNote" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#e6ffe6;strokeColor=#009900;size=14;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;fontSize=10;" value="&lt;b&gt;CAMBIOS vs Vista Original:&lt;/b&gt;&lt;br&gt;&lt;br&gt;✅ WSO2 ESB → Spring Cloud Gateway&lt;br&gt;✅ Apache ODE BPEL → Saga Pattern (en OrderService)&lt;br&gt;✅ Apache jUDDI → Eureka Server&lt;br&gt;✅ PostgreSQL + MongoDB → MySQL único&lt;br&gt;✅ Kafka + Zookeeper → Kafka KRaft&lt;br&gt;✅ Tomcat WAR → React SPA&lt;br&gt;✅ Agregados: Mock Providers, MailDev, Observability&lt;br&gt;&lt;br&gt;&lt;b&gt;RAM:&lt;/b&gt; 54GB → ~8-10GB&lt;br&gt;&lt;b&gt;Containers:&lt;/b&gt; 6 mega → ~15 micro" vertex="1">
+          <mxGeometry height="200" width="280" x="50" y="900" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

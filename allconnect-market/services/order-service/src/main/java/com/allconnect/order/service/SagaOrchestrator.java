@@ -31,7 +31,18 @@ public class SagaOrchestrator {
 
     @Async
     @Transactional
-    public void startSaga(Order order) {
+    public void startSaga(Long orderId) {
+        // Small delay to ensure the creating transaction has committed
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        // Reload order from DB to get a fresh managed entity in this transaction
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found: " + orderId));
+
         log.info("Starting saga for order: {}", order.getId());
 
         // Create saga state
@@ -68,7 +79,7 @@ public class SagaOrchestrator {
             sagaStateRepository.save(sagaState);
 
             // Start compensation
-            compensateSaga(order);
+            compensateSaga(order.getId());
         }
     }
 
@@ -256,7 +267,11 @@ public class SagaOrchestrator {
 
     @Async
     @Transactional
-    public void compensateSaga(Order order) {
+    public void compensateSaga(Long orderId) {
+        // Reload order from DB to get a fresh managed entity in this transaction
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found: " + orderId));
+
         log.info("Starting compensation for order: {}", order.getId());
 
         SagaState sagaState = sagaStateRepository.findByOrderId(order.getId())

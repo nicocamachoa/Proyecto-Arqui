@@ -1,0 +1,543 @@
+# AllConnect Market - Docker Compose Completo (Sistema SOA)
+# Este archivo despliega todo el sistema: Infraestructura + Platform + Services + Integration + Frontend
+
+services:
+  # ===========================================
+  # INFRASTRUCTURE LAYER
+  # ===========================================
+
+  mysql:
+    image: mysql:8.0
+    container_name: allconnect-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: allconnect_root_2025
+      MYSQL_USER: allconnect_user
+      MYSQL_PASSWORD: allconnect_pass_2025
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./infrastructure/scripts/init-databases.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pallconnect_root_2025"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - allconnect-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: allconnect-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - allconnect-network
+
+  kafka:
+    image: apache/kafka:3.7.0
+    container_name: allconnect-kafka
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    ports:
+      - "9092:9092"
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    networks:
+      - allconnect-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: allconnect-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: allconnect_user
+      RABBITMQ_DEFAULT_PASS: allconnect_pass_2025
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    networks:
+      - allconnect-network
+
+  maildev:
+    image: maildev/maildev
+    container_name: allconnect-maildev
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+    networks:
+      - allconnect-network
+
+  # ===========================================
+  # PLATFORM LAYER (ESB Replacement)
+  # ===========================================
+
+  eureka:
+    build:
+      context: ./infrastructure/platform/eureka-server
+      dockerfile: Dockerfile
+    container_name: allconnect-eureka
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8761/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    networks:
+      - allconnect-network
+
+  gateway:
+    build:
+      context: ./infrastructure/platform/gateway
+      dockerfile: Dockerfile
+    container_name: allconnect-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+    depends_on:
+      eureka:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    networks:
+      - allconnect-network
+
+  # ===========================================
+  # ENTERPRISE SERVICES LAYER (SOA)
+  # ===========================================
+
+  security-service:
+    build:
+      context: ./services
+      dockerfile: security-service/Dockerfile
+    container_name: allconnect-security
+    ports:
+      - "8097:8097"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/security_db
+      - SPRING_DATASOURCE_USERNAME=allconnect_user
+      - SPRING_DATASOURCE_PASSWORD=allconnect_pass_2025
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8097/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - allconnect-network
+
+  customer-service:
+    build:
+      context: ./services
+      dockerfile: customer-service/Dockerfile
+    container_name: allconnect-customer
+    ports:
+      - "8093:8093"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/customers_db
+      - SPRING_DATASOURCE_USERNAME=allconnect_user
+      - SPRING_DATASOURCE_PASSWORD=allconnect_pass_2025
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8093/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - allconnect-network
+
+  catalog-service:
+    build:
+      context: ./services
+      dockerfile: catalog-service/Dockerfile
+    container_name: allconnect-catalog
+    ports:
+      - "8092:8092"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/catalog_db
+      - SPRING_DATASOURCE_USERNAME=allconnect_user
+      - SPRING_DATASOURCE_PASSWORD=allconnect_pass_2025
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - INTEGRATION_SERVICE_URL=http://allconnect-integration:8085
+      - CATALOG_USE_PROVIDERS=true
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8092/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - allconnect-network
+
+  order-service:
+    build:
+      context: ./services
+      dockerfile: order-service/Dockerfile
+    container_name: allconnect-order
+    ports:
+      - "8091:8091"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/orders_db
+      - SPRING_DATASOURCE_USERNAME=allconnect_user
+      - SPRING_DATASOURCE_PASSWORD=allconnect_pass_2025
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8091/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - allconnect-network
+
+  payment-service:
+    build:
+      context: ./services
+      dockerfile: payment-service/Dockerfile
+    container_name: allconnect-payment
+    ports:
+      - "8094:8094"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/payments_db
+      - SPRING_DATASOURCE_USERNAME=allconnect_user
+      - SPRING_DATASOURCE_PASSWORD=allconnect_pass_2025
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8094/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - allconnect-network
+
+  notification-service:
+    build:
+      context: ./services
+      dockerfile: notification-service/Dockerfile
+    container_name: allconnect-notification
+    ports:
+      - "8095:8095"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/notifications_db
+      - SPRING_DATASOURCE_USERNAME=allconnect_user
+      - SPRING_DATASOURCE_PASSWORD=allconnect_pass_2025
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - SPRING_MAIL_HOST=maildev
+      - SPRING_MAIL_PORT=1025
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8095/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      maildev:
+        condition: service_started
+    networks:
+      - allconnect-network
+
+  billing-service:
+    build:
+      context: ./services
+      dockerfile: billing-service/Dockerfile
+    container_name: allconnect-billing
+    ports:
+      - "8096:8096"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/billing_db
+      - SPRING_DATASOURCE_USERNAME=allconnect_user
+      - SPRING_DATASOURCE_PASSWORD=allconnect_pass_2025
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8096/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - allconnect-network
+
+  recommendation-service:
+    build:
+      context: ./services
+      dockerfile: recommendation-service/Dockerfile
+    container_name: allconnect-recommendation
+    ports:
+      - "8098:8098"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/recommendations_db
+      - SPRING_DATASOURCE_USERNAME=allconnect_user
+      - SPRING_DATASOURCE_PASSWORD=allconnect_pass_2025
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - CATALOG_SERVICE_URL=http://catalog-service:8092
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8098/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - allconnect-network
+
+  # ===========================================
+  # INTEGRATION LAYER
+  # ===========================================
+
+  integration-service:
+    build:
+      context: ./integration/integration-service
+      dockerfile: Dockerfile
+    container_name: allconnect-integration
+    ports:
+      - "8086:8085"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+      - INTEGRATION_PROVIDERS_REST_URL=http://rest-provider:4001
+      - INTEGRATION_PROVIDERS_SOAP_URL=http://soap-provider:4002
+      - INTEGRATION_PROVIDERS_GRPC_HOST=grpc-provider
+      - INTEGRATION_PROVIDERS_GRPC_PORT=4003
+    depends_on:
+      eureka:
+        condition: service_healthy
+      rest-provider:
+        condition: service_started
+      soap-provider:
+        condition: service_started
+      grpc-provider:
+        condition: service_started
+    networks:
+      - allconnect-network
+
+  # ===========================================
+  # MOCK PROVIDERS (External Systems Simulation)
+  # ===========================================
+
+  rest-provider:
+    build:
+      context: ./integration/mock-providers/rest-provider
+      dockerfile: Dockerfile
+    container_name: allconnect-rest-provider
+    ports:
+      - "4001:4001"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:4001
+    networks:
+      - allconnect-network
+
+  soap-provider:
+    build:
+      context: ./integration/mock-providers/soap-provider
+      dockerfile: Dockerfile
+    container_name: allconnect-soap-provider
+    ports:
+      - "4002:4002"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:4002
+    networks:
+      - allconnect-network
+
+  grpc-provider:
+    build:
+      context: ./integration/mock-providers/grpc-provider
+      dockerfile: Dockerfile
+    container_name: allconnect-grpc-provider
+    ports:
+      - "4003:4003"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:4003
+    networks:
+      - allconnect-network
+
+  # ===========================================
+  # FRONTEND LAYER (MVVM)
+  # ===========================================
+
+  customer-portal:
+    build:
+      context: ./frontend/customer-portal
+      dockerfile: Dockerfile
+    container_name: allconnect-customer-portal
+    ports:
+      - "3000:3000"
+    depends_on:
+      - gateway
+    networks:
+      - allconnect-network
+
+  admin-dashboard:
+    build:
+      context: ./frontend/admin-dashboard
+      dockerfile: Dockerfile
+    container_name: allconnect-admin-dashboard
+    ports:
+      - "3002:3002"
+    depends_on:
+      - gateway
+    networks:
+      - allconnect-network
+
+  # ===========================================
+  # OBSERVABILITY LAYER
+  # ===========================================
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: allconnect-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./infrastructure/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    networks:
+      - allconnect-network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: allconnect-grafana
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
+    networks:
+      - allconnect-network
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: allconnect-jaeger
+    ports:
+      - "16686:16686"
+      - "14268:14268"
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    networks:
+      - allconnect-network
+
+# ===========================================
+# NETWORKS
+# ===========================================
+networks:
+  allconnect-network:
+    driver: bridge
+    name: allconnect-network
+
+# ===========================================
+# VOLUMES
+# ===========================================
+volumes:
+  mysql_data:
+    name: allconnect-mysql-data

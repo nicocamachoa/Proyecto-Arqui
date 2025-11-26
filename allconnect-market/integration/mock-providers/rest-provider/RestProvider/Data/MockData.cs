@@ -14,7 +14,7 @@ public static class MockData
             Price = 1299.99m,
             Stock = 50,
             Category = "Electronics",
-            ImageUrl = "https://example.com/images/laptop.jpg"
+            ImageUrl = "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=500"
         },
         new Product
         {
@@ -24,7 +24,7 @@ public static class MockData
             Price = 899.99m,
             Stock = 100,
             Category = "Electronics",
-            ImageUrl = "https://example.com/images/phone.jpg"
+            ImageUrl = "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500"
         },
         new Product
         {
@@ -34,7 +34,7 @@ public static class MockData
             Price = 199.99m,
             Stock = 200,
             Category = "Audio",
-            ImageUrl = "https://example.com/images/headphones.jpg"
+            ImageUrl = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500"
         },
         new Product
         {
@@ -44,7 +44,7 @@ public static class MockData
             Price = 549.99m,
             Stock = 30,
             Category = "Electronics",
-            ImageUrl = "https://example.com/images/monitor.jpg"
+            ImageUrl = "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500"
         },
         new Product
         {
@@ -54,7 +54,7 @@ public static class MockData
             Price = 149.99m,
             Stock = 150,
             Category = "Peripherals",
-            ImageUrl = "https://example.com/images/keyboard.jpg"
+            ImageUrl = "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=500"
         }
     };
 

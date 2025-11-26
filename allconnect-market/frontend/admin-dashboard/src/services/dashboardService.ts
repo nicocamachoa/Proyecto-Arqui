@@ -1,4 +1,4 @@
-import api, { USE_MOCK } from './api';
+import api, { USE_MOCK, USE_MOCK_IT, USE_MOCK_OPS } from './api';
 import {
   DashboardStats,
   Order,
@@ -168,10 +168,11 @@ export const contenidoService = {
 };
 
 // ============= IT ADMIN SERVICES =============
+// IT Admin services use real data by default (USE_MOCK_IT = false)
 
 export const itService = {
   getServiceHealth: async (): Promise<ServiceHealth[]> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_IT) {
       await delay(300);
       return mockServiceHealth;
     }
@@ -180,7 +181,7 @@ export const itService = {
   },
 
   getSystemMetrics: async (): Promise<SystemMetrics> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_IT) {
       await delay(300);
       return mockSystemMetrics;
     }
@@ -189,7 +190,7 @@ export const itService = {
   },
 
   getEventLogs: async (filters?: { service?: string; severity?: string }): Promise<EventLog[]> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_IT) {
       await delay(300);
       let logs = [...mockEventLogs];
       if (filters?.service) {
@@ -205,7 +206,7 @@ export const itService = {
   },
 
   getIntegrationStatus: async (): Promise<IntegrationStatus[]> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_IT) {
       await delay(300);
       return mockIntegrationStatus;
     }
@@ -214,7 +215,7 @@ export const itService = {
   },
 
   testConnection: async (integrationName: string): Promise<{ success: boolean; responseTime: number }> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_IT) {
       await delay(1000);
       return { success: true, responseTime: Math.floor(Math.random() * 200) + 50 };
     }
@@ -223,7 +224,7 @@ export const itService = {
   },
 
   forceSync: async (integrationName: string): Promise<{ success: boolean }> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_IT) {
       await delay(2000);
       return { success: true };
     }
@@ -233,10 +234,11 @@ export const itService = {
 };
 
 // ============= OPERACIONES ADMIN SERVICES =============
+// Operations Admin services use real data by default (USE_MOCK_OPS = false)
 
 export const operacionesService = {
   getOrders: async (filters?: { status?: string; orderType?: string }): Promise<Order[]> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_OPS) {
       await delay(300);
       let orders = [...mockOrders];
       if (filters?.status) {
@@ -252,7 +254,7 @@ export const operacionesService = {
   },
 
   updateOrderStatus: async (orderId: number, status: string): Promise<Order> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_OPS) {
       await delay(500);
       const order = mockOrders.find(o => o.id === orderId);
       if (!order) throw new Error('Orden no encontrada');
@@ -263,7 +265,7 @@ export const operacionesService = {
   },
 
   getLowStockProducts: async (): Promise<Product[]> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_OPS) {
       await delay(300);
       return mockProducts.filter(p => p.stock <= p.lowStockThreshold);
     }
@@ -272,7 +274,7 @@ export const operacionesService = {
   },
 
   updateStock: async (productId: number, stock: number): Promise<Product> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_OPS) {
       await delay(300);
       const product = mockProducts.find(p => p.id === productId);
       if (!product) throw new Error('Producto no encontrado');
@@ -283,7 +285,7 @@ export const operacionesService = {
   },
 
   getShippingQueue: async (): Promise<Order[]> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_OPS) {
       await delay(300);
       return mockOrders.filter(o => o.orderType === 'PHYSICAL' && ['CONFIRMED', 'PROCESSING'].includes(o.status));
     }
@@ -292,7 +294,7 @@ export const operacionesService = {
   },
 
   markAsShipped: async (orderId: number, trackingNumber?: string): Promise<Order> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_OPS) {
       await delay(500);
       const order = mockOrders.find(o => o.id === orderId);
       if (!order) throw new Error('Orden no encontrada');

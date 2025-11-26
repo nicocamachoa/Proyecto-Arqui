@@ -171,15 +171,15 @@ export const DashboardNegocio = () => {
           </div>
           <div className="divide-y">
             {stats.topProducts.map((item, index) => (
-              <div key={item.product.id} className="px-6 py-4 flex items-center gap-4">
+              <div key={item.productId || item.id || index} className="px-6 py-4 flex items-center gap-4">
                 <span className="text-lg font-bold text-gray-400">#{index + 1}</span>
                 <div className="flex-1">
-                  <p className="font-medium text-gray-900">{item.product.name}</p>
-                  <p className="text-sm text-gray-500">{item.product.sku}</p>
+                  <p className="font-medium text-gray-900">{item.productName}</p>
+                  <p className="text-sm text-gray-500">{item.sku}</p>
                 </div>
                 <div className="text-right">
                   <p className="font-medium">{item.sales} ventas</p>
-                  <p className="text-sm text-gray-500">${item.product.price}</p>
+                  <p className="text-sm text-gray-500">${item.price}</p>
                 </div>
               </div>
             ))}

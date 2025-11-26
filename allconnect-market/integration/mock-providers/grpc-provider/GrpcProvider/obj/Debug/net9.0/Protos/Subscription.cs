@@ -45,21 +45,22 @@ namespace GrpcProvider {
             "CzIWLnN1YnNjcmlwdGlvbi5QbGFuRGF0YRIPCgdzdWNjZXNzGAIgASgIIlwK",
             "DFBsYW5SZXNwb25zZRIkCgRwbGFuGAEgASgLMhYuc3Vic2NyaXB0aW9uLlBs",
             "YW5EYXRhEg8KB3N1Y2Nlc3MYAiABKAgSFQoNZXJyb3JfbWVzc2FnZRgDIAEo",
-            "CSJxCghQbGFuRGF0YRIKCgJpZBgBIAEoCRIMCgRuYW1lGAIgASgJEhMKC2Rl",
-            "c2NyaXB0aW9uGAMgASgJEg0KBXByaWNlGAQgASgBEhUKDWJpbGxpbmdfY3lj",
-            "bGUYBSABKAkSEAoIZmVhdHVyZXMYBiADKAkyjgQKE1N1YnNjcmlwdGlvblNl",
-            "cnZpY2USYQoSQ3JlYXRlU3Vic2NyaXB0aW9uEicuc3Vic2NyaXB0aW9uLkNy",
-            "ZWF0ZVN1YnNjcmlwdGlvblJlcXVlc3QaIi5zdWJzY3JpcHRpb24uU3Vic2Ny",
-            "aXB0aW9uUmVzcG9uc2USWwoPR2V0U3Vic2NyaXB0aW9uEiQuc3Vic2NyaXB0",
-            "aW9uLkdldFN1YnNjcmlwdGlvblJlcXVlc3QaIi5zdWJzY3JpcHRpb24uU3Vi",
-            "c2NyaXB0aW9uUmVzcG9uc2USWwoSQ2FuY2VsU3Vic2NyaXB0aW9uEicuc3Vi",
-            "c2NyaXB0aW9uLkNhbmNlbFN1YnNjcmlwdGlvblJlcXVlc3QaHC5zdWJzY3Jp",
-            "cHRpb24uQ2FuY2VsUmVzcG9uc2USTQoLQ2hlY2tBY2Nlc3MSIC5zdWJzY3Jp",
-            "cHRpb24uQ2hlY2tBY2Nlc3NSZXF1ZXN0Ghwuc3Vic2NyaXB0aW9uLkFjY2Vz",
-            "c1Jlc3BvbnNlEkYKCEdldFBsYW5zEh0uc3Vic2NyaXB0aW9uLkdldFBsYW5z",
-            "UmVxdWVzdBobLnN1YnNjcmlwdGlvbi5QbGFuc1Jlc3BvbnNlEkMKB0dldFBs",
-            "YW4SHC5zdWJzY3JpcHRpb24uR2V0UGxhblJlcXVlc3QaGi5zdWJzY3JpcHRp",
-            "b24uUGxhblJlc3BvbnNlQg+qAgxHcnBjUHJvdmlkZXJiBnByb3RvMw=="));
+            "CSKEAQoIUGxhbkRhdGESCgoCaWQYASABKAkSDAoEbmFtZRgCIAEoCRITCgtk",
+            "ZXNjcmlwdGlvbhgDIAEoCRINCgVwcmljZRgEIAEoARIVCg1iaWxsaW5nX2N5",
+            "Y2xlGAUgASgJEhAKCGZlYXR1cmVzGAYgAygJEhEKCWltYWdlX3VybBgHIAEo",
+            "CTKOBAoTU3Vic2NyaXB0aW9uU2VydmljZRJhChJDcmVhdGVTdWJzY3JpcHRp",
+            "b24SJy5zdWJzY3JpcHRpb24uQ3JlYXRlU3Vic2NyaXB0aW9uUmVxdWVzdBoi",
+            "LnN1YnNjcmlwdGlvbi5TdWJzY3JpcHRpb25SZXNwb25zZRJbCg9HZXRTdWJz",
+            "Y3JpcHRpb24SJC5zdWJzY3JpcHRpb24uR2V0U3Vic2NyaXB0aW9uUmVxdWVz",
+            "dBoiLnN1YnNjcmlwdGlvbi5TdWJzY3JpcHRpb25SZXNwb25zZRJbChJDYW5j",
+            "ZWxTdWJzY3JpcHRpb24SJy5zdWJzY3JpcHRpb24uQ2FuY2VsU3Vic2NyaXB0",
+            "aW9uUmVxdWVzdBocLnN1YnNjcmlwdGlvbi5DYW5jZWxSZXNwb25zZRJNCgtD",
+            "aGVja0FjY2VzcxIgLnN1YnNjcmlwdGlvbi5DaGVja0FjY2Vzc1JlcXVlc3Qa",
+            "HC5zdWJzY3JpcHRpb24uQWNjZXNzUmVzcG9uc2USRgoIR2V0UGxhbnMSHS5z",
+            "dWJzY3JpcHRpb24uR2V0UGxhbnNSZXF1ZXN0Ghsuc3Vic2NyaXB0aW9uLlBs",
+            "YW5zUmVzcG9uc2USQwoHR2V0UGxhbhIcLnN1YnNjcmlwdGlvbi5HZXRQbGFu",
+            "UmVxdWVzdBoaLnN1YnNjcmlwdGlvbi5QbGFuUmVzcG9uc2VCD6oCDEdycGNQ",
+            "cm92aWRlcmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -74,7 +75,7 @@ namespace GrpcProvider {
             new pbr::GeneratedClrTypeInfo(typeof(global::GrpcProvider.AccessResponse), global::GrpcProvider.AccessResponse.Parser, new[]{ "HasAccess", "AccessUrl", "ExpiresAt", "ErrorMessage" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::GrpcProvider.PlansResponse), global::GrpcProvider.PlansResponse.Parser, new[]{ "Plans", "Success" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::GrpcProvider.PlanResponse), global::GrpcProvider.PlanResponse.Parser, new[]{ "Plan", "Success", "ErrorMessage" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::GrpcProvider.PlanData), global::GrpcProvider.PlanData.Parser, new[]{ "Id", "Name", "Description", "Price", "BillingCycle", "Features" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::GrpcProvider.PlanData), global::GrpcProvider.PlanData.Parser, new[]{ "Id", "Name", "Description", "Price", "BillingCycle", "Features", "ImageUrl" }, null, null, null, null)
           }));
     }
     #endregion
@@ -2945,6 +2946,7 @@ namespace GrpcProvider {
       price_ = other.price_;
       billingCycle_ = other.billingCycle_;
       features_ = other.features_.Clone();
+      imageUrl_ = other.imageUrl_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -3025,6 +3027,18 @@ namespace GrpcProvider {
       get { return features_; }
     }
 
+    /// <summary>Field number for the "image_url" field.</summary>
+    public const int ImageUrlFieldNumber = 7;
+    private string imageUrl_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string ImageUrl {
+      get { return imageUrl_; }
+      set {
+        imageUrl_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -3046,6 +3060,7 @@ namespace GrpcProvider {
       if (!pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.Equals(Price, other.Price)) return false;
       if (BillingCycle != other.BillingCycle) return false;
       if(!features_.Equals(other.features_)) return false;
+      if (ImageUrl != other.ImageUrl) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -3059,6 +3074,7 @@ namespace GrpcProvider {
       if (Price != 0D) hash ^= pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.GetHashCode(Price);
       if (BillingCycle.Length != 0) hash ^= BillingCycle.GetHashCode();
       hash ^= features_.GetHashCode();
+      if (ImageUrl.Length != 0) hash ^= ImageUrl.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -3098,6 +3114,10 @@ namespace GrpcProvider {
         output.WriteString(BillingCycle);
       }
       features_.WriteTo(output, _repeated_features_codec);
+      if (ImageUrl.Length != 0) {
+        output.WriteRawTag(58);
+        output.WriteString(ImageUrl);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -3129,6 +3149,10 @@ namespace GrpcProvider {
         output.WriteString(BillingCycle);
       }
       features_.WriteTo(ref output, _repeated_features_codec);
+      if (ImageUrl.Length != 0) {
+        output.WriteRawTag(58);
+        output.WriteString(ImageUrl);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -3155,6 +3179,9 @@ namespace GrpcProvider {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(BillingCycle);
       }
       size += features_.CalculateSize(_repeated_features_codec);
+      if (ImageUrl.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(ImageUrl);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -3183,6 +3210,9 @@ namespace GrpcProvider {
         BillingCycle = other.BillingCycle;
       }
       features_.Add(other.features_);
+      if (other.ImageUrl.Length != 0) {
+        ImageUrl = other.ImageUrl;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -3222,6 +3252,10 @@ namespace GrpcProvider {
             features_.AddEntriesFrom(input, _repeated_features_codec);
             break;
           }
+          case 58: {
+            ImageUrl = input.ReadString();
+            break;
+          }
         }
       }
     #endif
@@ -3259,6 +3293,10 @@ namespace GrpcProvider {
           }
           case 50: {
             features_.AddEntriesFrom(ref input, _repeated_features_codec);
+            break;
+          }
+          case 58: {
+            ImageUrl = input.ReadString();
             break;
           }
         }

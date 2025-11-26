@@ -46,8 +46,33 @@ export const authService = {
       };
     }
 
-    const response = await api.post<AuthResponse>('/security/login', credentials);
-    return response.data;
+    const response = await api.post<{
+      token: string;
+      tokenType: string;
+      userId: number;
+      email: string;
+      firstName: string;
+      lastName: string;
+      role: string;
+      expiresIn: number;
+    }>('/security/login', credentials);
+
+    // Map backend response to frontend AuthResponse
+    return {
+      token: response.data.token,
+      refreshToken: '',
+      user: {
+        id: response.data.userId,
+        email: response.data.email,
+        firstName: response.data.firstName,
+        lastName: response.data.lastName,
+        role: response.data.role as 'CUSTOMER' | 'ADMIN_NEGOCIO' | 'ADMIN_CONTENIDO' | 'ADMIN_IT' | 'ADMIN_OPERACIONES',
+        enabled: true,
+        emailVerified: true,
+        createdAt: new Date().toISOString(),
+      },
+      expiresIn: response.data.expiresIn / 1000, // Convert ms to seconds
+    };
   },
 
   register: async (data: RegisterRequest): Promise<AuthResponse> => {

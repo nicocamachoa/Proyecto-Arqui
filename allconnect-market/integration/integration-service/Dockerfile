@@ -1,9 +1,13 @@
-FROM eclipse-temurin:17-jdk-alpine AS build
+# Build stage with Maven
+FROM maven:3.9-eclipse-temurin-17-alpine AS build
 WORKDIR /app
-COPY . .
-RUN chmod +x mvnw 2>/dev/null || true
-RUN ./mvnw clean package -DskipTests || mvn clean package -DskipTests
+COPY pom.xml .
+# Download dependencies first (cacheable layer)
+RUN mvn dependency:go-offline -B
+COPY src ./src
+RUN mvn clean package -DskipTests -B
 
+# Runtime stage
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar

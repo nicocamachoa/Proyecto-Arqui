@@ -19,7 +19,7 @@ public class Address {
     @Column(name = "customer_id", nullable = false)
     private Long customerId;
 
-    @Column(nullable = false)
+    @Column(name = "street_address", nullable = false)
     private String street;
 
     @Column(nullable = false)
@@ -27,7 +27,7 @@ public class Address {
 
     private String state;
 
-    @Column(nullable = false)
+    @Column(name = "postal_code", nullable = false)
     private String zipCode;
 
     @Column(nullable = false)

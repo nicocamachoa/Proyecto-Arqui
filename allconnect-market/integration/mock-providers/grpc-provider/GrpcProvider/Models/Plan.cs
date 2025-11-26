@@ -8,4 +8,5 @@ public class Plan
     public decimal Price { get; set; }
     public string BillingCycle { get; set; } = "monthly";
     public List<string> Features { get; set; } = new();
+    public string ImageUrl { get; set; } = string.Empty;
 }
