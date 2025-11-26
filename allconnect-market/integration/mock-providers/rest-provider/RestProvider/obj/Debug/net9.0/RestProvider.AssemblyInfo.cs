@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RestProvider")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e6cb2bd67d7c5c9b9b4d30964dfee68b4dc1a9bb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+689ab9cd7420c7c0ae81c8517582d7a149e7422e")]
 [assembly: System.Reflection.AssemblyProductAttribute("RestProvider")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RestProvider")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

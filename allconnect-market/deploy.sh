@@ -161,10 +161,36 @@ cleanup_previous() {
 
     cd "$SCRIPT_DIR"
 
+    # Verificar si existe volumen de MySQL
+    local mysql_volume=$(docker volume ls -q | grep -E "(mysql-data|mysql_data)" || true)
+
+    if [ -n "$mysql_volume" ] && [ "$FRESH_INSTALL" = false ]; then
+        log_warning "¡ATENCIÓN! Se detectó volumen de MySQL existente: $mysql_volume"
+        log_warning "El script init-databases.sql NO se ejecutará (solo se ejecuta en volúmenes nuevos)"
+        log_warning "Si tienes problemas de login, ejecuta: $0 --fresh"
+        echo ""
+        read -p "¿Continuar con volumen existente? (y/N): " -n 1 -r
+        echo
+        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+            log_info "Despliegue cancelado. Ejecuta '$0 --fresh' para garantizar login funcional"
+            exit 0
+        fi
+    fi
+
     # Detener contenedores existentes
     if docker-compose ps -q 2>/dev/null | grep -q .; then
         log_info "Deteniendo contenedores existentes..."
-        docker-compose down --remove-orphans 2>/dev/null || true
+        if [ "$FRESH_INSTALL" = true ]; then
+            docker-compose down -v --remove-orphans 2>/dev/null || true
+            log_success "Contenedores y volúmenes eliminados"
+        else
+            docker-compose down --remove-orphans 2>/dev/null || true
+            log_success "Contenedores detenidos (volúmenes preservados)"
+        fi
+    elif [ "$FRESH_INSTALL" = true ] && [ -n "$mysql_volume" ]; then
+        log_info "Eliminando volumen de MySQL existente..."
+        docker volume rm $mysql_volume 2>/dev/null || true
+        log_success "Volumen eliminado"
     fi
 
     log_success "Limpieza completada"
@@ -375,13 +401,18 @@ main() {
     print_banner
 
     # Parsear argumentos
+    local FRESH_INSTALL=false
     case "${1:-}" in
         --clean|-c)
-            log_info "Modo limpieza: deteniendo todos los contenedores..."
+            log_info "Modo limpieza: deteniendo todos los contenedores y eliminando volúmenes..."
             cd "$SCRIPT_DIR"
             docker-compose down -v --remove-orphans
-            log_success "Limpieza completada"
+            log_success "Limpieza completada (volúmenes eliminados)"
             exit 0
+            ;;
+        --fresh|-f)
+            log_info "Modo fresh install: se eliminarán volúmenes para garantizar datos limpios"
+            FRESH_INSTALL=true
             ;;
         --status|-s)
             cd "$SCRIPT_DIR"
@@ -394,15 +425,24 @@ main() {
             echo ""
             echo "Opciones:"
             echo "  (sin opciones)    Despliegue completo del sistema"
-            echo "  --clean, -c       Detener y limpiar todos los contenedores"
+            echo "  --fresh, -f       Despliegue limpio (elimina volúmenes, GARANTIZA login funcional)"
+            echo "  --clean, -c       Detener y limpiar todos los contenedores y volúmenes"
             echo "  --status, -s      Mostrar estado actual del despliegue"
             echo "  --help, -h        Mostrar esta ayuda"
+            echo ""
+            echo "IMPORTANTE:"
+            echo "  - Usa --fresh en la primera instalación o si tienes problemas de login"
+            echo "  - El modo --fresh eliminará volúmenes existentes para garantizar datos limpios"
             exit 0
             ;;
     esac
 
     # Ejecutar despliegue
     check_prerequisites
+
+    # Exportar variable para funciones
+    export FRESH_INSTALL
+
     cleanup_previous
     deploy_infrastructure
     deploy_platform

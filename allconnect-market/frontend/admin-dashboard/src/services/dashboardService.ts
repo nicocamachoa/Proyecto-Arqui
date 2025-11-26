@@ -1,4 +1,4 @@
-import api, { USE_MOCK, USE_MOCK_IT } from './api';
+import api, { USE_MOCK, USE_MOCK_IT, USE_MOCK_OPS } from './api';
 import {
   DashboardStats,
   Order,
@@ -234,10 +234,11 @@ export const itService = {
 };
 
 // ============= OPERACIONES ADMIN SERVICES =============
+// Operations Admin services use real data by default (USE_MOCK_OPS = false)
 
 export const operacionesService = {
   getOrders: async (filters?: { status?: string; orderType?: string }): Promise<Order[]> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_OPS) {
       await delay(300);
       let orders = [...mockOrders];
       if (filters?.status) {
@@ -253,7 +254,7 @@ export const operacionesService = {
   },
 
   updateOrderStatus: async (orderId: number, status: string): Promise<Order> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_OPS) {
       await delay(500);
       const order = mockOrders.find(o => o.id === orderId);
       if (!order) throw new Error('Orden no encontrada');
@@ -264,7 +265,7 @@ export const operacionesService = {
   },
 
   getLowStockProducts: async (): Promise<Product[]> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_OPS) {
       await delay(300);
       return mockProducts.filter(p => p.stock <= p.lowStockThreshold);
     }
@@ -273,7 +274,7 @@ export const operacionesService = {
   },
 
   updateStock: async (productId: number, stock: number): Promise<Product> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_OPS) {
       await delay(300);
       const product = mockProducts.find(p => p.id === productId);
       if (!product) throw new Error('Producto no encontrado');
@@ -284,7 +285,7 @@ export const operacionesService = {
   },
 
   getShippingQueue: async (): Promise<Order[]> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_OPS) {
       await delay(300);
       return mockOrders.filter(o => o.orderType === 'PHYSICAL' && ['CONFIRMED', 'PROCESSING'].includes(o.status));
     }
@@ -293,7 +294,7 @@ export const operacionesService = {
   },
 
   markAsShipped: async (orderId: number, trackingNumber?: string): Promise<Order> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_OPS) {
       await delay(500);
       const order = mockOrders.find(o => o.id === orderId);
       if (!order) throw new Error('Orden no encontrada');

@@ -22,8 +22,15 @@ public class Order {
     @EqualsAndHashCode.Include
     private Long id;
 
+    @Column(name = "order_number", nullable = false, unique = true)
+    private String orderNumber;
+
     @Column(name = "customer_id", nullable = false)
     private Long customerId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "order_type", nullable = false)
+    private ProductType orderType;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

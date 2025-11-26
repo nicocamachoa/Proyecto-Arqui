@@ -26,12 +26,32 @@ public class OrderItem {
     @Column(name = "product_id", nullable = false)
     private Long productId;
 
-    @Column(name = "product_name")
+    @Column(name = "product_sku", nullable = false)
+    private String productSku;
+
+    @Column(name = "product_name", nullable = false)
     private String productName;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "product_type", nullable = false)
     private ProductType productType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "provider_type", nullable = false)
+    private ProviderType providerType;
+
+    @Column(name = "provider_item_id")
+    private String providerItemId;
+
+    @Column(name = "reservation_date")
+    private String reservationDate;
+
+    @Column(name = "reservation_code")
+    private String reservationCode;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private ItemStatus status;
 
     @Column(nullable = false)
     private Integer quantity;

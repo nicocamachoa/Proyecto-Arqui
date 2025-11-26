@@ -24,8 +24,17 @@ set "CYAN=[96m"
 set "NC=[0m"
 
 REM Parsear argumentos
+set "FRESH_INSTALL=false"
 if "%~1"=="--clean" goto :clean
 if "%~1"=="-c" goto :clean
+if "%~1"=="--fresh" (
+    set "FRESH_INSTALL=true"
+    goto :main
+)
+if "%~1"=="-f" (
+    set "FRESH_INSTALL=true"
+    goto :main
+)
 if "%~1"=="--status" goto :status
 if "%~1"=="-s" goto :status
 if "%~1"=="--help" goto :help
@@ -43,18 +52,23 @@ echo Uso: deploy.bat [opciones]
 echo.
 echo Opciones:
 echo   (sin opciones)    Despliegue completo del sistema
-echo   --clean, -c       Detener y limpiar todos los contenedores
+echo   --fresh, -f       Despliegue limpio (elimina volumenes, GARANTIZA login funcional)
+echo   --clean, -c       Detener y limpiar todos los contenedores y volumenes
 echo   --status, -s      Mostrar estado actual del despliegue
 echo   --help, -h        Mostrar esta ayuda
+echo.
+echo IMPORTANTE:
+echo   - Usa --fresh en la primera instalacion o si tienes problemas de login
+echo   - El modo --fresh eliminara volumenes existentes para garantizar datos limpios
 echo.
 goto :eof
 
 :clean
 echo.
-echo %CYAN%[INFO]%NC% Modo limpieza: deteniendo todos los contenedores...
+echo %CYAN%[INFO]%NC% Modo limpieza: deteniendo todos los contenedores y eliminando volumenes...
 cd /d "%SCRIPT_DIR%"
 docker-compose down -v --remove-orphans
-echo %GREEN%[OK]%NC% Limpieza completada
+echo %GREEN%[OK]%NC% Limpieza completada (volumenes eliminados)
 goto :eof
 
 :status
@@ -109,8 +123,33 @@ echo %CYAN%━━━━━━━━━━━━━━━━━━━━━━━
 echo.
 
 cd /d "%SCRIPT_DIR%"
-docker-compose down --remove-orphans 2>nul
-echo %GREEN%[OK]%NC% Limpieza completada
+
+REM Verificar si existe volumen de MySQL
+set "MYSQL_VOLUME="
+for /f "tokens=*" %%i in ('docker volume ls -q ^| findstr /R "mysql"') do set "MYSQL_VOLUME=%%i"
+
+if defined MYSQL_VOLUME if "%FRESH_INSTALL%"=="false" (
+    echo %YELLOW%[WARN]%NC% ATENCION! Se detecto volumen de MySQL existente: !MYSQL_VOLUME!
+    echo %YELLOW%[WARN]%NC% El script init-databases.sql NO se ejecutara (solo se ejecuta en volumenes nuevos^)
+    echo %YELLOW%[WARN]%NC% Si tienes problemas de login, ejecuta: deploy.bat --fresh
+    echo.
+    set /p "CONTINUE=Continuar con volumen existente? (y/N): "
+    if /i not "!CONTINUE!"=="y" (
+        echo %BLUE%[INFO]%NC% Despliegue cancelado. Ejecuta 'deploy.bat --fresh' para garantizar login funcional
+        exit /b 0
+    )
+)
+
+REM Detener contenedores
+if "%FRESH_INSTALL%"=="true" (
+    echo %BLUE%[INFO]%NC% Deteniendo contenedores y eliminando volumenes...
+    docker-compose down -v --remove-orphans 2>nul
+    echo %GREEN%[OK]%NC% Contenedores y volumenes eliminados
+) else (
+    echo %BLUE%[INFO]%NC% Deteniendo contenedores (volumenes preservados^)...
+    docker-compose down --remove-orphans 2>nul
+    echo %GREEN%[OK]%NC% Contenedores detenidos
+)
 
 echo.
 echo %CYAN%━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%NC%

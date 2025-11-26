@@ -121,15 +121,35 @@ allconnect-market/
 
 ## Despliegue Automatizado
 
-El proyecto incluye scripts de despliegue automatizado para todas las plataformas:
+El proyecto incluye scripts de despliegue automatizado para todas las plataformas.
+
+### ⚠️ IMPORTANTE: Primera Instalación
+
+**Para garantizar que el login funcione correctamente**, usa el flag `--fresh` en la primera instalación:
+
+```bash
+# Linux / macOS / Git Bash
+./deploy.sh --fresh
+
+# Windows CMD
+deploy.bat --fresh
+
+# Windows PowerShell
+.\deploy.ps1 -Fresh
+```
+
+El flag `--fresh` elimina volúmenes de MySQL existentes para forzar la ejecución del script de inicialización con los datos correctos. **Esto garantiza que el login funcione en cualquier máquina nueva.**
 
 ### Linux / macOS
 
 ```bash
-# Dar permisos de ejecución
+# Dar permisos de ejecución (solo primera vez)
 chmod +x deploy.sh
 
-# Despliegue completo
+# PRIMERA INSTALACIÓN (recomendado - garantiza login funcional)
+./deploy.sh --fresh
+
+# Despliegue normal (preserva datos en volúmenes)
 ./deploy.sh
 
 # Ver estado del despliegue
@@ -145,7 +165,10 @@ chmod +x deploy.sh
 ### Windows (PowerShell)
 
 ```powershell
-# Despliegue completo
+# PRIMERA INSTALACIÓN (recomendado - garantiza login funcional)
+.\deploy.ps1 -Fresh
+
+# Despliegue normal (preserva datos en volúmenes)
 .\deploy.ps1
 
 # Ver estado del despliegue
@@ -161,7 +184,10 @@ chmod +x deploy.sh
 ### Windows (CMD)
 
 ```cmd
-REM Despliegue completo
+REM PRIMERA INSTALACIÓN (recomendado - garantiza login funcional)
+deploy.bat --fresh
+
+REM Despliegue normal (preserva datos en volúmenes)
 deploy.bat
 
 REM Ver estado del despliegue

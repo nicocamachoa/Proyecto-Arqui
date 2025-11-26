@@ -43,7 +43,9 @@ CREATE TABLE IF NOT EXISTS users (
     password_hash VARCHAR(255) NOT NULL,
     first_name VARCHAR(100),
     last_name VARCHAR(100),
+    phone VARCHAR(20),
     role ENUM('CUSTOMER', 'ADMIN_NEGOCIO', 'ADMIN_CONTENIDO', 'ADMIN_IT', 'ADMIN_OPERACIONES') NOT NULL DEFAULT 'CUSTOMER',
+    active BOOLEAN NOT NULL DEFAULT TRUE,
     enabled BOOLEAN DEFAULT TRUE,
     email_verified BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -80,13 +82,13 @@ CREATE TABLE IF NOT EXISTS audit_log (
 
 -- Test users with BCrypt hashed passwords (password: "password123" for all)
 -- BCrypt hash for "password123": $2a$10$AqX6QaZCwuDmKgdG3lyfi.0AEg69mRNlQRXfmf8HSrJTLg4bU44uW
-INSERT INTO users (email, password_hash, first_name, last_name, role, enabled, email_verified) VALUES
-('cliente@test.com', '$2a$10$AqX6QaZCwuDmKgdG3lyfi.0AEg69mRNlQRXfmf8HSrJTLg4bU44uW', 'Juan', 'Cliente', 'CUSTOMER', TRUE, TRUE),
-('cliente2@test.com', '$2a$10$AqX6QaZCwuDmKgdG3lyfi.0AEg69mRNlQRXfmf8HSrJTLg4bU44uW', 'Maria', 'Compradora', 'CUSTOMER', TRUE, TRUE),
-('admin.negocio@test.com', '$2a$10$AqX6QaZCwuDmKgdG3lyfi.0AEg69mRNlQRXfmf8HSrJTLg4bU44uW', 'Carlos', 'Negocio', 'ADMIN_NEGOCIO', TRUE, TRUE),
-('admin.contenido@test.com', '$2a$10$AqX6QaZCwuDmKgdG3lyfi.0AEg69mRNlQRXfmf8HSrJTLg4bU44uW', 'Ana', 'Contenido', 'ADMIN_CONTENIDO', TRUE, TRUE),
-('admin.it@test.com', '$2a$10$AqX6QaZCwuDmKgdG3lyfi.0AEg69mRNlQRXfmf8HSrJTLg4bU44uW', 'Pedro', 'TI', 'ADMIN_IT', TRUE, TRUE),
-('admin.operaciones@test.com', '$2a$10$AqX6QaZCwuDmKgdG3lyfi.0AEg69mRNlQRXfmf8HSrJTLg4bU44uW', 'Laura', 'Operaciones', 'ADMIN_OPERACIONES', TRUE, TRUE);
+INSERT INTO users (email, password_hash, first_name, last_name, role, active, enabled, email_verified) VALUES
+('cliente@test.com', '$2a$10$AqX6QaZCwuDmKgdG3lyfi.0AEg69mRNlQRXfmf8HSrJTLg4bU44uW', 'Juan', 'Cliente', 'CUSTOMER', TRUE, TRUE, TRUE),
+('cliente2@test.com', '$2a$10$AqX6QaZCwuDmKgdG3lyfi.0AEg69mRNlQRXfmf8HSrJTLg4bU44uW', 'Maria', 'Compradora', 'CUSTOMER', TRUE, TRUE, TRUE),
+('admin.negocio@test.com', '$2a$10$AqX6QaZCwuDmKgdG3lyfi.0AEg69mRNlQRXfmf8HSrJTLg4bU44uW', 'Carlos', 'Negocio', 'ADMIN_NEGOCIO', TRUE, TRUE, TRUE),
+('admin.contenido@test.com', '$2a$10$AqX6QaZCwuDmKgdG3lyfi.0AEg69mRNlQRXfmf8HSrJTLg4bU44uW', 'Ana', 'Contenido', 'ADMIN_CONTENIDO', TRUE, TRUE, TRUE),
+('admin.it@test.com', '$2a$10$AqX6QaZCwuDmKgdG3lyfi.0AEg69mRNlQRXfmf8HSrJTLg4bU44uW', 'Pedro', 'TI', 'ADMIN_IT', TRUE, TRUE, TRUE),
+('admin.operaciones@test.com', '$2a$10$AqX6QaZCwuDmKgdG3lyfi.0AEg69mRNlQRXfmf8HSrJTLg4bU44uW', 'Laura', 'Operaciones', 'ADMIN_OPERACIONES', TRUE, TRUE, TRUE);
 
 -- ============================================
 -- CUSTOMERS_DB - Customer Profiles
@@ -272,7 +274,7 @@ CREATE TABLE IF NOT EXISTS orders (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     order_number VARCHAR(50) NOT NULL UNIQUE,
     customer_id BIGINT NOT NULL,
-    status ENUM('PENDING', 'CONFIRMED', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED', 'REFUNDED') DEFAULT 'PENDING',
+    status ENUM('PENDING', 'CONFIRMED', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED', 'REFUNDED', 'CREATED', 'PAYMENT_PENDING', 'PAYMENT_COMPLETED', 'PAYMENT_FAILED', 'PROVIDER_PENDING', 'PROVIDER_CONFIRMED', 'PROVIDER_FAILED', 'COMPLETED') DEFAULT 'PENDING',
     order_type ENUM('PHYSICAL', 'SERVICE', 'SUBSCRIPTION', 'MIXED') NOT NULL,
     subtotal DECIMAL(12,2) NOT NULL,
     tax DECIMAL(12,2) DEFAULT 0,

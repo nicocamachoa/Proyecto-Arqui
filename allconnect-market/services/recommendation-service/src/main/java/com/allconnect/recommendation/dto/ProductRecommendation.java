@@ -16,6 +16,7 @@ public class ProductRecommendation {
     private BigDecimal price;
     private String imageUrl;
     private String type;
+    private String providerType;
     private Long categoryId;
     private String categoryName;
     private Double score;

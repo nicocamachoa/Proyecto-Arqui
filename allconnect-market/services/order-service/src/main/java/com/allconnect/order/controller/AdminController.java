@@ -47,6 +47,13 @@ public class AdminController {
                 .map(this::mapToAdminOrderResponse)
                 .collect(Collectors.toList());
 
+        // Filter by orderType if specified
+        if (orderType != null && !orderType.isEmpty()) {
+            response = response.stream()
+                    .filter(o -> orderType.equals(o.getOrderType()))
+                    .collect(Collectors.toList());
+        }
+
         return ResponseEntity.ok(response);
     }
 

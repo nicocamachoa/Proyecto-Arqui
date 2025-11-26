@@ -6,6 +6,7 @@
 
 param(
     [switch]$Clean,
+    [switch]$Fresh,
     [switch]$Status,
     [switch]$Help
 )
@@ -180,11 +181,39 @@ function Clear-Previous {
 
     Set-Location $ScriptDir
 
+    # Verificar si existe volumen de MySQL
+    $mysqlVolume = docker volume ls -q | Where-Object { $_ -match "mysql" }
+
+    if ($mysqlVolume -and -not $Fresh) {
+        Write-LogWarning "ATENCION! Se detecto volumen de MySQL existente: $mysqlVolume"
+        Write-LogWarning "El script init-databases.sql NO se ejecutara (solo se ejecuta en volumenes nuevos)"
+        Write-LogWarning "Si tienes problemas de login, ejecuta: .\deploy.ps1 -Fresh"
+        Write-Host ""
+        $response = Read-Host "Continuar con volumen existente? (y/N)"
+        if ($response -notmatch "^[Yy]") {
+            Write-LogInfo "Despliegue cancelado. Ejecuta '.\deploy.ps1 -Fresh' para garantizar login funcional"
+            exit 0
+        }
+    }
+
     # Verificar si hay contenedores corriendo
     $containers = docker-compose ps -q 2>$null
     if ($containers) {
-        Write-LogInfo "Deteniendo contenedores existentes..."
-        docker-compose down --remove-orphans 2>$null
+        if ($Fresh) {
+            Write-LogInfo "Deteniendo contenedores y eliminando volumenes..."
+            docker-compose down -v --remove-orphans 2>$null
+            Write-LogSuccess "Contenedores y volumenes eliminados"
+        }
+        else {
+            Write-LogInfo "Deteniendo contenedores (volumenes preservados)..."
+            docker-compose down --remove-orphans 2>$null
+            Write-LogSuccess "Contenedores detenidos"
+        }
+    }
+    elseif ($Fresh -and $mysqlVolume) {
+        Write-LogInfo "Eliminando volumen de MySQL existente..."
+        docker volume rm $mysqlVolume 2>$null
+        Write-LogSuccess "Volumen eliminado"
     }
 
     Write-LogSuccess "Limpieza completada"
@@ -403,9 +432,14 @@ function Show-Help {
     Write-Host ""
     Write-Host "Opciones:"
     Write-Host "  (sin opciones)    Despliegue completo del sistema"
-    Write-Host "  -Clean            Detener y limpiar todos los contenedores"
+    Write-Host "  -Fresh            Despliegue limpio (elimina volumenes, GARANTIZA login funcional)"
+    Write-Host "  -Clean            Detener y limpiar todos los contenedores y volumenes"
     Write-Host "  -Status           Mostrar estado actual del despliegue"
     Write-Host "  -Help             Mostrar esta ayuda"
+    Write-Host ""
+    Write-Host "IMPORTANTE:"
+    Write-Host "  - Usa -Fresh en la primera instalacion o si tienes problemas de login"
+    Write-Host "  - El modo -Fresh eliminara volumenes existentes para garantizar datos limpios"
 }
 
 # =============================================================================
@@ -424,11 +458,15 @@ function Main {
     }
 
     if ($Clean) {
-        Write-LogInfo "Modo limpieza: deteniendo todos los contenedores..."
+        Write-LogInfo "Modo limpieza: deteniendo todos los contenedores y eliminando volumenes..."
         Set-Location $ScriptDir
         docker-compose down -v --remove-orphans
-        Write-LogSuccess "Limpieza completada"
+        Write-LogSuccess "Limpieza completada (volumenes eliminados)"
         return
+    }
+
+    if ($Fresh) {
+        Write-LogInfo "Modo fresh install: se eliminaran volumenes para garantizar datos limpios"
     }
 
     if ($Status) {

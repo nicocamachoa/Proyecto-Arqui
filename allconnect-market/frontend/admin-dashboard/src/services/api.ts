@@ -7,6 +7,9 @@ export const USE_MOCK = import.meta.env.VITE_USE_MOCK !== 'false'; // Default to
 // IT Admin uses real data by default (can be overridden with VITE_IT_USE_MOCK=true)
 export const USE_MOCK_IT = import.meta.env.VITE_IT_USE_MOCK === 'true'; // Default to real data for IT Admin
 
+// Operations Admin uses real data by default (can be overridden with VITE_OPS_USE_MOCK=true)
+export const USE_MOCK_OPS = import.meta.env.VITE_OPS_USE_MOCK === 'true'; // Default to real data for Operations Admin
+
 // Create axios instance
 const api: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
