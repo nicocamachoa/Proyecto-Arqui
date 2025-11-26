@@ -26,6 +26,15 @@ export interface AuthResponse {
 }
 
 // Dashboard Stats
+export interface TopProduct {
+  id?: number;
+  productId?: number;
+  productName: string;
+  sku: string;
+  price: number;
+  sales: number;
+}
+
 export interface DashboardStats {
   totalOrders: number;
   totalRevenue: number;
@@ -35,8 +44,8 @@ export interface DashboardStats {
   lowStockProducts: number;
   recentOrders: Order[];
   salesByDay: { date: string; revenue: number; orders: number }[];
-  salesByCategory: { category: string; revenue: number }[];
-  topProducts: { product: Product; sales: number }[];
+  salesByCategory?: { category: string; revenue: number }[];
+  topProducts: TopProduct[];
 }
 
 // Product

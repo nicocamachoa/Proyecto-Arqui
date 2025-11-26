@@ -192,6 +192,13 @@ management:
     gateway:
       enabled: true
 
+# Monitoring configuration for IT Admin Dashboard
+monitoring:
+  prometheus:
+    url: http://prometheus:9090
+  eureka:
+    url: http://eureka:8761
+
 # Logging configuration
 logging:
   level:

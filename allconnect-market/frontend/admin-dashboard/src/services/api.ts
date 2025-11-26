@@ -4,6 +4,9 @@ import axios, { AxiosInstance, AxiosError } from 'axios';
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
 export const USE_MOCK = import.meta.env.VITE_USE_MOCK !== 'false'; // Default to mock mode
 
+// IT Admin uses real data by default (can be overridden with VITE_IT_USE_MOCK=true)
+export const USE_MOCK_IT = import.meta.env.VITE_IT_USE_MOCK === 'true'; // Default to real data for IT Admin
+
 // Create axios instance
 const api: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,

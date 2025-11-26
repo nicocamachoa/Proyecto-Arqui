@@ -1,4 +1,4 @@
-import api, { USE_MOCK } from './api';
+import api, { USE_MOCK, USE_MOCK_IT } from './api';
 import {
   DashboardStats,
   Order,
@@ -168,10 +168,11 @@ export const contenidoService = {
 };
 
 // ============= IT ADMIN SERVICES =============
+// IT Admin services use real data by default (USE_MOCK_IT = false)
 
 export const itService = {
   getServiceHealth: async (): Promise<ServiceHealth[]> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_IT) {
       await delay(300);
       return mockServiceHealth;
     }
@@ -180,7 +181,7 @@ export const itService = {
   },
 
   getSystemMetrics: async (): Promise<SystemMetrics> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_IT) {
       await delay(300);
       return mockSystemMetrics;
     }
@@ -189,7 +190,7 @@ export const itService = {
   },
 
   getEventLogs: async (filters?: { service?: string; severity?: string }): Promise<EventLog[]> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_IT) {
       await delay(300);
       let logs = [...mockEventLogs];
       if (filters?.service) {
@@ -205,7 +206,7 @@ export const itService = {
   },
 
   getIntegrationStatus: async (): Promise<IntegrationStatus[]> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_IT) {
       await delay(300);
       return mockIntegrationStatus;
     }
@@ -214,7 +215,7 @@ export const itService = {
   },
 
   testConnection: async (integrationName: string): Promise<{ success: boolean; responseTime: number }> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_IT) {
       await delay(1000);
       return { success: true, responseTime: Math.floor(Math.random() * 200) + 50 };
     }
@@ -223,7 +224,7 @@ export const itService = {
   },
 
   forceSync: async (integrationName: string): Promise<{ success: boolean }> => {
-    if (USE_MOCK) {
+    if (USE_MOCK_IT) {
       await delay(2000);
       return { success: true };
     }

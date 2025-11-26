@@ -12,6 +12,7 @@ import { DashboardOperaciones } from './views/pages/DashboardOperaciones';
 import { Orders } from './views/pages/Orders';
 import { Products } from './views/pages/Products';
 import { Customers } from './views/pages/Customers';
+import { Reports } from './views/pages/Reports';
 // Content Admin pages
 import { Content } from './views/pages/Content';
 import { Promotions } from './views/pages/Promotions';
@@ -80,7 +81,7 @@ function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/products" element={<Products />} />
         <Route path="/customers" element={<Customers />} />
-        <Route path="/reports" element={<DashboardNegocio />} />
+        <Route path="/reports" element={<Reports />} />
 
         {/* Content Admin Routes */}
         <Route path="/content" element={<Content />} />

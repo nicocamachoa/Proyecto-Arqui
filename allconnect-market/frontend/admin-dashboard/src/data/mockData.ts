@@ -234,10 +234,10 @@ export const mockDashboardStats: DashboardStats = {
     { category: 'Ropa', revenue: 5978 }
   ],
   topProducts: [
-    { product: mockProducts[0], sales: 45 },
-    { product: mockProducts[1], sales: 38 },
-    { product: mockProducts[2], sales: 67 },
-    { product: mockProducts[3], sales: 234 }
+    { productId: mockProducts[0].id, productName: mockProducts[0].name, sku: mockProducts[0].sku, price: mockProducts[0].price, sales: 45 },
+    { productId: mockProducts[1].id, productName: mockProducts[1].name, sku: mockProducts[1].sku, price: mockProducts[1].price, sales: 38 },
+    { productId: mockProducts[2].id, productName: mockProducts[2].name, sku: mockProducts[2].sku, price: mockProducts[2].price, sales: 67 },
+    { productId: mockProducts[3].id, productName: mockProducts[3].name, sku: mockProducts[3].sku, price: mockProducts[3].price, sales: 234 }
   ]
 };
 

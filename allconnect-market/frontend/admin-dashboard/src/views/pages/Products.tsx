@@ -68,11 +68,8 @@ export const Products = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Catálogo de Productos</h1>
-          <p className="text-gray-500">Gestiona productos, servicios y suscripciones</p>
+          <p className="text-gray-500">Productos disponibles de proveedores externos</p>
         </div>
-        <button className="btn-primary">
-          + Nuevo Producto
-        </button>
       </div>
 
       {/* Search */}
@@ -117,16 +114,11 @@ export const Products = () => {
                 <p className="text-lg font-bold text-primary-600">${product.price}</p>
               </div>
               <p className="text-sm text-gray-600 line-clamp-2 mb-3">{product.description}</p>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  {getProviderBadge(product.providerType)}
-                  <span className={`text-sm ${product.stock > 10 ? 'text-green-600' : product.stock > 0 ? 'text-yellow-600' : 'text-red-600'}`}>
-                    Stock: {product.stock}
-                  </span>
-                </div>
-                <button className="text-primary-600 hover:text-primary-700 text-sm font-medium">
-                  Editar
-                </button>
+              <div className="flex items-center gap-2">
+                {getProviderBadge(product.providerType)}
+                <span className={`text-sm ${product.stock > 10 ? 'text-green-600' : product.stock > 0 ? 'text-yellow-600' : 'text-red-600'}`}>
+                  Stock: {product.stock}
+                </span>
               </div>
             </div>
           </div>
