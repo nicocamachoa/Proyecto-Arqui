@@ -164,7 +164,8 @@ public class BookingService : IBookingContract
             Category = s.Category,
             DurationMinutes = s.DurationMinutes,
             ProviderName = s.ProviderName,
-            Price = s.Price
+            Price = s.Price,
+            ImageUrl = s.ImageUrl
         }).ToList();
 
         return new ServiceListResponse
@@ -192,7 +193,8 @@ public class BookingService : IBookingContract
             Category = service.Category,
             DurationMinutes = service.DurationMinutes,
             ProviderName = service.ProviderName,
-            Price = service.Price
+            Price = service.Price,
+            ImageUrl = service.ImageUrl
         };
     }
 }

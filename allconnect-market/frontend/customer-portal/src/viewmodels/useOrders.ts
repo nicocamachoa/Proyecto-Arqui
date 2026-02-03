@@ -28,7 +28,7 @@ export const useOrders = () => {
   }, [user]);
 
   const createOrder = useCallback(async (orderData: {
-    items: { productId: number; quantity: number; price: number }[];
+    items: { productId: number; productName: string; productType: string; quantity: number; unitPrice: number }[];
     shippingAddress?: Record<string, string>;
     paymentMethod: string;
   }) => {

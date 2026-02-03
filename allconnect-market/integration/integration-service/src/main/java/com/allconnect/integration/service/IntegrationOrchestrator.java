@@ -6,8 +6,12 @@ import com.allconnect.integration.factory.AdapterFactory;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 import java.time.LocalDate;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class IntegrationOrchestrator {
@@ -15,9 +19,168 @@ public class IntegrationOrchestrator {
     private static final Logger log = LoggerFactory.getLogger(IntegrationOrchestrator.class);
 
     private final AdapterFactory adapterFactory;
+    private final WebClient webClient;
 
-    public IntegrationOrchestrator(AdapterFactory adapterFactory) {
+    @Value("${integration.providers[0].baseUrl:http://localhost:4001}")
+    private String restProviderUrl;
+
+    @Value("${integration.providers[1].baseUrl:http://localhost:4002}")
+    private String soapProviderUrl;
+
+    @Value("${integration.providers[2].baseUrl:http://localhost:4003}")
+    private String grpcProviderUrl;
+
+    public IntegrationOrchestrator(AdapterFactory adapterFactory, WebClient.Builder webClientBuilder) {
         this.adapterFactory = adapterFactory;
+        this.webClient = webClientBuilder.build();
+    }
+
+    // ============================================
+    // Products Operations (Aggregated from all providers)
+    // ============================================
+
+    public Map<String, Object> getAllProducts() {
+        log.info("Orchestrator: Fetching products from all providers");
+        Map<String, Object> result = new HashMap<>();
+        List<Map<String, Object>> allProducts = new ArrayList<>();
+
+        // Fetch from REST provider (Physical Products)
+        try {
+            List<Map<String, Object>> restProducts = webClient.get()
+                .uri(restProviderUrl + "/api/products")
+                .retrieve()
+                .bodyToFlux(Map.class)
+                .map(p -> {
+                    Map<String, Object> product = new HashMap<>(p);
+                    product.put("providerType", "REST");
+                    product.put("productType", "PHYSICAL");
+                    return product;
+                })
+                .collectList()
+                .block();
+            if (restProducts != null) {
+                allProducts.addAll(restProducts);
+                log.info("Fetched {} products from REST provider", restProducts.size());
+            }
+        } catch (Exception e) {
+            log.error("Error fetching from REST provider: {}", e.getMessage());
+        }
+
+        // Fetch from SOAP provider (Professional Services)
+        try {
+            Map<String, Object> soapResponse = webClient.get()
+                .uri(soapProviderUrl + "/api/services")
+                .retrieve()
+                .bodyToMono(Map.class)
+                .block();
+            if (soapResponse != null && soapResponse.get("services") != null) {
+                List<Map<String, Object>> services = (List<Map<String, Object>>) soapResponse.get("services");
+                for (Map<String, Object> service : services) {
+                    Map<String, Object> product = new HashMap<>(service);
+                    product.put("providerType", "SOAP");
+                    product.put("productType", "SERVICE");
+                    product.put("stock", 999); // Services have unlimited "stock"
+                    allProducts.add(product);
+                }
+                log.info("Fetched {} services from SOAP provider", services.size());
+            }
+        } catch (Exception e) {
+            log.error("Error fetching from SOAP provider: {}", e.getMessage());
+        }
+
+        // Fetch from gRPC provider (Digital Subscriptions)
+        try {
+            List<Map<String, Object>> grpcProducts = webClient.get()
+                .uri(grpcProviderUrl + "/api/subscriptions")
+                .retrieve()
+                .bodyToFlux(Map.class)
+                .map(p -> {
+                    Map<String, Object> product = new HashMap<>(p);
+                    product.put("providerType", "GRPC");
+                    product.put("productType", "DIGITAL");
+                    product.put("stock", 999); // Digital products have unlimited "stock"
+                    return product;
+                })
+                .collectList()
+                .block();
+            if (grpcProducts != null) {
+                allProducts.addAll(grpcProducts);
+                log.info("Fetched {} subscriptions from gRPC provider", grpcProducts.size());
+            }
+        } catch (Exception e) {
+            log.error("Error fetching from gRPC provider: {}", e.getMessage());
+        }
+
+        result.put("products", allProducts);
+        result.put("total", allProducts.size());
+        result.put("providers", Map.of(
+            "rest", restProviderUrl,
+            "soap", soapProviderUrl,
+            "grpc", grpcProviderUrl
+        ));
+        return result;
+    }
+
+    public Map<String, Object> getProductById(String productId) {
+        log.info("Orchestrator: Fetching product {} from providers", productId);
+
+        // Try REST provider first (PROD* IDs)
+        if (productId.startsWith("PROD")) {
+            try {
+                Map<String, Object> product = webClient.get()
+                    .uri(restProviderUrl + "/api/products/{id}", productId)
+                    .retrieve()
+                    .bodyToMono(Map.class)
+                    .block();
+                if (product != null) {
+                    product.put("providerType", "REST");
+                    product.put("productType", "PHYSICAL");
+                    return product;
+                }
+            } catch (Exception e) {
+                log.warn("Product {} not found in REST provider", productId);
+            }
+        }
+
+        // Try SOAP provider (SVC* IDs)
+        if (productId.startsWith("SVC")) {
+            try {
+                Map<String, Object> service = webClient.get()
+                    .uri(soapProviderUrl + "/api/services/{id}", productId)
+                    .retrieve()
+                    .bodyToMono(Map.class)
+                    .block();
+                if (service != null) {
+                    service.put("providerType", "SOAP");
+                    service.put("productType", "SERVICE");
+                    service.put("stock", 999);
+                    return service;
+                }
+            } catch (Exception e) {
+                log.warn("Service {} not found in SOAP provider", productId);
+            }
+        }
+
+        // Try gRPC provider (SUB* IDs)
+        if (productId.startsWith("SUB")) {
+            try {
+                Map<String, Object> subscription = webClient.get()
+                    .uri(grpcProviderUrl + "/api/subscriptions/{id}", productId)
+                    .retrieve()
+                    .bodyToMono(Map.class)
+                    .block();
+                if (subscription != null) {
+                    subscription.put("providerType", "GRPC");
+                    subscription.put("productType", "DIGITAL");
+                    subscription.put("stock", 999);
+                    return subscription;
+                }
+            } catch (Exception e) {
+                log.warn("Subscription {} not found in gRPC provider", productId);
+            }
+        }
+
+        return Collections.emptyMap();
     }
 
     // ============================================

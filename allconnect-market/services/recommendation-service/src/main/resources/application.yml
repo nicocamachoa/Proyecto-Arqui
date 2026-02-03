@@ -55,6 +55,11 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
 
+# Catalog service URL
+catalog:
+  service:
+    url: ${CATALOG_SERVICE_URL:http://localhost:8092}
+
 # Feign client configuration
 feign:
   client:
@@ -66,3 +71,5 @@ feign:
 logging:
   level:
     com.allconnect: DEBUG
+    feign: DEBUG
+    org.springframework.cloud.openfeign: DEBUG

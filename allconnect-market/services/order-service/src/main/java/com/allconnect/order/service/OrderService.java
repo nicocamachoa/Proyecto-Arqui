@@ -12,9 +12,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,7 +30,7 @@ public class OrderService {
     private final SagaOrchestrator sagaOrchestrator;
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
-    private static final BigDecimal TAX_RATE = new BigDecimal("0.19"); // 19% IVA
+    private static final BigDecimal TAX_RATE = new BigDecimal("0.13"); // 13% IVA
 
     @Transactional
     public OrderResponse createOrder(CreateOrderRequest request) {
@@ -44,9 +47,17 @@ public class OrderService {
         BigDecimal shippingCost = calculateShippingCost(request.getItems());
         BigDecimal total = subtotal.add(tax).add(shippingCost);
 
+        // Generate order number
+        String orderNumber = generateOrderNumber();
+
+        // Determine order type
+        ProductType orderType = determineOrderType(request.getItems());
+
         // Create order
         Order order = Order.builder()
+                .orderNumber(orderNumber)
                 .customerId(request.getCustomerId())
+                .orderType(orderType)
                 .status(OrderStatus.CREATED)
                 .subtotal(subtotal)
                 .tax(tax)
@@ -59,15 +70,30 @@ public class OrderService {
 
         // Add items
         for (OrderItemRequest itemRequest : request.getItems()) {
+            // Generate SKU if not provided
+            String sku = itemRequest.getProductSku();
+            if (sku == null || sku.isEmpty()) {
+                sku = "SKU-" + itemRequest.getProductId();
+            }
+
+            // Default provider type if not provided
+            ProviderType providerType = itemRequest.getProviderType();
+            if (providerType == null) {
+                providerType = ProviderType.REST;
+            }
+
             OrderItem item = OrderItem.builder()
                     .productId(itemRequest.getProductId())
-                    .productName(itemRequest.getProductName())
+                    .productSku(sku)
+                    .productName(itemRequest.getProductName() != null ? itemRequest.getProductName() : "Product " + itemRequest.getProductId())
                     .productType(itemRequest.getProductType())
+                    .providerType(providerType)
                     .quantity(itemRequest.getQuantity())
                     .unitPrice(itemRequest.getUnitPrice())
                     .totalPrice(itemRequest.getUnitPrice().multiply(BigDecimal.valueOf(itemRequest.getQuantity())))
                     .bookingDate(itemRequest.getBookingDate())
                     .bookingTime(itemRequest.getBookingTime())
+                    .status(ItemStatus.PENDING)
                     .build();
             order.addItem(item);
         }
@@ -75,8 +101,8 @@ public class OrderService {
         order = orderRepository.save(order);
         log.info("Order created with ID: {}", order.getId());
 
-        // Start Saga
-        sagaOrchestrator.startSaga(order);
+        // Start Saga (pass ID, not entity)
+        sagaOrchestrator.startSaga(order.getId());
 
         // Publish event
         publishOrderEvent("order.created", order);
@@ -121,7 +147,7 @@ public class OrderService {
         log.info("Cancelling order: {}", id);
 
         // Start compensation saga
-        sagaOrchestrator.compensateSaga(order);
+        sagaOrchestrator.compensateSaga(order.getId());
 
         order.setStatus(OrderStatus.CANCELLED);
         order = orderRepository.save(order);
@@ -160,7 +186,32 @@ public class OrderService {
     private BigDecimal calculateShippingCost(List<OrderItemRequest> items) {
         boolean hasPhysical = items.stream()
                 .anyMatch(item -> item.getProductType() == ProductType.PHYSICAL);
-        return hasPhysical ? new BigDecimal("15000") : BigDecimal.ZERO;
+        return hasPhysical ? new BigDecimal("15.00") : BigDecimal.ZERO;
+    }
+
+    private String generateOrderNumber() {
+        // Format: ORD-YYYY-XXXXXXXX (8 char unique suffix)
+        String year = String.valueOf(LocalDate.now().getYear());
+        String uniquePart = UUID.randomUUID().toString().substring(0, 8).toUpperCase();
+        return String.format("ORD-%s-%s", year, uniquePart);
+    }
+
+    private ProductType determineOrderType(List<OrderItemRequest> items) {
+        if (items == null || items.isEmpty()) {
+            return ProductType.PHYSICAL; // Default
+        }
+
+        Set<ProductType> types = items.stream()
+                .map(OrderItemRequest::getProductType)
+                .collect(Collectors.toSet());
+
+        if (types.size() == 1) {
+            return types.iterator().next();
+        }
+        // Mixed order - return PHYSICAL as the dominant type
+        // The order_type enum in DB has MIXED, but ProductType doesn't
+        // We'll return PHYSICAL for mixed orders
+        return ProductType.PHYSICAL;
     }
 
     private OrderResponse mapToOrderResponse(Order order) {

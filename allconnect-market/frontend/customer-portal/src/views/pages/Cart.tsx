@@ -56,7 +56,7 @@ export const Cart = () => {
                     alt={item.product.name}
                     className="w-24 h-24 object-cover rounded-lg"
                     onError={(e) => {
-                      (e.target as HTMLImageElement).src = 'https://via.placeholder.com/96x96?text=Producto';
+                      (e.target as HTMLImageElement).src = 'https://placehold.co/96x96?text=Producto';
                     }}
                   />
                 </Link>
